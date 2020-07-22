@@ -38,8 +38,8 @@ Future<objects.User> requestUser() async { // @formatter:off
 Future<String> link(String userkey) async { // @formatter:off
   var _response = await http.post('${variables.url}/link', body: {
     'userkey': '$userkey',
-    'name':    getName(),
-    'model':   getModel(),
+    'name':    await getName(),
+    'model':   await getModel(),
     'version': variables.appVersion
   });
   if(_response.statusCode != 200) {
@@ -74,12 +74,10 @@ Future<String> getModel() async {
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
   if (Platform.isAndroid) {
     AndroidDeviceInfo a = await deviceInfo.androidInfo;
-    return 'Manufacturer: ${a.manufacturer}, Brand: ${a.brand}, Model: ${a.model}, AndrodID: '
-        '${a.androidId}, isPhysicalDevice: ${a.isPhysicalDevice} Fingerprint: ${a.fingerprint}';
+    return 'Model: ${a.model}';
   } else if (Platform.isIOS) {
     IosDeviceInfo i = await deviceInfo.iosInfo;
-    return 'Model: ${i.model}, Name: ${i.name}, SystemVersion: ${i.systemVersion}, '
-        'IsPhysicalDevice: ${i.isPhysicalDevice}';
+    return 'Model: ${i.model}';
   } else
     throw 'Platform nicht erkannt.';
 }
@@ -88,9 +86,9 @@ Future<String> getName() async {
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
   if (Platform.isAndroid) {
     AndroidDeviceInfo a = await deviceInfo.androidInfo;
-    return 'Name: ${a.host}';
+    return 'Name: ${a.type}';
   } else if (Platform.isIOS) {
     IosDeviceInfo i = await deviceInfo.iosInfo;
-    return 'Name: ${i.name}, SystemName: ${i.systemName}';
+    return 'SystemName: ${i.systemName}';
   } else throw 'Platform nicht erkannt.';
 }
