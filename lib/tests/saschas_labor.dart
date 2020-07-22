@@ -1,5 +1,7 @@
+import 'package:dipl_app/backend/requests/variables.dart';
 import 'package:dipl_app/main.dart';
 import 'package:flutter/material.dart';
+//import '../../';
 
 class SaschasLabor extends StatefulWidget {
   @override
@@ -10,7 +12,11 @@ class _SaschasLaborState extends State<SaschasLabor> {
   @override
   Widget build(BuildContext context) {
     return TempSeite(children: [
-      Text('Hier kommen die Elemente die getestet werden sollen rein. 👌🏻')
+//      RaisedButton(
+//        onPressed: () {
+//          print(getModel());
+//        },
+//      )
     ]);
   }
 }
