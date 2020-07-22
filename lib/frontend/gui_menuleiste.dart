@@ -20,7 +20,6 @@ class _LeisteState extends State<Leiste> {
         child: Container(
             height: 90,
             padding: EdgeInsets.only(left: 11, right: 11),
-            color: Farben.blau,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
