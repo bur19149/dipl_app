@@ -67,6 +67,13 @@ abstract class Farben {
   /// **Bitte nicht verwenden!**
   /// Wird nur in der _gui.dart_ verwendet!
   static const Color weissHighlight = hellgrau;
+
+// ----------------- sonstige Farben ------------------
+
+  /// Farbe ([Color]) rahmenFarbe: #D6D6D6
+  /// **Bitte nicht verwenden!**
+  /// Wird nur in der _gui_rahmen.dart_ verwendet!
+  static const Color rahmenFarbe = Color.fromRGBO(214, 214, 214, 1);
 }
 
 // @formatter:off
