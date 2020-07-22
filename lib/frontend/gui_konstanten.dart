@@ -76,13 +76,6 @@ abstract class Farben {
   static const Color rahmenFarbe = Color.fromRGBO(214, 214, 214, 1);
 }
 
-/// Enthält die in der App verwendeten Textgrößen.
-/// Textgroesse normal ist 17 (Muss in der jeweiligen Klasse als Standardwert definiert werden)
-abstract class Groesse {
-  static const double gross = 30;
-  static const double klein = 9;
-}
-
 // @formatter:off
 /// Enthält alle in der App vorkommenden Buttonfarben.
 enum Farbe {
