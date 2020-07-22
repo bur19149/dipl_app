@@ -71,7 +71,7 @@ abstract class Farben {
 
 // @formatter:off
 /// Enthält alle in der App vorkommenden Buttonfarben.
-enum Farbe {
+enum ButtonFarbe {
 	gruen,		// #28A745
 	rot,			// #B70E0C
 	gelb,			// #FFC107
