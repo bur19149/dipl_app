@@ -1,7 +1,6 @@
 import 'package:dipl_app/backend/requests/variables.dart';
 import 'package:dipl_app/main.dart';
 import 'package:flutter/material.dart';
-//import '../../';
 
 class SaschasLabor extends StatefulWidget {
   @override
