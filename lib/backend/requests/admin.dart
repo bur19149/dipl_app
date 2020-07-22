@@ -118,7 +118,7 @@ abstract class User {
     if (jugendgruppe != null) parameter['jugendgruppe'] = jugendgruppe;
     if (usertyp      != null) parameter['usertyp']      = '$usertyp';
     if (elternID     != null) parameter['elternID']     = '$elternID';
-    if (elternemail   != null) parameter['elternemail']   = elternemail;
+    if (elternemail  != null) parameter['elternemail']   = elternemail;
 
     var _response = await http.patch('${variables.url}/admin/user/', body: parameter);
 
