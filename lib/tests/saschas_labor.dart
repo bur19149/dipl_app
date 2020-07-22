@@ -13,7 +13,7 @@ class _SaschasLaborState extends State<SaschasLabor> {
     return TempSeite(children: [
       RaisedButton(
         onPressed: () {
-          print(getModel());
+          print(/*getModel()*/'');
         },
       )
     ]);

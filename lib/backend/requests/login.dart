@@ -39,7 +39,7 @@ Future<String> link(String userkey) async { // @formatter:off
   var _response = await http.post('${variables.url}/link', body: {
     'userkey': '$userkey',
     'name':    getName(),
-    'model':   getModel(),
+    'model':   '',//getModel(),
     'version': variables.appVersion
   });
   if(_response.statusCode != 200) {
@@ -70,17 +70,17 @@ login(String value) async { // @formatter:off
     await variables.FileHandler.writeFile(await link(value));
 } // @formatter:on
 
-Future<String> getModel() async {
-  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-  if (Platform.isAndroid) {
-    AndroidDeviceInfo a = await deviceInfo.androidInfo;
-    return 'Manufacturer: ${a.manufacturer}, Brand: ${a.brand}, Model: ${a.model}, AndrodID: ${a
-        .androidId}, isPhysicalDevice: ${a.isPhysicalDevice} Fingerprint: ${a.fingerprint}';
-  } if (Platform.isIOS) {
-    IosDeviceInfo i = await deviceInfo.iosInfo;
-    return 'Model: ${i.model}, Name: ${i.name}, SystemVersion: ${i.systemVersion}, IsPhysicalDevice: ${i.isPhysicalDevice}';
-  } throw 'Platform nicht erkannt.';
-}
+//Future<String> getModel() async {
+//  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+//  if (Platform.isAndroid) {
+//    AndroidDeviceInfo a = await deviceInfo.androidInfo;
+//    return 'Manufacturer: ${a.manufacturer}, Brand: ${a.brand}, Model: ${a.model}, AndrodID: ${a
+//        .androidId}, isPhysicalDevice: ${a.isPhysicalDevice} Fingerprint: ${a.fingerprint}';
+//  } if (Platform.isIOS) {
+//    IosDeviceInfo i = await deviceInfo.iosInfo;
+//    return 'Model: ${i.model}, Name: ${i.name}, SystemVersion: ${i.systemVersion}, IsPhysicalDevice: ${i.isPhysicalDevice}';
+//  } throw 'Platform nicht erkannt.';
+//}
 
 Future<String> getName() async{
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
