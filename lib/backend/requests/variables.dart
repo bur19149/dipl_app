@@ -1,5 +1,5 @@
 // -------------------------------- Imports ---------------------------------
-
+import 'package:path_provider/path_provider.dart';
 import '../objects.dart' as objects;
 import 'dart:io';
 
@@ -46,9 +46,8 @@ abstract class FileHandler {
 
   /// Stellt den Dateipfad der Applikation zur Verfügung
   static Future<String> get _localPath async {
-    //TODO einkommentieren bei einem Flutter Projekt
-//    final directory=await getApplicationDocumentsDirectory();
-//    return directory.path;
+    final directory=await getApplicationDocumentsDirectory();
+    return directory.path;
   }
 
   /// Erstellt das File
