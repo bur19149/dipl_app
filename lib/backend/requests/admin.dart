@@ -275,13 +275,13 @@ abstract class Termin {
     var parameters = <String, String>{};
     parameters['token']        = variables.token;
     parameters['eventid']      = '$eventID';
-    if (name         != null) parameters['name']         = name;
-    if (beschreibung != null) parameters['beschreibung'] = beschreibung;
-    if (ort          != null) parameters['ort']          = ort;
+    if (name         != null) parameters['name']          = name;
+    if (beschreibung != null) parameters['beschreibung']  = beschreibung;
+    if (ort          != null) parameters['ort']           = ort;
     if (startDatum   != null) parameters['start_datum']   = '${converter.dateTimeFormat(startDatum)}';
     if (endDatum     != null) parameters['end_datum']     = '${converter.dateTimeFormat(endDatum)}';
-    if (plaetze      != null) parameters['plaetze']      = '$plaetze';
-    if (oeffentlich  != null) parameters['oeffentlich']  = '$oeffentlich';
+    if (plaetze      != null) parameters['plaetze']       = '$plaetze';
+    if (oeffentlich  != null) parameters['oeffentlich']   = '$oeffentlich';
     if (sichtbarAb   != null) parameters['sichtbar_ab']   = '${converter.dateTimeFormat(sichtbarAb)}';
     if (anmeldungBis != null) parameters['anmeldung_bis'] = '${converter.dateTimeFormat(anmeldungBis)}';
 

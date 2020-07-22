@@ -46,7 +46,7 @@ abstract class FileHandler {
 
   /// Stellt den Dateipfad der Applikation zur Verfügung
   static Future<String> get _localPath async {
-    final directory=await getApplicationDocumentsDirectory();
+    final directory = await getApplicationDocumentsDirectory();
     return directory.path;
   }
 
@@ -56,7 +56,7 @@ abstract class FileHandler {
     return File('$path/orgAppToken.txt');
   }
 
-  // --------------------------------- Andere ---------------------------------
+  // --------------------------------- Path Provider ---------------------------------
 
   /// Speichert die Datei
   static Future<File> writeFile(String value) async {
