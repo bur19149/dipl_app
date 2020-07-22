@@ -2,6 +2,7 @@ import 'package:dipl_app/tests/christians_spielwiese.dart';
 import 'package:dipl_app/tests/dominiks_testgelaende.dart';
 import 'package:dipl_app/tests/saschas_labor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,10 +11,11 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]); // sperrt Bildschirmrotation
     return MaterialApp(
       title: 'orgApp',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(),
@@ -89,6 +91,8 @@ class _MyHomePageState extends State<MyHomePage> {
     )));
   }
 }
+
+// -------------------------------- Temporär --------------------------------
 
 class TempButton extends StatelessWidget {
   final String text;
