@@ -41,7 +41,6 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Image.network('https://i.makeagif.com/media/9-18-2015/30s1Uo.gif', width: double.infinity),
                 TempButton(
                     text: 'App-Baustelle',
                     onPressed: () => Navigator.push(

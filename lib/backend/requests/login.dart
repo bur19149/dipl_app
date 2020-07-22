@@ -1,6 +1,6 @@
 // -------------------------------- Imports ---------------------------------
-
 // @formatter:off
+import 'package:device_info/device_info.dart';
 import '../pruefungen.dart'     as pruefungen;
 import 'package:http/http.dart' as http;
 import '../converter.dart'      as converter;
@@ -8,6 +8,7 @@ import 'variables.dart'         as variables;
 import '../objects.dart'        as objects;
 import 'dart:convert'           as convert;
 import '../exceptions.dart';
+import 'dart:io';
 // @formatter:on
 
 // ------------------------------ GET-Requests ------------------------------
@@ -34,11 +35,11 @@ Future<objects.User> requestUser() async { // @formatter:off
 /// Token wird in der Datenbank mit dem User Account verknüpft. [...]"
 ///
 /// Dokumentation der API-Doku v2.6 v. Tobias Möller entnommen
-Future<String> link(String value) async { // @formatter:off
+Future<String> link(String userkey) async { // @formatter:off
   var _response = await http.post('${variables.url}/link', body: {
-    'userkey': '$value',
-    'name':    'Dominiks PC',
-    'model':   'ASUS-PC',
+    'userkey': '$userkey',
+    'name':    getName(),
+    'model':   getModel(),
     'version': variables.appVersion
   });
   if(_response.statusCode != 200) {
@@ -68,3 +69,26 @@ login(String value) async { // @formatter:off
   if (!RegExp('[0-9A-Za-z]{8}').hasMatch(pruefungen.stringPrufung(value))) throw 'Ungültiger UserToken.';
     await variables.FileHandler.writeFile(await link(value));
 } // @formatter:on
+
+Future<String> getModel() async {
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  if (Platform.isAndroid) {
+    AndroidDeviceInfo a = await deviceInfo.androidInfo;
+    return 'Manufacturer: ${a.manufacturer}, Brand: ${a.brand}, Model: ${a.model}, AndrodID: ${a
+        .androidId}, isPhysicalDevice: ${a.isPhysicalDevice} Fingerprint: ${a.fingerprint}';
+  } if (Platform.isIOS) {
+    IosDeviceInfo i = await deviceInfo.iosInfo;
+    return 'Model: ${i.model}, Name: ${i.name}, SystemVersion: ${i.systemVersion}, IsPhysicalDevice: ${i.isPhysicalDevice}';
+  } throw 'Platform nicht erkannt.';
+}
+
+Future<String> getName() async{
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  if (Platform.isAndroid) {
+    AndroidDeviceInfo a = await deviceInfo.androidInfo;
+    return 'Name: ${a.host}';
+  } if (Platform.isIOS) {
+    IosDeviceInfo i = await deviceInfo.iosInfo;
+    return 'Name: ${i.name}, SystemName: ${i.systemName}';
+  } throw 'Platform nicht erkannt.';
+}

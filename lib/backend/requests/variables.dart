@@ -6,7 +6,7 @@ import 'dart:io';
 // -------------------------------- Variablen -------------------------------
 
 // @formatter:off
-final File orgAppConfig = File('OrgAppConfig.txt');
+final File orgAppConfig = File('OrgAppConfig.txt');                                           //Name des SaveFiles
 final String url        = 'https://jugendevent.mainlevel.at/api';                             // Verbindungs-URL
 final String appVersion = 'alpha 0.1';                                                        // aktuelle Version der App
 //      String token      = 'rVMWQRDvHY0NpO-c_8S!nMRhmi=pXZ4gLQ3szHY7wYVVEV-z=RwhvezRxu8lkcB!'; // Token zur Identifizierung beim Server
@@ -38,6 +38,16 @@ var permissions = const <objects.Permission>[objects.Permission(null, null, 'Erl
                                              objects.Permission(null, null, 'Darf eine Liste aller Bewerbe einsehen',                                             'bewerb.alle_zeigen'          )];
 // @formatter:on
 
+// -------------------------------- Methoden --------------------------------
+
+//String getModel() {
+//  String androidDeviceInfo;
+//  DeviceInfoPlugin().androidInfo.then((value) => androidDeviceInfo =
+//      '${value.manufacturer}, ${value.brand}, ${value.model}, ${value.id}, ${value.androidId}');
+//  Future.delayed(Duration(seconds: 2));
+//  return '[$androidDeviceInfo]';
+//}
+
 // ---------------------------- Datei-Management ----------------------------
 
 /// Enthält alle für das Datei-Management notwendigen Methoden.
@@ -55,8 +65,6 @@ abstract class FileHandler {
     final path = await _localPath;
     return File('$path/orgAppToken.txt');
   }
-
-  // --------------------------------- Path Provider ---------------------------------
 
   /// Speichert die Datei
   static Future<File> writeFile(String value) async {
