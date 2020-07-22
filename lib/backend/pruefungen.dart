@@ -2,11 +2,11 @@
 /// nachfolgende und führende leerzeichen zurück.
 String stringPrufung(String value) {
   if (value == null) {
-    throw 'Dieses feld darf nicht null sein';
+    throw 'Dieses feld darf nicht null sein.';
   } else {
     value = value.trim();
     if (value.isEmpty) {
-      throw 'Dieses Feld darf nicht leer sein';
+      throw 'Dieses Feld darf nicht leer sein.';
     } else {
       return value;
     }
