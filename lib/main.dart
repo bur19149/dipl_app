@@ -11,7 +11,8 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]); // sperrt Bildschirmrotation
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp]); // sperrt Bildschirmrotation
     return MaterialApp(
       title: 'orgApp',
       theme: ThemeData(
@@ -41,7 +42,9 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Image.network('https://i.makeagif.com/media/9-18-2015/30s1Uo.gif', width: double.infinity),
+                Image.network(
+                    'https://i.makeagif.com/media/9-18-2015/30s1Uo.gif',
+                    width: double.infinity),
                 TempButton(
                     text: 'App-Baustelle',
                     onPressed: () => Navigator.push(
@@ -70,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   SaschasLabor())),
                                     ),
                                     TempButton(
-                                      text: 'Dominiks Testgelände',
+                                      text: 'Dominiks Testgelände️',
                                       onPressed: () => Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -80,10 +83,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                     TempButton(
                                       text: 'Christians Spielwiese',
                                       onPressed: () => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ChristiansSpielwiese())),
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ChristiansSpielwiese())),
                                     )
                                   ],
                                 ))))
