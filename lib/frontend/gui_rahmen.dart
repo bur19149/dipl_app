@@ -25,7 +25,7 @@ class _RahmenState extends State<Rahmen> {
     children.addAll([
       topWidget,
       Padding(
-          padding: EdgeInsets.only(bottom: 25, top: 20, left: 15, right: 15),
+          padding: EdgeInsets.only(bottom: 25, top: 20, left: 11, right: 11),
           child: Column(children: widget.children)),
       bottomWidget
     ]);
@@ -68,6 +68,9 @@ class _TerminRahmenState extends State<TerminRahmen> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        focusColor: Colors.transparent,
         onTap: _oeffnen,
         child: Stack(children: [
           Rahmen(children: widget.children, header: BottomHeader()),

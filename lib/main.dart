@@ -126,7 +126,7 @@ class _TempSeiteState extends State<TempSeite> {
         body: SafeArea(
             child: Center(
       child: Padding(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(15),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: widget.children)),

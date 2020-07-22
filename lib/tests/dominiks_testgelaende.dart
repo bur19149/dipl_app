@@ -26,7 +26,7 @@ class _DominiksTestgelaendeState extends State<DominiksTestgelaende> {
           Container(
             height: 300,
             width: double.infinity,
-            color: Farben.weiss,
+            color: Farben.blau,
           )
         ],
       )
