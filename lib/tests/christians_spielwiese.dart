@@ -7,14 +7,27 @@ class ChristiansSpielwiese extends StatefulWidget {
 }
 
 class _ChristiansSpielwieseState extends State<ChristiansSpielwiese> {
+  bool change = false;
+
+  void _pressed() {
+    setState(() {
+      change = !change;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return TempSeite(children: [
       Test(
         text: 'huhnjn',
       ),
-      StatefulContainer(),
-      RaisedButton(onPressed: (){},child: Text('änder Farbe'),)
+      StatefulContainer(
+        color: change ? Colors.red : Colors.blue,
+      ),
+      RaisedButton(
+        onPressed: _pressed,
+        child: Text('änder Farbe'),
+      )
     ]);
   }
 }
@@ -34,6 +47,10 @@ class Test extends StatelessWidget {
 }
 
 class StatefulContainer extends StatefulWidget {
+  final Color color;
+
+  StatefulContainer({@required this.color});
+
   @override
   State<StatefulWidget> createState() => _StatefulContainerState();
 }
@@ -41,6 +58,10 @@ class StatefulContainer extends StatefulWidget {
 class _StatefulContainerState extends State<StatefulContainer> {
   @override
   Widget build(BuildContext context) {
-      return Container(height: 100,width: 100,color: Colors.blue,);
+    return AnimatedContainer(
+      height: 100,
+      width: 100,
+      color: widget.color, duration: Duration(milliseconds: 500),
+    );
   }
 }
