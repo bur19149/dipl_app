@@ -12,6 +12,27 @@ class DominiksTestgelaende extends StatefulWidget {
 }
 
 class _DominiksTestgelaendeState extends State<DominiksTestgelaende> {
+  @override
+  Widget build(BuildContext context) {
+    return TempSeite(children: [
+      TempButton(
+          onPressed: () => Navigator.push(
+              context, MaterialPageRoute(builder: (context) => TesteMenu())),
+          text: 'Menüleisten-Test'),
+      TempButton(
+          onPressed: () => Navigator.push(
+              context, MaterialPageRoute(builder: (context) => TesteWidgets())),
+          text: 'Widgets-Tests')
+    ]);
+  }
+}
+
+class TesteWidgets extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _TesteWidgetsState();
+}
+
+class _TesteWidgetsState extends State<TesteWidgets> {
   bool offen = false;
 
   @override
@@ -23,11 +44,6 @@ class _DominiksTestgelaendeState extends State<DominiksTestgelaende> {
         });
       }),
       SizedBox(height: 50),
-      RaisedButton(
-          onPressed: () => Navigator.push(
-              context, MaterialPageRoute(builder: (context) => TesteMenu())),
-          child: Text('Menüleisten-Test')),
-      SizedBox(height: 50),
       TerminRahmen(
         children: [
           Container(
@@ -37,7 +53,6 @@ class _DominiksTestgelaendeState extends State<DominiksTestgelaende> {
           )
         ],
       )
-      //Kreuz(offen: offen, groesse: 0.7,)
     ]);
   }
 }
@@ -63,7 +78,9 @@ class _TesteMenuState extends State<TesteMenu> {
           bottom: adminMenu ? 85 : -510,
           curve: Curves.easeOutExpo,
           duration: Duration(milliseconds: 500),
-          child: AnimatedOpacity(duration: Duration(milliseconds: 500), curve: Curves.easeOutCirc,
+          child: AnimatedOpacity(
+              duration: Duration(milliseconds: 500),
+              curve: Curves.easeOutCirc,
               opacity: adminMenu ? 1 : 0,
               child: AdminMenu())),
       Leiste(
