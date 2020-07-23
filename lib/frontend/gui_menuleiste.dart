@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// Navigationsleiste
-class Menuleiste extends StatefulWidget {
+class Menuleiste extends StatefulWidget { // TODO scaffold ev. gegen anderes Widget austauschen
   // ------------------------------- Variablen --------------------------------
 
   // @formatter:off
@@ -27,7 +27,31 @@ class Menuleiste extends StatefulWidget {
 class _MenuleisteState extends State<Menuleiste> {
   // ------------------------------- Variablen --------------------------------
 
-  bool adminMenu = false; // Wird das Admin-Menü gerade angezeigt?
+  // @formatter:off
+  bool home         = true;  // Wird das Home-Menü gerade angezeigt?
+  bool meineTermine = false; // Wird das Meine-Termine-Menü gerade angezeigt?
+  bool adminMenu    = false; // Wird das Admin-Menü gerade angezeigt?
+  // @formatter:on
+
+  // ------------------------------ Eventhandler ------------------------------
+
+  void handleHome() {
+    setState(() {
+      // TODO
+    });
+  }
+
+  void handleMeineTermine() {
+    setState(() {
+      // TODO
+    });
+  }
+
+  void showAdminMenu() {
+    setState(() {
+      adminMenu = !adminMenu;
+    });
+  }
 
   // --------------------------------- Build ----------------------------------
 
@@ -51,15 +75,44 @@ class _MenuleisteState extends State<Menuleiste> {
                   opacity: adminMenu ? 1 : 0,
                   child: _AdminMenu()))
           : Container(),
-      _Leiste(
-          admin: widget.admin,
-          home: () {},
-          meineTermine: () {},
-          adminBereich: () {
-            setState(() {
-              adminMenu = !adminMenu;
-            });
-          })
+      Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+              height: 90,
+              padding: EdgeInsets.only(left: 11, right: 11),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                      child: _LeistenButton(
+                    text: 'Home',
+                    onPressed: handleHome,
+                    svg: svgIcons['haus'],
+                    admin: widget.admin,
+                    active: home,
+                  )),
+                  SizedBox(width: 10),
+                  Expanded(
+                      child: _LeistenButton(
+                    text: 'Meine Termine',
+                    onPressed: handleMeineTermine,
+                    svg: svgIcons['kalender'],
+                    admin: widget.admin,
+                    active: meineTermine,
+                  )),
+                  SizedBox(width: 10),
+                  widget.admin
+                      ? Expanded(
+                          child: _LeistenButton(
+                          text: 'Admin Bereich',
+                          onPressed: showAdminMenu,
+                          svg: svgIcons['administrator'],
+                          admin: widget.admin,
+                          active: adminMenu,
+                        ))
+                      : Container(),
+                ],
+              )))
     ]));
   }
 }
@@ -73,6 +126,7 @@ class _Leiste extends StatefulWidget {
   final VoidCallback meineTermine; // Eventhandler des meineTermine-Buttons
   final VoidCallback adminBereich; // Eventhandler des adminBereich-Buttons
   final bool         admin;        // Ist der Nutzer ein Admin oder ein User?
+
   // @formatter:on
 
   // ------------------------------ Konstruktor -------------------------------
