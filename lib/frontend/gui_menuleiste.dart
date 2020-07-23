@@ -6,7 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// Navigationsleiste
-class Menuleiste extends StatefulWidget { // TODO scaffold ev. gegen anderes Widget austauschen
+class Menuleiste extends StatefulWidget {
+  // TODO scaffold ev. gegen anderes Widget austauschen
   // ------------------------------- Variablen --------------------------------
 
   // @formatter:off
@@ -37,13 +38,21 @@ class _MenuleisteState extends State<Menuleiste> {
 
   void handleHome() {
     setState(() {
-      // TODO
+      if(!home) {
+        home = true;
+        meineTermine = false;
+      }
+      adminMenu = false;
     });
   }
 
   void handleMeineTermine() {
     setState(() {
-      // TODO
+      if(!meineTermine) {
+        home = false;
+        meineTermine = true;
+      }
+      adminMenu = false;
     });
   }
 
@@ -117,72 +126,6 @@ class _MenuleisteState extends State<Menuleiste> {
   }
 }
 
-/// Buttonleiste der Navigationsleiste
-class _Leiste extends StatefulWidget {
-  // ------------------------------- Variablen --------------------------------
-
-  // @formatter:off
-  final VoidCallback home;         // Eventhandler des Home-Buttons
-  final VoidCallback meineTermine; // Eventhandler des meineTermine-Buttons
-  final VoidCallback adminBereich; // Eventhandler des adminBereich-Buttons
-  final bool         admin;        // Ist der Nutzer ein Admin oder ein User?
-
-  // @formatter:on
-
-  // ------------------------------ Konstruktor -------------------------------
-
-  _Leiste(
-      {this.home, this.meineTermine, this.adminBereich, this.admin = false});
-
-  // ------------------------------- createState ------------------------------
-
-  @override
-  State<StatefulWidget> createState() => _LeisteState();
-}
-
-class _LeisteState extends State<_Leiste> {
-  // --------------------------------- Build ----------------------------------
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-        alignment: Alignment.bottomCenter,
-        child: Container(
-            height: 90,
-            padding: EdgeInsets.only(left: 11, right: 11),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                    child: _LeistenButton(
-                      text: 'Home',
-                      onPressed: widget.home,
-                      svg: svgIcons['haus'],
-                      admin: widget.admin,
-                    )),
-                SizedBox(width: 10),
-                Expanded(
-                    child: _LeistenButton(
-                      text: 'Meine Termine',
-                      onPressed: widget.meineTermine,
-                      svg: svgIcons['kalender'],
-                      admin: widget.admin,
-                    )),
-                SizedBox(width: 10),
-                widget.admin
-                    ? Expanded(
-                    child: _LeistenButton(
-                      text: 'Admin Bereich',
-                      onPressed: widget.adminBereich,
-                      svg: svgIcons['administrator'],
-                      admin: widget.admin,
-                    ))
-                    : Container(),
-              ],
-            )));
-  }
-}
-
 /// In der Navigationsleiste enthaltener Button
 class _LeistenButton extends StatefulWidget {
   // ------------------------------- Variablen --------------------------------
@@ -210,17 +153,18 @@ class _LeistenButton extends StatefulWidget {
 }
 
 class _LeistenButtonState extends State<_LeistenButton> {
+  // TODO auskommentierten Code entweder entfernen oder verwenden
   // ------------------------------- Variablen --------------------------------
 
-  bool _active; // Befindet sich der Nutzer aktuell in dem Menütab des Buttons?
+  //bool _active; // Befindet sich der Nutzer aktuell in dem Menütab des Buttons?
 
   // -------------------------------- initState -------------------------------
 
-  @override
-  void initState() {
-    _active = widget.active;
-    super.initState();
-  }
+  //@override
+  //void initState() {
+  //  _active = widget.active;
+  //  super.initState();
+  //}
 
   // --------------------------------- Build ----------------------------------
 
@@ -234,11 +178,14 @@ class _LeistenButtonState extends State<_LeistenButton> {
               text: widget.text,
               admin: widget.admin,
               svg: widget.svg,
+              active: widget.active,
             ),
             color: Farben.weiss,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
-                side: BorderSide(color: Farben.blaugrau, width: 1))));
+                side: BorderSide(
+                    color: widget.active ? Farben.rot : Farben.blaugrau,
+                    width: 1))));
   }
 }
 
@@ -248,15 +195,16 @@ class _LeistenButtonChild extends StatefulWidget {
   // ------------------------------- Variablen --------------------------------
 
   // @formatter:off
-  final bool   admin; // Ist der Nutzer ein Admin oder ein User?
-  final String text;  // Textinhalt des Buttons
-  final String svg;   // Icon des Buttons
+  final bool   active; // Befindet sich der Nutzer aktuell in dem Menütab des Buttons?
+  final bool   admin;  // Ist der Nutzer ein Admin oder ein User?
+  final String text;   // Textinhalt des Buttons
+  final String svg;    // Icon des Buttons
   // @formatter:on
 
   // ------------------------------ Konstruktor -------------------------------
 
   _LeistenButtonChild(
-      {this.admin = false, @required this.text, @required this.svg});
+      {this.admin = false, @required this.text, @required this.svg, this.active = false});
 
   // ------------------------------- createState ------------------------------
 
@@ -271,19 +219,23 @@ class _LeistenButtonChildState extends State<_LeistenButtonChild> {
   Widget build(BuildContext context) {
     return widget.admin
         ? Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      SvgPicture.asset(widget.svg, height: 17, color: Farben.blaugrau),
+      SvgPicture.asset(widget.svg, height: 17,
+          color: widget.active ? Farben.rot : Farben.blaugrau),
       SizedBox(height: 5),
       Text(
         widget.text,
-        style: TextStyle(fontSize: 9, color: Farben.blaugrau),
+        style: TextStyle(
+            fontSize: 9, color: widget.active ? Farben.rot : Farben.blaugrau),
       )
     ])
         : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-      SvgPicture.asset(widget.svg, height: 17, color: Farben.blaugrau),
+      SvgPicture.asset(widget.svg, height: 17,
+          color: widget.active ? Farben.rot : Farben.blaugrau),
       SizedBox(width: 7),
       Text(
         widget.text,
-        style: TextStyle(fontSize: 12, color: Farben.blaugrau),
+        style: TextStyle(
+            fontSize: 12, color: widget.active ? Farben.rot : Farben.blaugrau),
       )
     ]);
   }
