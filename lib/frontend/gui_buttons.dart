@@ -1,47 +1,55 @@
-//import 'package:flutter/cupertino.dart';
-//import 'package:flutter/material.dart';
-//import 'gui_konstanten.dart';
-//
-//class BreiterButton extends StatelessWidget{
-//
-//  final String text;
-//  final Farbe farbe;
-//
-//  BreiterButton({@required this.text, @required this.farbe});
-//
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    return RaisedButton(child: Text(text, style: TextStyle(height: Groesse.klein,),),);
-//  }
-//
-//}
+// -------------------------------- Imports ---------------------------------
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'gui_konstanten.dart';
 
+class Button extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _ButtonState();
+}
+
+class _ButtonState extends State<Button> {
+  @override
+  Widget build(BuildContext context) {
+    return null; // TODO
+  }
+}
+
 class CustomToggleButton extends StatefulWidget {
-  /// Standardwert = true
-  final bool value;
+  // ------------------------------- Variablen --------------------------------
+  // @formatter:off
+  final bool               value; // Standardwert
+  final GestureTapCallback onTap; // Eventhandler
+  final double             size;  // Groesse (Breite)
+  // @formatter:on
 
-  /// Eventhandler
-  final GestureTapCallback onTap;
-
-  /// Groesse (Breite)
-  final double size;
+  // ------------------------------ Konstruktor -------------------------------
 
   CustomToggleButton(
       {this.size = 70, this.value = true, @required this.onTap, Key key})
       : super(key: key);
+
+  // ------------------------------- createState ------------------------------
 
   @override
   State<StatefulWidget> createState() => _CustomToggleButtonState();
 }
 
 class _CustomToggleButtonState extends State<CustomToggleButton> {
-  bool _value = true;
+  // ------------------------------- Variablen --------------------------------
+
+  bool _value = true; // aktueller Wert
+
+  // -------------------------------- initState -------------------------------
+
+  @override
+  void initState() {
+    _value = widget.value;
+    super.initState();
+  }
+
+  // ------------------------------ Eventhandler ------------------------------
 
   void _changeValue() {
     setState(() {
@@ -50,11 +58,7 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
     });
   }
 
-  @override
-  void initState() {
-    _value = widget.value;
-    super.initState();
-  }
+  // --------------------------------- Build ----------------------------------
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +77,7 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
                     child: Stack(children: [
                       Align(
                           alignment: FractionalOffset(0.5, 0.5),
-                          child: Container(
+                          child: Container( // Button-Hintergrund
                             height: 50,
                             width: 130,
                             decoration: BoxDecoration(
@@ -86,7 +90,7 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
                       AnimatedPositioned(
                           left: _value ? 70 : 0,
                           duration: Duration(milliseconds: 200),
-                          child: AnimatedContainer(
+                          child: AnimatedContainer( // Button-Knopf
                               curve: Curves.linearToEaseOut,
                               duration: Duration(milliseconds: 200),
                               width: 70,
