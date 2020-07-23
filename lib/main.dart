@@ -1,3 +1,4 @@
+import 'package:dipl_app/tests/checkliste_fertige_elemente.dart';
 import 'package:dipl_app/tests/christians_spielwiese.dart';
 import 'package:dipl_app/tests/dominiks_testgelaende.dart';
 import 'package:dipl_app/tests/saschas_labor.dart';
@@ -84,7 +85,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                                       builder: (context) =>
                                                           ChristiansSpielwiese())),
                                             )
-                                          ]))))
+                                          ])))),
+                          TempButton(text: 'Checkliste', onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Checkliste())))
                         ])))));
   }
 }
