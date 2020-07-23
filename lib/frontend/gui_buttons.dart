@@ -3,14 +3,24 @@
 import 'package:dipl_app/frontend/gui_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'gui_konstanten.dart';
 
 class Button extends StatefulWidget {
   final double width;
   final VoidCallback onPressed;
-  final ButtonFarbe farbe;
+  final Buttonfarbe farbe;
+  final bool gefuellt;
+  final String text;
+  final String svg;
 
-  Button({this.width = double.infinity, @required this.onPressed, this.farbe});
+  Button(
+      {this.width = double.infinity,
+      @required this.onPressed,
+      this.farbe = Buttonfarbe.blaugrau,
+      this.gefuellt = true,
+      this.text = 'Button',
+      this.svg});
 
   @override
   State<StatefulWidget> createState() => _ButtonState();
@@ -19,21 +29,54 @@ class Button extends StatefulWidget {
 class _ButtonState extends State<Button> {
   @override
   Widget build(BuildContext context) {
-    Widget child = Text('Teste',
-        style: TextStyle(
-            fontSize: Groesse.normal,
-            fontFamily: appFont,
-            fontWeight: FontWeight.w400));
+    Color buttonFarbe;
+    Color highlightColor;
 
+    switch (widget.farbe) { // @formatter:off
+      case Buttonfarbe.rot:			 highlightColor = Farben.rotHighlight; 	    buttonFarbe = Farben.rot;			 break; // rot:      #B70E0C; rotHighlight:      #7A0A09
+      case Buttonfarbe.gelb:		 highlightColor = Farben.gelbHighlight;	    buttonFarbe = Farben.gelb;		 break; // gelb:     #FFC107; gelbHighlight:     #C49506
+      case Buttonfarbe.gruen:		 highlightColor = Farben.gruenHighlight; 	  buttonFarbe = Farben.gruen;		 break; // gruen:    #28A745; gruenHighlight:    #1A692C
+      case Buttonfarbe.blau:		 highlightColor = Farben.blauHighlight; 	  buttonFarbe = Farben.blau;		 break; // blau:     #17A2B8; blauHighlight:     #117585
+      case Buttonfarbe.blaugrau: highlightColor = Farben.blaugrauHighlight; buttonFarbe = Farben.blaugrau; break; // blaugrau: #6C757D; blaugrauHighlight: #444A4F
+      default:						       highlightColor = Farben.weissHighlight; 		buttonFarbe = Farben.weiss;		 break; // weiss:    #FFFFFF; weissHighlight:    #F2F2F2
+    } // @formatter:on
+
+    Widget child,
+        textWidget = Text(widget.text,
+            style: TextStyle(
+                fontSize: Groesse.normal,
+                fontFamily: appFont,
+                fontWeight: FontWeight.w300));
+
+    if (widget.svg != null) {
+      child = Row(children: [Expanded(child: Container()),
+        SvgPicture.asset(widget.svg, height: 23,
+            color: widget.gefuellt ? Farben.weiss : buttonFarbe),
+        SizedBox(width: 12),
+        Text(widget.text,
+            style: TextStyle(
+                fontSize: Groesse.normal,
+                fontFamily: appFont,
+                fontWeight: FontWeight.w300)), Expanded(child: Container())
+      ]);
+    } else {
+      child = textWidget;
+    }
     return SizedBox(
         width: widget.width,
         child: RaisedButton(
           padding: EdgeInsets.only(top: 8, bottom: 8),
+          textColor: widget.gefuellt ? Farben.weiss : buttonFarbe,
+          color: widget.gefuellt ? buttonFarbe : Farben.weiss,
+          highlightColor: widget.gefuellt ? highlightColor : Farben
+              .weissHighlight,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0),
+              side: BorderSide(color: buttonFarbe, width: 1.6)),
           onPressed: widget.onPressed,
           child: child,
-        ));
+        )
+    );
   }
 }
 

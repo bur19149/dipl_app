@@ -64,7 +64,6 @@ class _TesteWidgetsState extends State<TesteWidgets> {
       SvgPicture.asset(svgIcons['einstellungen'],
           color: Farben.blaugrau, height: 50),
       SizedBox(height: 50),
-      Button(onPressed: () {  },),
       SizedBox(height: 50),
       LoginRahmen(
         children: [
@@ -72,6 +71,11 @@ class _TesteWidgetsState extends State<TesteWidgets> {
             height: 100,
             width: double.infinity,
             color: Farben.blau,
+          ),
+          Button(
+            text: 'Anmelden',
+            onPressed: () {},
+            farbe: Buttonfarbe.rot,
           )
         ],
       )

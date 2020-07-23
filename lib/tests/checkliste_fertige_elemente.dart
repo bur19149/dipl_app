@@ -9,6 +9,7 @@ class Checkliste extends StatefulWidget {
     // @formatter:off
     ListenText('ToggleButton', widget: CustomToggleButton(onTap: () {})),
     ListenText('Kreuz',        widget: Kreuz()),
+    ListenText('Standard-Button', anmerkung: 'soweit fertig')
     // @formatter:on
   ];
 
@@ -18,8 +19,7 @@ class Checkliste extends StatefulWidget {
     ListenText('Navigationsleiste', anmerkung: 'fast fertig'),
     ListenText('SVG-Icons',         anmerkung: 'teilweise importiert'),
     ListenText('Rahmen',            anmerkung: 'fast fertig'),
-    ListenText('Texte',             anmerkung: 'Überarbeitung nötig'),
-    ListenText('Standard-Button',   anmerkung: 'angefangen')
+    ListenText('Texte',             anmerkung: 'Überarbeitung nötig')
     // @formatter:on
   ];
 
