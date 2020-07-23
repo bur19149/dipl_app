@@ -3,6 +3,7 @@ import 'package:dipl_app/frontend/gui_konstanten.dart';
 import 'package:dipl_app/frontend/gui_menuleiste.dart';
 import 'package:dipl_app/frontend/gui_rahmen.dart';
 import 'package:dipl_app/frontend/gui_text.dart';
+import 'package:dipl_app/frontend/gui_topLeiste.dart';
 import 'package:dipl_app/main.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,27 @@ class _DominiksTestgelaendeState extends State<DominiksTestgelaende> {
       TempButton(
           onPressed: () => Navigator.push(context,
               MaterialPageRoute(builder: (context) => TesteSchriftarten())),
-          text: 'Schriftarten-Tests')
+          text: 'Schriftarten-Tests'),
+      TempButton(
+          onPressed: () => Navigator.push(context,
+              MaterialPageRoute(builder: (context) => TesteTopleiste())),
+          text: 'Topleisten-Tests')
+    ]);
+  }
+}
+
+class TesteTopleiste extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _TesteTopleisteState();
+}
+
+class _TesteTopleisteState extends State<TesteTopleiste> {
+  @override
+  Widget build(BuildContext context) {
+    return TempSeite(children: [
+      Container(
+          decoration: BoxDecoration(border: Border.all(color: Farben.schwarz)),
+          child: Topleiste())
     ]);
   }
 }
