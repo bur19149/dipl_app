@@ -71,46 +71,20 @@ class TesteMenu extends StatefulWidget {
 }
 
 class _TesteMenuState extends State<TesteMenu> {
-  bool adminMenu = false, admin = true;
+  bool admin = true;
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Stack(children: [
-      Scaffold(
-          body: Center(
-              child: RaisedButton(
-                  onPressed: () {
-                    setState(() {
-                      admin = !admin;
-                    });
-                  },
-                  child: Text('change Menu')))),
-      Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(height: 90, color: Farben.blau)),
-      admin
-          ? AnimatedPositioned(
-              right: adminMenu ? 11 : -220,
-              bottom: adminMenu ? 85 : -510,
-              curve: Curves.easeOutExpo,
-              duration: Duration(milliseconds: 500),
-              child: AnimatedOpacity(
-                  duration: Duration(milliseconds: 500),
-                  curve: Curves.easeOutCirc,
-                  opacity: adminMenu ? 1 : 0,
-                  child: AdminMenu()))
-          : Container(),
-      Leiste(
-          admin: admin,
-          home: () {},
-          meineTermine: () {},
-          adminBereich: () {
-            setState(() {
-              adminMenu = !adminMenu;
-            });
-          })
-    ]));
+    return Menuleiste(admin: admin,
+        scaffold: Scaffold(
+            body: Center(
+                child: RaisedButton(
+                    onPressed: () {
+                      setState(() {
+                        admin = !admin;
+                      });
+                    },
+                    child: Text('change Menu')))));
   }
 }
 
@@ -132,7 +106,8 @@ class _TesteSchriftartenState extends State<TesteSchriftarten> {
             CustomText('TextfeldText', textart: Textarten.TextfeldText),
             CustomText('Uberschrift', textart: Textarten.Uberschrift),
             CustomText('UnterUberschrift', textart: Textarten.UnterUberschrift),
-            Container(color: Farben.blau,
+            Container(
+                color: Farben.blau,
                 child: CustomText('WeisseDickeUberschrift',
                     textart: Textarten.WeisseDickeUberschrift))
           ])),
