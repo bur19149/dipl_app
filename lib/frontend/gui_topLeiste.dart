@@ -54,7 +54,8 @@ class _TopleisteState extends State<Topleiste> {
                               ],
                               border: Border(
                                 top: BorderSide(width: 1, color: Farben.grau),
-                                bottom: BorderSide(width: 1, color: Farben.grau),
+                                bottom:
+                                    BorderSide(width: 1, color: Farben.grau),
                               )),
                           width: fieldExpanded
                               ? MediaQuery.of(context).size.width
@@ -106,6 +107,7 @@ class _LeistenTextfieldState extends State<LeistenTextfield> {
   Widget build(BuildContext context) {
     return TextField(
       decoration: InputDecoration(
+          hintText: 'Suchen',hintStyle: TextStyle(color: Farben.grau, ),
           border: OutlineInputBorder(borderSide: BorderSide.none)),
     );
   }
