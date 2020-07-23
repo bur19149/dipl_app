@@ -72,9 +72,9 @@ class _TopleisteState extends State<Topleiste> {
                 ])))
       ]),
       Row(children: [
-        LeistenButton(onPressed: _buttonPressed),
+        LeistenButton(onPressed: _buttonPressed, fieldExpanded: fieldExpanded, left: true),
         Expanded(child: Container()),
-        LeistenButton(onPressed: _buttonPressed)
+        LeistenButton(onPressed: _buttonPressed, fieldExpanded: fieldExpanded, left: false)
       ])
     ]);
   }
@@ -97,8 +97,10 @@ class _LeistenTextfieldState extends State<LeistenTextfield> {
 
 class LeistenButton extends StatefulWidget {
   final GestureTapCallback onPressed;
+  final bool fieldExpanded;
+  final bool left;
 
-  const LeistenButton({this.onPressed});
+  LeistenButton({this.onPressed, this.fieldExpanded = false, this.left = true});
 
   @override
   State<StatefulWidget> createState() => _LeistenButtonState();
@@ -109,17 +111,17 @@ class _LeistenButtonState extends State<LeistenButton> {
   Widget build(BuildContext context) {
     return InkWell(
         onTap: widget.onPressed,
-        child: Container(
+        child: AnimatedContainer(duration: Duration(milliseconds: 80),
           height: 50,
           width: 50,
           decoration: BoxDecoration(
             color: Farben.weiss,
             border: Border.all(width: 1),
             borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(10),
-                topLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10),
-                topRight: Radius.circular(10)),
+                bottomLeft: Radius.circular(!widget.left && widget.fieldExpanded ? 0 : 10),
+                topLeft: Radius.circular(!widget.left && widget.fieldExpanded ? 0 : 10),
+                bottomRight: Radius.circular(widget.left && widget.fieldExpanded ? 0 : 10),
+                topRight: Radius.circular(widget.left && widget.fieldExpanded ? 0 : 10)),
             boxShadow: [
               BoxShadow(
                   blurRadius: 7,
