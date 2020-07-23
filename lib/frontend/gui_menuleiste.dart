@@ -40,14 +40,15 @@ class _LeisteState extends State<Leiste> {
                   admin: widget.admin,
                 )),
                 SizedBox(width: 10),
-                widget.admin ?
-                Expanded(
-                    child: LeistenButton(
-                  text: 'Admin Bereich',
-                  onPressed: widget.adminBereich,
-                  svg: svgIcons['administrator'],
-                  admin: widget.admin,
-                )) : Container(),
+                widget.admin
+                    ? Expanded(
+                        child: LeistenButton(
+                        text: 'Admin Bereich',
+                        onPressed: widget.adminBereich,
+                        svg: svgIcons['administrator'],
+                        admin: widget.admin,
+                      ))
+                    : Container(),
               ],
             )));
   }
@@ -89,9 +90,10 @@ class _LeistenButtonState extends State<LeistenButton> {
               admin: widget.admin,
               svg: widget.svg,
             ),
+            color: Farben.weiss,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
-              /*side: BorderSide(color: Colors.red)*/
+              side: BorderSide(color: Farben.blaugrau, width: 1)
             )));
   }
 }
@@ -112,19 +114,19 @@ class _LeistenButtonChildState extends State<LeistenButtonChild> {
   Widget build(BuildContext context) {
     return widget.admin
         ? Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            SvgPicture.asset(widget.svg, height: 17, color: Farben.schwarz),
+            SvgPicture.asset(widget.svg, height: 17, color: Farben.blaugrau),
             SizedBox(height: 5),
             Text(
               widget.text,
-              style: TextStyle(fontSize: 9),
+              style: TextStyle(fontSize: 9, color: Farben.blaugrau),
             )
           ])
         : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            SvgPicture.asset(widget.svg, height: 17, color: Farben.schwarz),
-            SizedBox(width: 5),
+            SvgPicture.asset(widget.svg, height: 17, color: Farben.blaugrau),
+            SizedBox(width: 7),
             Text(
               widget.text,
-              style: TextStyle(fontSize: 9),
+              style: TextStyle(fontSize: 12, color: Farben.blaugrau),
             )
           ]);
   }
@@ -169,6 +171,6 @@ class _MenuBoxState extends State<MenuBox> {
                   offset: Offset(3, 3))
             ],
             borderRadius: BorderRadius.all(Radius.circular(10)),
-            border: Border.all(color: Farben.grau, width: 1)));
+            border: Border.all(color: Farben.blaugrau, width: 1)));
   }
 }
