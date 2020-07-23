@@ -1,10 +1,17 @@
 // -------------------------------- Imports ---------------------------------
 
+import 'package:dipl_app/frontend/gui_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'gui_konstanten.dart';
 
 class Button extends StatefulWidget {
+  final double width;
+  final VoidCallback onPressed;
+  final ButtonFarbe farbe;
+
+  Button({this.width = double.infinity, @required this.onPressed, this.farbe});
+
   @override
   State<StatefulWidget> createState() => _ButtonState();
 }
@@ -12,7 +19,21 @@ class Button extends StatefulWidget {
 class _ButtonState extends State<Button> {
   @override
   Widget build(BuildContext context) {
-    return null; // TODO
+    Widget child = Text('Teste',
+        style: TextStyle(
+            fontSize: Groesse.normal,
+            fontFamily: appFont,
+            fontWeight: FontWeight.w400));
+
+    return SizedBox(
+        width: widget.width,
+        child: RaisedButton(
+          padding: EdgeInsets.only(top: 8, bottom: 8),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+          onPressed: widget.onPressed,
+          child: child,
+        ));
   }
 }
 
@@ -77,20 +98,22 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
                     child: Stack(children: [
                       Align(
                           alignment: FractionalOffset(0.5, 0.5),
-                          child: Container( // Button-Hintergrund
+                          child: Container(
+                            // Button-Hintergrund
                             height: 50,
                             width: 130,
                             decoration: BoxDecoration(
                                 color: Farben.grau,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(11)),
+                                BorderRadius.all(Radius.circular(11)),
                                 border: Border.all(
                                     color: Farben.hellgrau, width: 3)),
                           )),
                       AnimatedPositioned(
                           left: _value ? 70 : 0,
                           duration: Duration(milliseconds: 200),
-                          child: AnimatedContainer( // Button-Knopf
+                          child: AnimatedContainer(
+                            // Button-Knopf
                               curve: Curves.linearToEaseOut,
                               duration: Duration(milliseconds: 200),
                               width: 70,
@@ -98,7 +121,7 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
                               decoration: BoxDecoration(
                                   color: _value ? Farben.gruen : Farben.rot,
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(12)),
+                                  BorderRadius.all(Radius.circular(12)),
                                   border: Border.all(
                                       color: Farben.hellgrau, width: 2),
                                   boxShadow: [

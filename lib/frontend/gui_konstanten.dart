@@ -86,10 +86,12 @@ enum ButtonFarbe {
 	blau			// #17A2B8
 } // @formatter:on
 
-final Map<String, String> svgIcons = {
+final Map<String, String> svgIcons = { // @formatter:off
   'administrator': 'assets/images/svg/administrator.svg',
-  'kalender': 'assets/images/svg/kalender.svg',
-  'haus': 'assets/images/svg/haus.svg',
   'einstellungen': 'assets/images/svg/einstellungen.svg',
-  'lupe': 'assets/images/svg/lupe.svg'
-};
+  'kalender':      'assets/images/svg/kalender.svg',
+  'haus':          'assets/images/svg/haus.svg',
+  'lupe':          'assets/images/svg/lupe.svg'
+}; // @formatter:on
+
+final String appFont = 'Roboto';

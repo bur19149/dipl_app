@@ -1,13 +1,13 @@
-import 'package:dipl_app/frontend/gui_buttons.dart';
 import 'package:dipl_app/frontend/gui_konstanten.dart';
 import 'package:dipl_app/frontend/gui_menuleiste.dart';
+import 'package:dipl_app/frontend/gui_topLeiste.dart';
+import 'package:dipl_app/frontend/gui_buttons.dart';
 import 'package:dipl_app/frontend/gui_rahmen.dart';
 import 'package:dipl_app/frontend/gui_text.dart';
-import 'package:dipl_app/frontend/gui_topLeiste.dart';
-import 'package:dipl_app/main.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:dipl_app/main.dart';
 
 class DominiksTestgelaende extends StatefulWidget {
   @override
@@ -18,22 +18,12 @@ class _DominiksTestgelaendeState extends State<DominiksTestgelaende> {
   @override
   Widget build(BuildContext context) {
     return TempSeite(children: [
-      TempButton(
-          onPressed: () => Navigator.push(
-              context, MaterialPageRoute(builder: (context) => TesteMenu())),
-          text: 'Menüleisten-Test'),
-      TempButton(
-          onPressed: () => Navigator.push(
-              context, MaterialPageRoute(builder: (context) => TesteWidgets())),
-          text: 'Widgets-Tests'),
-      TempButton(
-          onPressed: () => Navigator.push(context,
-              MaterialPageRoute(builder: (context) => TesteSchriftarten())),
-          text: 'Schriftarten-Tests'),
-      TempButton(
-          onPressed: () => Navigator.push(context,
-              MaterialPageRoute(builder: (context) => TesteTopleiste())),
-          text: 'Topleisten-Tests')
+      // @formatter:off
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteMenu())),         text: 'Menüleisten-Test'),
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteWidgets())),      text: 'Widgets-Tests'),
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteSchriftarten())), text: 'Schriftarten-Tests'),
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteTopleiste())),    text: 'Topleisten-Tests')
+      // @formatter:on
     ]);
   }
 }
@@ -71,9 +61,12 @@ class _TesteWidgetsState extends State<TesteWidgets> {
         });
       }),
       SizedBox(height: 50),
-      SvgPicture.asset(svgIcons['einstellungen'], color: Farben.blaugrau, height: 50),
+      SvgPicture.asset(svgIcons['einstellungen'],
+          color: Farben.blaugrau, height: 50),
       SizedBox(height: 50),
-      TerminRahmen(
+      Button(onPressed: () {  },),
+      SizedBox(height: 50),
+      LoginRahmen(
         children: [
           Container(
             height: 100,
@@ -126,12 +119,15 @@ class _TesteSchriftartenState extends State<TesteSchriftarten> {
                   EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
               children: [
             CustomText('TextfeldText', textart: Textarten.TextfeldText),
-            CustomText('Uberschrift', textart: Textarten.Uberschrift),
+            Container(
+                color: Farben.rot,
+                child:
+                    CustomText('Uberschrift', textart: Textarten.Uberschrift)),
             CustomText('UnterUberschrift', textart: Textarten.UnterUberschrift),
             Container(
                 color: Farben.blau,
                 child: CustomText('WeisseDickeUberschrift',
-                    textart: Textarten.WeisseDickeUberschrift))
+                    textart: Textarten.WeisseUberschrift))
           ])),
     ));
   }

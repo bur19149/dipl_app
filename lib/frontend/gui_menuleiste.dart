@@ -1,6 +1,7 @@
 // -------------------------------- Imports ---------------------------------
 
 import 'package:dipl_app/frontend/gui_konstanten.dart';
+import 'package:dipl_app/frontend/gui_text.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -259,7 +260,9 @@ class _LeistenButtonChildState extends State<_LeistenButtonChild> {
       Text(
         widget.text,
         style: TextStyle(
-            fontSize: 9, color: widget.active ? Farben.rot : Farben.blaugrau),
+            fontSize: 9,
+            fontFamily: appFont,
+            color: widget.active ? Farben.rot : Farben.blaugrau),
       )
     ])
         : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -269,7 +272,9 @@ class _LeistenButtonChildState extends State<_LeistenButtonChild> {
       Text(
         widget.text,
         style: TextStyle(
-            fontSize: 12, color: widget.active ? Farben.rot : Farben.blaugrau),
+            fontSize: 12,
+            fontFamily: appFont,
+            color: widget.active ? Farben.rot : Farben.blaugrau),
       )
     ]);
   }
@@ -288,18 +293,67 @@ class _AdminMenuState extends State<_AdminMenu> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      _MenuBox(),
+    return Material(color: Colors.transparent, child: Column(children: [
+      _MenuBox(children: [
+        _AdminMenuText('Vollständige Termin Liste'),
+        _AdminMenuText('Neuen Termin anlegen')
+      ]),
       SizedBox(
         height: 10,
       ),
-      _MenuBox()
-    ]);
+      _MenuBox(children: [
+        _AdminMenuText('User Einstellungen'),
+        _AdminMenuText('Registrierte User'),
+        _AdminMenuText('Neuen User anlegen')
+      ])
+    ]));
   }
 }
 
+class _AdminMenuText extends StatefulWidget {
+  // ------------------------------- Variablen --------------------------------
+
+  final String text;
+
+  // ------------------------------ Konstruktor -------------------------------
+
+  const _AdminMenuText(this.text);
+
+  // ------------------------------- createState ------------------------------
+
+  @override
+  State<StatefulWidget> createState() => _AdminMenuTextState();
+}
+
+class _AdminMenuTextState extends State<_AdminMenuText> {
+  // --------------------------------- Build ----------------------------------
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+        alignment: Alignment.centerRight,
+        child: Container(
+            padding: EdgeInsets.only(right: 10, top: 11, bottom: 11),
+            child: Text(
+                widget.text, style: TextStyle(fontSize: 18,
+                color: Farben.blaugrau,
+                fontFamily: appFont,
+                fontWeight: FontWeight.w600))));
+  }
+}
+
+
 /// Box des Admin-Bereich Untermenüs der Menüleiste
 class _MenuBox extends StatefulWidget {
+  // ------------------------------- Variablen --------------------------------
+
+  final List<Widget> children;
+
+  // ------------------------------ Konstruktor -------------------------------
+
+  const _MenuBox({this.children});
+
+
   // ------------------------------- createState ------------------------------
 
   @override
@@ -311,9 +365,8 @@ class _MenuBoxState extends State<_MenuBox> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: 250,
-        width: 200,
+    return Container(padding: EdgeInsets.all(10),
+        width: 250,
         decoration: BoxDecoration(
             color: Farben.weiss,
             boxShadow: [
@@ -324,6 +377,7 @@ class _MenuBoxState extends State<_MenuBox> {
                   offset: Offset(3, 3))
             ],
             borderRadius: BorderRadius.all(Radius.circular(10)),
-            border: Border.all(color: Farben.blaugrau, width: 1)));
+            border: Border.all(color: Farben.blaugrau, width: 1)),
+        child: Column(children: widget.children));
   }
 }

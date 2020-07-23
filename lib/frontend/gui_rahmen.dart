@@ -1,5 +1,6 @@
-import 'package:dipl_app/backend/requests/admin.dart';
 import 'package:dipl_app/frontend/gui_konstanten.dart';
+import 'package:dipl_app/backend/requests/admin.dart';
+import 'package:dipl_app/frontend/gui_text.dart';
 import 'package:flutter/material.dart';
 
 class Rahmen extends StatefulWidget {
@@ -85,16 +86,34 @@ class _TerminRahmenState extends State<TerminRahmen> {
   }
 }
 
+class LoginRahmen extends StatelessWidget {
+  final List<Widget> children;
+
+  LoginRahmen({this.children});
+
+  @override
+  Widget build(BuildContext context) {
+    return Rahmen(
+      header: LoginHeader(),
+      children: children,
+    );
+  }
+}
+
 class LoginHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 90, // TODO
+        width: double.infinity,
+        height: 90,
+        padding: EdgeInsets.only(left: 11),
         decoration: BoxDecoration(
             color: Farben.rot,
             borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(9.5),
-                topRight: Radius.circular(9.5))));
+                topLeft: Radius.circular(9.5), topRight: Radius.circular(9.5))),
+        child: Align(
+            alignment: Alignment.centerLeft,
+            child: CustomText('Anmelden', textart: Textarten.Uberschrift)));
   }
 }
 

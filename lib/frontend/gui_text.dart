@@ -5,9 +5,10 @@ import 'gui_konstanten.dart';
 /// Enthält die in der App verwendeten Textgrößen.
 /// Textgroesse normal ist 17 (Muss in der jeweiligen Klasse als Standardwert definiert werden)
 abstract class Groesse {
-  static const double normal = 30;
-  static const double klein = 9; //TODO keine Ahnung für was das gebraucht wird /shrug
-  static const double gross = 50;
+  static const double normal = 24;
+  static const double klein =
+      9; //TODO keine Ahnung für was das gebraucht wird /shrug
+  static const double gross = 38;
 }
 
 class _TextTemplate extends StatelessWidget {
@@ -22,7 +23,7 @@ class _TextTemplate extends StatelessWidget {
 //@formatter:on
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Text(text,
         textAlign: TextAlign.left,
         style: TextStyle(
@@ -30,61 +31,65 @@ class _TextTemplate extends StatelessWidget {
           fontStyle: FontStyle.normal,
           fontWeight: fontWeight,
           fontSize: fontSize,
-          fontFamily: 'Roboto',
+          fontFamily: appFont,
         ));
   }
 }
 
-class UnterUberschrift extends StatelessWidget {
+class _UnterUberschrift extends StatelessWidget {
   final String text;
 
-  UnterUberschrift({@required this.text});
+  _UnterUberschrift({@required this.text});
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return _TextTemplate(
       text: text,
-      farbe: Farben.grau,
-      fontWeight: FontWeight.bold,
+      farbe: Farben.blaugrau,
+      fontWeight: FontWeight.w400,
     );
   }
 }
 
-class TextfeldText extends StatelessWidget {
+class _TextfeldText extends StatelessWidget {
   final String text;
 
-  TextfeldText({@required this.text});
+  _TextfeldText({@required this.text});
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return _TextTemplate(
       text: text,
-      farbe: Farben.grau,
-      fontWeight: FontWeight.normal,
+      farbe: Farben.blaugrau,
+      fontWeight: FontWeight.w300,
     );
   }
 }
 
-class Uberschrift extends StatelessWidget {
+class _Uberschrift extends StatelessWidget {
   final String text;
 
-  Uberschrift({@required this.text});
+  _Uberschrift({@required this.text});
 
   @override
-  Widget build(BuildContext context){
-    return _TextTemplate(text: text, fontSize: Groesse.gross);
+  Widget build(BuildContext context) {
+    return _TextTemplate(
+      text: text, fontSize: Groesse.gross, farbe: Farben.weiss,);
   }
 }
 
-class WeisseDickeUberschrift extends StatelessWidget {
+class _WeisseUberschrift extends StatelessWidget {
   final String text;
 
-  WeisseDickeUberschrift({@required this.text});
+  _WeisseUberschrift({@required this.text});
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return _TextTemplate(
-      text: text, farbe: Farben.weiss, fontWeight: FontWeight.normal, fontSize: Groesse.normal);
+        text: text,
+        farbe: Farben.weiss,
+        fontWeight: FontWeight.w300,
+        fontSize: Groesse.normal);
   }
 }
 
@@ -95,14 +100,14 @@ class CustomText extends StatelessWidget {
   CustomText(this.text, {@required this.textart});
 
   @override
-  Widget build(BuildContext context){
-    switch(textart){
-      case Textarten.Uberschrift: return Uberschrift(text: text);
-      case Textarten.TextfeldText: return TextfeldText(text: text);
-      case Textarten.UnterUberschrift: return UnterUberschrift(text: text);
-      case Textarten.WeisseDickeUberschrift: return WeisseDickeUberschrift(text: text);
-      default: return TextfeldText(text: text);
-    }
+  Widget build(BuildContext context) {
+    switch(textart){ // @formatter:off
+      case Textarten.Uberschrift:       return _Uberschrift       (text: text);
+      case Textarten.TextfeldText:      return _TextfeldText      (text: text);
+      case Textarten.UnterUberschrift:  return _UnterUberschrift  (text: text);
+      case Textarten.WeisseUberschrift: return _WeisseUberschrift (text: text);
+      default:                          return _TextfeldText      (text: text);
+    } // @formatter:on
   }
 }
 
@@ -110,5 +115,5 @@ enum Textarten {
   Uberschrift,
   TextfeldText,
   UnterUberschrift,
-  WeisseDickeUberschrift,
+  WeisseUberschrift,
 }
