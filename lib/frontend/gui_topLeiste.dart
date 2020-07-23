@@ -106,8 +106,11 @@ class _LeistenTextfieldState extends State<LeistenTextfield> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      style: TextStyle(fontSize: 20),
+      strutStyle: StrutStyle(forceStrutHeight: true, height: 1.6),
       decoration: InputDecoration(
-          hintText: 'Suchen',hintStyle: TextStyle(color: Farben.grau, ),
+          hintText: 'Suchen',
+          hintStyle: TextStyle(color: Farben.grau, fontSize: 20),
           border: OutlineInputBorder(borderSide: BorderSide.none)),
     );
   }
