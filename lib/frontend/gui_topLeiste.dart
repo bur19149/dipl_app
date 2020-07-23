@@ -28,11 +28,23 @@ class _TopleisteState extends State<Topleiste> {
                 Align(
                     alignment: Alignment.centerRight,
                     child: AnimatedContainer(
-                        color: Colors.blue,
+                        decoration: BoxDecoration(color: Farben.weiss,
+                            boxShadow: [
+                              BoxShadow(
+                                  blurRadius: 7,
+                                  spreadRadius: 0.03,
+                                  color: Color.fromRGBO(0, 0, 0, 0.18),
+                                  offset: Offset(3, 3))
+                            ],
+                            border: Border(
+                              top: BorderSide(width: 1),
+                              bottom: BorderSide(width: 1),
+                            )),
                         width: fieldExpanded
-                            ? MediaQuery.of(context).size.width : 0,
-                        duration: Duration(milliseconds: 500),
-                        child: TextField()))
+                            ? MediaQuery.of(context).size.width
+                            : 0,
+                        duration: Duration(milliseconds: 80),
+                        child: LeistenTextfield()))
               ])),
         ),
         LeistenButton(onPressed: _buttonPressed)
@@ -42,10 +54,6 @@ class _TopleisteState extends State<Topleiste> {
 }
 
 class LeistenTextfield extends StatefulWidget {
-  final bool fieldExpanded;
-
-  const LeistenTextfield({this.fieldExpanded = false});
-
   @override
   State<StatefulWidget> createState() => _LeistenTextfieldState();
 }
@@ -53,11 +61,10 @@ class LeistenTextfield extends StatefulWidget {
 class _LeistenTextfieldState extends State<LeistenTextfield> {
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-        color: Colors.blue,
-        width: widget.fieldExpanded ? 200 : 0,
-        duration: Duration(milliseconds: 500),
-        child: TextField());
+    return TextField(
+      decoration: InputDecoration(
+          border: OutlineInputBorder(borderSide: BorderSide.none)),
+    );
   }
 }
 

@@ -48,7 +48,7 @@ class _TesteTopleisteState extends State<TesteTopleiste> {
   Widget build(BuildContext context) {
     return TempSeite(children: [
       Container(
-          decoration: BoxDecoration(border: Border.all(color: Farben.schwarz)),
+          //decoration: BoxDecoration(border: Border.all(color: Farben.schwarz)),
           child: Topleiste())
     ]);
   }
