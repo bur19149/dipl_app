@@ -18,25 +18,26 @@ class _TopleisteState extends State<Topleiste> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        width: double.infinity,
-        height: 50,
-        child: Stack(
-          children: [
-            Align(
-                alignment: Alignment.centerRight,
-                child: AnimatedContainer(
-                    color: Colors.blue,
-                    width: fieldExpanded ? 200 : 0,
-                    duration: Duration(milliseconds: 500),
-                    child: TextField())),
-            Align(
-                alignment: Alignment.centerLeft,
-                child: LeistenButton(
-                  onPressed: _buttonPressed,
-                ))
-          ],
-        ));
+    return Row(
+      children: [
+        LeistenButton(onPressed: _buttonPressed),
+        Expanded(
+          child: SizedBox(
+              height: 50,
+              child: Stack(children: [
+                Align(
+                    alignment: Alignment.centerRight,
+                    child: AnimatedContainer(
+                        color: Colors.blue,
+                        width: fieldExpanded
+                            ? MediaQuery.of(context).size.width : 0,
+                        duration: Duration(milliseconds: 500),
+                        child: TextField()))
+              ])),
+        ),
+        LeistenButton(onPressed: _buttonPressed)
+      ],
+    );
   }
 }
 
