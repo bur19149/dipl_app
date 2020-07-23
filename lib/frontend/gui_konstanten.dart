@@ -89,5 +89,7 @@ enum ButtonFarbe {
 final Map<String, String> svgIcons = {
   'administrator': 'assets/images/svg/administrator.svg',
   'kalender': 'assets/images/svg/kalender.svg',
-  'haus': 'assets/images/svg/haus.svg'
+  'haus': 'assets/images/svg/haus.svg',
+  'einstellungen': 'assets/images/svg/einstellungen.svg',
+  'lupe': 'assets/images/svg/lupe.svg'
 };

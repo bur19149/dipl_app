@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'gui_konstanten.dart';
 
@@ -9,6 +10,7 @@ class Topleiste extends StatefulWidget {
 
 class _TopleisteState extends State<Topleiste> {
   bool fieldExpanded = false;
+  Duration duration;
 
   void _buttonPressed() {
     setState(() {
@@ -18,10 +20,11 @@ class _TopleisteState extends State<Topleiste> {
 
   @override
   Widget build(BuildContext context) {
+    duration = Duration(milliseconds: 80);
     return Stack(children: [
       Row(children: [
         AnimatedContainer(
-            duration: Duration(milliseconds: 80),
+            duration: duration,
             child: Container(
                 height: 50,
                 width: 50,
@@ -39,6 +42,7 @@ class _TopleisteState extends State<Topleiste> {
                   Align(
                       alignment: Alignment.centerRight,
                       child: AnimatedContainer(
+                          curve: Curves.easeInQuart,
                           decoration: BoxDecoration(
                               color: Farben.weiss,
                               boxShadow: [
@@ -55,11 +59,13 @@ class _TopleisteState extends State<Topleiste> {
                           width: fieldExpanded
                               ? MediaQuery.of(context).size.width
                               : 0,
-                          duration: Duration(milliseconds: 80),
+                          duration: !fieldExpanded
+                              ? Duration(milliseconds: 50)
+                              : duration,
                           child: LeistenTextfield()))
                 ]))),
         AnimatedContainer(
-            duration: Duration(milliseconds: 80),
+            duration: duration,
             child: Container(
                 height: 50,
                 width: 50,
@@ -72,9 +78,19 @@ class _TopleisteState extends State<Topleiste> {
                 ])))
       ]),
       Row(children: [
-        LeistenButton(onPressed: _buttonPressed, fieldExpanded: fieldExpanded, left: true),
+        LeistenButton(
+            onPressed: _buttonPressed,
+            fieldExpanded: fieldExpanded,
+            left: true,
+            duration: duration,
+            svg: svgIcons['einstellungen']),
         Expanded(child: Container()),
-        LeistenButton(onPressed: _buttonPressed, fieldExpanded: fieldExpanded, left: false)
+        LeistenButton(
+            onPressed: _buttonPressed,
+            fieldExpanded: fieldExpanded,
+            left: false,
+            duration: duration,
+            svg: svgIcons['lupe'])
       ])
     ]);
   }
@@ -99,37 +115,64 @@ class LeistenButton extends StatefulWidget {
   final GestureTapCallback onPressed;
   final bool fieldExpanded;
   final bool left;
+  final Duration duration;
+  final String svg;
 
-  LeistenButton({this.onPressed, this.fieldExpanded = false, this.left = true});
+  LeistenButton(
+      {this.onPressed,
+      this.fieldExpanded = false,
+      this.left = true,
+      this.duration,
+      @required this.svg});
 
   @override
   State<StatefulWidget> createState() => _LeistenButtonState();
 }
 
 class _LeistenButtonState extends State<LeistenButton> {
+  BorderRadius borderRadius;
+
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-        onTap: widget.onPressed,
-        child: AnimatedContainer(duration: Duration(milliseconds: 80),
-          height: 50,
-          width: 50,
-          decoration: BoxDecoration(
-            color: Farben.weiss,
-            border: Border.all(width: 1),
-            borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(!widget.left && widget.fieldExpanded ? 0 : 10),
-                topLeft: Radius.circular(!widget.left && widget.fieldExpanded ? 0 : 10),
-                bottomRight: Radius.circular(widget.left && widget.fieldExpanded ? 0 : 10),
-                topRight: Radius.circular(widget.left && widget.fieldExpanded ? 0 : 10)),
-            boxShadow: [
-              BoxShadow(
-                  blurRadius: 7,
-                  spreadRadius: 0.03,
-                  color: Color.fromRGBO(0, 0, 0, 0.18),
-                  offset: Offset(3, 3))
-            ],
-          ),
-        ));
+    borderRadius = BorderRadius.only(
+        bottomLeft:
+            Radius.circular(!widget.left && widget.fieldExpanded ? 0 : 10),
+        topLeft: Radius.circular(!widget.left && widget.fieldExpanded ? 0 : 10),
+        bottomRight:
+            Radius.circular(widget.left && widget.fieldExpanded ? 0 : 10),
+        topRight:
+            Radius.circular(widget.left && widget.fieldExpanded ? 0 : 10));
+
+    return AnimatedContainer(
+      child: Stack(children: [
+        Align(
+            alignment: Alignment.center,
+            child: SvgPicture.asset(widget.svg,
+                color: Farben.blaugrau, height: 23)),
+        Material(
+            color: Colors.transparent,
+            borderRadius: borderRadius,
+            child: InkWell(
+              borderRadius: borderRadius,
+              onTap: widget.onPressed,
+            ))
+      ]),
+      duration: widget.duration,
+      curve: Curves.easeOutExpo,
+      height: 50,
+      width: 50,
+      decoration: BoxDecoration(
+        color: Farben.weiss,
+        border: Border.all(width: 1),
+        borderRadius: borderRadius,
+        boxShadow: [
+          BoxShadow(
+              blurRadius: 7,
+              spreadRadius: 0.03,
+              color: Color.fromRGBO(0, 0, 0, 0.18),
+              offset: Offset(3, 3))
+        ],
+      ),
+    );
   }
 }

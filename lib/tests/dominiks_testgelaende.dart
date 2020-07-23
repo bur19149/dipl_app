@@ -71,7 +71,7 @@ class _TesteWidgetsState extends State<TesteWidgets> {
         });
       }),
       SizedBox(height: 50),
-      SvgPicture.asset(svgIcons['haus'], color: Farben.gruen, height: 50),
+      SvgPicture.asset(svgIcons['einstellungen'], color: Farben.blaugrau, height: 50),
       SizedBox(height: 50),
       TerminRahmen(
         children: [
