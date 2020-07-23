@@ -1,12 +1,13 @@
 import 'package:dipl_app/frontend/gui_konstanten.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Leiste extends StatefulWidget {
-
   final VoidCallback home, meineTermine, adminBereich;
+  final bool admin;
 
-  Leiste({this.home, this.meineTermine, this.adminBereich});
+  Leiste({this.home, this.meineTermine, this.adminBereich, this.admin = false});
 
   @override
   State<StatefulWidget> createState() => _LeisteState();
@@ -23,40 +24,111 @@ class _LeisteState extends State<Leiste> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(child: LeistenButton(text: 'Test1', onPressed: widget.home,)),
-                //Container(height: 50, color: Farben.rot)),
+                Expanded(
+                    child: LeistenButton(
+                  text: 'Home',
+                  onPressed: widget.home,
+                  svg: svgIcons['haus'],
+                  admin: widget.admin,
+                )),
                 SizedBox(width: 10),
-                Expanded(child: LeistenButton(text: 'Test2', onPressed: widget.meineTermine,)),
-                //Container(height: 50, color: Farben.rot)),
+                Expanded(
+                    child: LeistenButton(
+                  text: 'Meine Termine',
+                  onPressed: widget.meineTermine,
+                  svg: svgIcons['kalender'],
+                  admin: widget.admin,
+                )),
                 SizedBox(width: 10),
-                Expanded(child: LeistenButton(text: 'Test3', onPressed: widget.adminBereich,)),
-                //Container(height: 50, color: Farben.rot)),
+                widget.admin ?
+                Expanded(
+                    child: LeistenButton(
+                  text: 'Admin Bereich',
+                  onPressed: widget.adminBereich,
+                  svg: svgIcons['administrator'],
+                  admin: widget.admin,
+                )) : Container(),
               ],
             )));
   }
 }
 
 class LeistenButton extends StatefulWidget {
-  final String text;
+  final String text, svg;
   final VoidCallback onPressed;
+  final bool active, admin;
 
-  LeistenButton({@required this.text, this.onPressed});
+  LeistenButton(
+      {@required this.text,
+      this.onPressed,
+      this.active,
+      @required this.svg,
+      this.admin = false});
 
   @override
   State<StatefulWidget> createState() => _LeistenButtonState();
 }
 
 class _LeistenButtonState extends State<LeistenButton> {
+  bool _active;
+
+  @override
+  void initState() {
+    _active = widget.active;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 60,
-        child: RaisedButton(onPressed: widget.onPressed, child: Text(widget.text),shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(10),
-    /*side: BorderSide(color: Colors.red)*/)));
+        height: 55,
+        child: RaisedButton(
+            onPressed: widget.onPressed,
+            child: LeistenButtonChild(
+              text: widget.text,
+              admin: widget.admin,
+              svg: widget.svg,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+              /*side: BorderSide(color: Colors.red)*/
+            )));
   }
 }
 
+class LeistenButtonChild extends StatefulWidget {
+  final bool admin;
+  final String text, svg;
+
+  LeistenButtonChild(
+      {this.admin = false, @required this.text, @required this.svg});
+
+  @override
+  State<StatefulWidget> createState() => _LeistenButtonChildState();
+}
+
+class _LeistenButtonChildState extends State<LeistenButtonChild> {
+  @override
+  Widget build(BuildContext context) {
+    return widget.admin
+        ? Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            SvgPicture.asset(widget.svg, height: 17, color: Farben.schwarz),
+            SizedBox(height: 5),
+            Text(
+              widget.text,
+              style: TextStyle(fontSize: 9),
+            )
+          ])
+        : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            SvgPicture.asset(widget.svg, height: 17, color: Farben.schwarz),
+            SizedBox(width: 5),
+            Text(
+              widget.text,
+              style: TextStyle(fontSize: 9),
+            )
+          ]);
+  }
+}
 
 class AdminMenu extends StatefulWidget {
   @override
@@ -66,9 +138,14 @@ class AdminMenu extends StatefulWidget {
 class _AdminMenuState extends State<AdminMenu> {
   @override
   Widget build(BuildContext context) {
-    return Column(children: [MenuBox(), SizedBox(height: 10,), MenuBox()]);
+    return Column(children: [
+      MenuBox(),
+      SizedBox(
+        height: 10,
+      ),
+      MenuBox()
+    ]);
   }
-
 }
 
 class MenuBox extends StatefulWidget {

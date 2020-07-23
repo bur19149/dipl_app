@@ -85,3 +85,9 @@ enum ButtonFarbe {
 	blaugrau,	// #6C757D
 	blau			// #17A2B8
 } // @formatter:on
+
+final Map<String, String> svgIcons = {
+  'administrator': 'assets/images/svg/administrator.svg',
+  'kalender': 'assets/images/svg/kalender.svg',
+  'haus': 'assets/images/svg/haus.svg'
+};

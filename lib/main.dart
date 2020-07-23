@@ -11,7 +11,8 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]); // sperrt Bildschirmrotation
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp]); // sperrt Bildschirmrotation
     return MaterialApp(
       title: 'orgApp',
       theme: ThemeData(
@@ -36,58 +37,55 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
         body: SafeArea(
             child: Center(
-      child: Padding(
-          padding: EdgeInsets.all(20),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                TempButton(
-                    text: 'App-Baustelle',
-                    onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => TempSeite(
-                                  children: [
-                                    Text('Wird noch ausgelagert'),
-                                    Text(
-                                        'Hier kommt später dann die fertige GUI hin')
-                                  ],
-                                )))),
-                TempButton(
-                    text: 'Testgelände',
-                    onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => TempSeite(
-                                  children: [
-                                    TempButton(
-                                      text: 'Saschas Labor',
-                                      onPressed: () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  SaschasLabor())),
-                                    ),
-                                    TempButton(
-                                      text: 'Dominiks Testgelände',
-                                      onPressed: () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DominiksTestgelaende())),
-                                    ),
-                                    TempButton(
-                                      text: 'Christians Spielwiese',
-                                      onPressed: () => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ChristiansSpielwiese())),
-                                    )
-                                  ],
-                                ))))
-              ])),
-    )));
+                child: Padding(
+                    padding: EdgeInsets.all(15),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          TempButton(
+                              text: 'App-Baustelle',
+                              onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          TempSeite(children: [
+                                            Text('Wird noch ausgelagert'),
+                                            Text(
+                                                'Hier kommt später dann die fertige GUI hin')
+                                          ])))),
+                          TempButton(
+                              text: 'Testgelände',
+                              onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          TempSeite(children: [
+                                            TempButton(
+                                              text: 'Saschas Labor',
+                                              onPressed: () => Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          SaschasLabor())),
+                                            ),
+                                            TempButton(
+                                              text: 'Dominiks Testgelände',
+                                              onPressed: () => Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          DominiksTestgelaende())),
+                                            ),
+                                            TempButton(
+                                              text: 'Christians Spielwiese',
+                                              onPressed: () => Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ChristiansSpielwiese())),
+                                            )
+                                          ]))))
+                        ])))));
   }
 }
 
