@@ -132,8 +132,9 @@ class _TesteSchriftartenState extends State<TesteSchriftarten> {
             CustomText('TextfeldText', textart: Textarten.TextfeldText),
             CustomText('Uberschrift', textart: Textarten.Uberschrift),
             CustomText('UnterUberschrift', textart: Textarten.UnterUberschrift),
-            CustomText('WeisseDickeUberschrift',
-                textart: Textarten.WeisseDickeUberschrift),
+            Container(color: Farben.blau,
+                child: CustomText('WeisseDickeUberschrift',
+                    textart: Textarten.WeisseDickeUberschrift))
           ])),
     ));
   }
