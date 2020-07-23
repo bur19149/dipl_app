@@ -67,11 +67,7 @@ class _TesteWidgetsState extends State<TesteWidgets> {
       SizedBox(height: 50),
       LoginRahmen(
         children: [
-          Container(
-            height: 100,
-            width: double.infinity,
-            color: Farben.blau,
-          ),
+          Placeholder(fallbackHeight: 100),
           Button(
             text: 'Anmelden',
             onPressed: () {},
