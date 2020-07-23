@@ -26,9 +26,10 @@ class _TextTemplate extends StatelessWidget {
     return Text(text,
         textAlign: TextAlign.left,
         style: TextStyle(
+          color: farbe,
           fontStyle: FontStyle.normal,
-          fontWeight: FontWeight.normal,
-          fontSize: Groesse.normal,
+          fontWeight: fontWeight,
+          fontSize: fontSize,
           fontFamily: 'Roboto',
         ));
   }

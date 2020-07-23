@@ -75,7 +75,8 @@ class _TesteMenuState extends State<TesteMenu> {
 
   @override
   Widget build(BuildContext context) {
-    return Menuleiste(admin: admin,
+    return Menuleiste(
+        admin: admin,
         scaffold: Scaffold(
             body: Center(
                 child: RaisedButton(

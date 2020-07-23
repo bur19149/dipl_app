@@ -77,11 +77,11 @@ class _MenuleisteState extends State<Menuleiste> {
 
   void swipeHandler(int page) {
     setState(() {
-      if(page == 0) {
+      if (page == 0) {
         home = true;
         meineTermine = false;
         adminMenu = false;
-      } else if(page == 1) {
+      } else if (page == 1) {
         home = false;
         meineTermine = true;
         adminMenu = false;
@@ -110,7 +110,14 @@ class _MenuleisteState extends State<Menuleiste> {
       ),
       Align(
           alignment: Alignment.bottomCenter,
-          child: Container(height: 90, color: Farben.blau)),
+          child: Container(
+            height: 90,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(colors: [
+              Color.fromRGBO(255, 255, 255, 100),
+              Color.fromRGBO(255, 255, 255, 0)
+            ], begin: Alignment.bottomCenter, end: Alignment.topCenter)),
+          )),
       // TODO Farbe ändern
       widget.admin
           ? AnimatedPositioned(
