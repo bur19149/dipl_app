@@ -53,8 +53,8 @@ class _TopleisteState extends State<Topleiste> {
                                     offset: Offset(3, 3))
                               ],
                               border: Border(
-                                top: BorderSide(width: 1),
-                                bottom: BorderSide(width: 1),
+                                top: BorderSide(width: 1, color: Farben.grau),
+                                bottom: BorderSide(width: 1, color: Farben.grau),
                               )),
                           width: fieldExpanded
                               ? MediaQuery.of(context).size.width
@@ -162,7 +162,7 @@ class _LeistenButtonState extends State<LeistenButton> {
       width: 50,
       decoration: BoxDecoration(
         color: Farben.weiss,
-        border: Border.all(width: 1),
+        border: Border.all(width: 1, color: Farben.blaugrau),
         borderRadius: borderRadius,
         boxShadow: [
           BoxShadow(
