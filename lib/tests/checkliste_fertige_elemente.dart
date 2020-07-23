@@ -14,13 +14,12 @@ class Checkliste extends StatefulWidget {
 
   final List<Widget> unfertig = [
     // @formatter:off
-    ListenText('Topleiste', anmerkung: 'fast fertig'),
+    ListenText('Topleiste',         anmerkung: 'fast fertig'),
     ListenText('Navigationsleiste', anmerkung: 'fast fertig'),
-    ListenText('SVG-Icons', anmerkung: 'teilweise importiert'),
-    ListenText('Rahmen', anmerkung: 'fast fertig'),
-    ListenText('Texte', anmerkung: 'Überarbeitung nötig'),
-    ListenText('Standard-Button', anmerkung: 'angefangen')
-
+    ListenText('SVG-Icons',         anmerkung: 'teilweise importiert'),
+    ListenText('Rahmen',            anmerkung: 'fast fertig'),
+    ListenText('Texte',             anmerkung: 'Überarbeitung nötig'),
+    ListenText('Standard-Button',   anmerkung: 'angefangen')
     // @formatter:on
   ];
 
