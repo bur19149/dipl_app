@@ -32,15 +32,26 @@ class _MenuleisteState extends State<Menuleiste> {
   bool home         = true;  // Wird das Home-Menü gerade angezeigt?
   bool meineTermine = false; // Wird das Meine-Termine-Menü gerade angezeigt?
   bool adminMenu    = false; // Wird das Admin-Menü gerade angezeigt?
+  PageController pageController;
   // @formatter:on
+
+  // -------------------------------- initState -------------------------------
+
+  @override
+  void initState() {
+    pageController = PageController();
+    super.initState();
+  }
 
   // ------------------------------ Eventhandler ------------------------------
 
   void handleHome() {
     setState(() {
-      if(!home) {
+      if (!home) {
         home = true;
         meineTermine = false;
+        pageController.animateToPage(0,
+            duration: Duration(milliseconds: 200), curve: Curves.linear);
       }
       adminMenu = false;
     });
@@ -48,9 +59,11 @@ class _MenuleisteState extends State<Menuleiste> {
 
   void handleMeineTermine() {
     setState(() {
-      if(!meineTermine) {
+      if (!meineTermine) {
         home = false;
         meineTermine = true;
+        pageController.animateToPage(1,
+            duration: Duration(milliseconds: 200), curve: Curves.linear);
       }
       adminMenu = false;
     });
@@ -62,16 +75,43 @@ class _MenuleisteState extends State<Menuleiste> {
     });
   }
 
+  void swipeHandler(int page) {
+    setState(() {
+      if(page == 0) {
+        home = true;
+        meineTermine = false;
+        adminMenu = false;
+      } else if(page == 1) {
+        home = false;
+        meineTermine = true;
+        adminMenu = false;
+      }
+    });
+  }
+
   // --------------------------------- Build ----------------------------------
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Stack(children: [
-      widget.scaffold,
+      PageView(
+        controller: pageController,
+        onPageChanged: (page) => swipeHandler(page),
+        children: [
+          widget.scaffold,
+          Scaffold(
+            body: Center(child: Text('Seite 2')),
+          ),
+          /*Scaffold(
+            body: Center(child: Text('Seite 3')),
+          )*/ //TODO
+        ],
+      ),
       Align(
           alignment: Alignment.bottomCenter,
           child: Container(height: 90, color: Farben.blau)),
+      // TODO Farbe ändern
       widget.admin
           ? AnimatedPositioned(
               right: adminMenu ? 11 : -220,
@@ -153,19 +193,6 @@ class _LeistenButton extends StatefulWidget {
 }
 
 class _LeistenButtonState extends State<_LeistenButton> {
-  // TODO auskommentierten Code entweder entfernen oder verwenden
-  // ------------------------------- Variablen --------------------------------
-
-  //bool _active; // Befindet sich der Nutzer aktuell in dem Menütab des Buttons?
-
-  // -------------------------------- initState -------------------------------
-
-  //@override
-  //void initState() {
-  //  _active = widget.active;
-  //  super.initState();
-  //}
-
   // --------------------------------- Build ----------------------------------
 
   @override
