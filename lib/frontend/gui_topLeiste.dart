@@ -1,16 +1,27 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+// -------------------------------- Imports ---------------------------------
 
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter/material.dart';
 import 'gui_konstanten.dart';
 
+/// Topleiste
+/// Enthält Suchfunktion und Einstellungen
 class Topleiste extends StatefulWidget {
+  // ------------------------------- createState ------------------------------
+
   @override
   State<StatefulWidget> createState() => _TopleisteState();
 }
 
 class _TopleisteState extends State<Topleiste> {
-  bool fieldExpanded = false;
-  Duration duration;
+  // ------------------------------- Variablen --------------------------------
+
+  // @formatter:off
+  bool     fieldExpanded = false; // Ist die Suchleiste sichtbar?
+  Duration duration;              // Animationsdauer
+  // @formatter:on
+
+  // ------------------------------ Eventhandler ------------------------------
 
   void _buttonPressed() {
     setState(() {
@@ -18,23 +29,26 @@ class _TopleisteState extends State<Topleiste> {
     });
   }
 
+  // --------------------------------- Build ----------------------------------
+
   @override
   Widget build(BuildContext context) {
-    duration = Duration(milliseconds: 80);
+    duration = Duration(milliseconds: 80); // Animationsdauer
+    AnimatedContainer schatten = AnimatedContainer(
+        duration: duration,
+        child: Container(
+            height: 50,
+            width: 50,
+            decoration: BoxDecoration(boxShadow: [
+              BoxShadow(
+                  blurRadius: 7,
+                  spreadRadius: 0.03,
+                  color: Color.fromRGBO(0, 0, 0, fieldExpanded ? 0.18 : 0),
+                  offset: Offset(3, 3))
+            ])));
     return Stack(children: [
       Row(children: [
-        AnimatedContainer(
-            duration: duration,
-            child: Container(
-                height: 50,
-                width: 50,
-                decoration: BoxDecoration(boxShadow: [
-                  BoxShadow(
-                      blurRadius: 7,
-                      spreadRadius: 0.03,
-                      color: Color.fromRGBO(0, 0, 0, fieldExpanded ? 0.18 : 0),
-                      offset: Offset(3, 3))
-                ]))),
+        schatten,
         Expanded(
             child: SizedBox(
                 height: 50,
@@ -61,32 +75,21 @@ class _TopleisteState extends State<Topleiste> {
                               ? MediaQuery.of(context).size.width
                               : 0,
                           duration: !fieldExpanded
-                              ? Duration(milliseconds: 50)
+                              ? Duration(milliseconds: 50) // Animationsdauer
                               : duration,
-                          child: LeistenTextfield()))
+                          child: _LeistenTextfield()))
                 ]))),
-        AnimatedContainer(
-            duration: duration,
-            child: Container(
-                height: 50,
-                width: 50,
-                decoration: BoxDecoration(boxShadow: [
-                  BoxShadow(
-                      blurRadius: 7,
-                      spreadRadius: 0.03,
-                      color: Color.fromRGBO(0, 0, 0, fieldExpanded ? 0.18 : 0),
-                      offset: Offset(3, 3))
-                ])))
+        schatten
       ]),
       Row(children: [
-        LeistenButton(
+        _LeistenButton(
             onPressed: _buttonPressed,
             fieldExpanded: fieldExpanded,
             left: true,
             duration: duration,
             svg: svgIcons['einstellungen']),
         Expanded(child: Container()),
-        LeistenButton(
+        _LeistenButton(
             onPressed: _buttonPressed,
             fieldExpanded: fieldExpanded,
             left: false,
@@ -97,12 +100,17 @@ class _TopleisteState extends State<Topleiste> {
   }
 }
 
-class LeistenTextfield extends StatefulWidget {
+/// Textfeld der Suchleiste
+class _LeistenTextfield extends StatefulWidget {
+  // ------------------------------- createState ------------------------------
+
   @override
   State<StatefulWidget> createState() => _LeistenTextfieldState();
 }
 
-class _LeistenTextfieldState extends State<LeistenTextfield> {
+class _LeistenTextfieldState extends State<_LeistenTextfield> {
+  // --------------------------------- Build ----------------------------------
+
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -117,67 +125,78 @@ class _LeistenTextfieldState extends State<LeistenTextfield> {
   }
 }
 
-class LeistenButton extends StatefulWidget {
-  final GestureTapCallback onPressed;
-  final bool fieldExpanded;
-  final bool left;
-  final Duration duration;
-  final String svg;
+/// Buttons der Topleiste (Einstellungen und Suchfunktion)
+class _LeistenButton extends StatefulWidget {
+  // ------------------------------- Variablen --------------------------------
 
-  LeistenButton(
-      {this.onPressed,
-      this.fieldExpanded = false,
-      this.left = true,
-      this.duration,
-      @required this.svg});
+  // @formatter:off
+  final GestureTapCallback onPressed;     // Eventhandler
+  final bool               fieldExpanded; // Ist das Suchfeld sichtbar?
+  final bool               left;          // Ist der Button links oder rechts auf der Leiste?
+  final Duration           duration;      // Animationsdauer
+  final String             svg;           // Dateipfad des SVG-Icons
+  // @formatter:on
+
+  // ------------------------------ Konstruktor -------------------------------
+
+  _LeistenButton({this.onPressed,
+    this.fieldExpanded = false,
+    this.left = true,
+    this.duration,
+    @required this.svg});
+
+  // ------------------------------- createState ------------------------------
 
   @override
   State<StatefulWidget> createState() => _LeistenButtonState();
 }
 
-class _LeistenButtonState extends State<LeistenButton> {
-  BorderRadius borderRadius;
+class _LeistenButtonState extends State<_LeistenButton> {
+  // ------------------------------- Variablen --------------------------------
+
+  BorderRadius borderRadius; // abgerundete Kanten
+
+  // --------------------------------- Build ----------------------------------
 
   @override
   Widget build(BuildContext context) {
+    // @formatter:off
     borderRadius = BorderRadius.only(
-        bottomLeft:
-            Radius.circular(!widget.left && widget.fieldExpanded ? 0 : 10),
-        topLeft: Radius.circular(!widget.left && widget.fieldExpanded ? 0 : 10),
-        bottomRight:
-            Radius.circular(widget.left && widget.fieldExpanded ? 0 : 10),
-        topRight:
-            Radius.circular(widget.left && widget.fieldExpanded ? 0 : 10));
+        bottomLeft:  Radius.circular(!widget.left && widget.fieldExpanded ? 0 : 10),
+        topLeft:     Radius.circular(!widget.left && widget.fieldExpanded ? 0 : 10),
+        bottomRight: Radius.circular( widget.left && widget.fieldExpanded ? 0 : 10),
+        topRight:    Radius.circular( widget.left && widget.fieldExpanded ? 0 : 10));
+    // @formatter:on
 
     return AnimatedContainer(
-      child: Material(
-          color: Colors.transparent,
-          borderRadius: borderRadius,
-          child: InkWell(
-              borderRadius: borderRadius,
-              onTap: widget.onPressed,
-              child: Stack(children: [
-                Align(
-                    alignment: Alignment.center,
-                    child: SvgPicture.asset(widget.svg,
-                        color: Farben.blaugrau, height: 23))
-              ]))),
-      duration: widget.duration,
-      curve: Curves.easeOutExpo,
-      height: 50,
-      width: 50,
-      decoration: BoxDecoration(
-        color: Farben.weiss,
-        border: Border.all(width: 1, color: Farben.blaugrau),
-        borderRadius: borderRadius,
-        boxShadow: [
-          BoxShadow(
-              blurRadius: 7,
-              spreadRadius: 0.03,
-              color: Color.fromRGBO(0, 0, 0, 0.18),
-              offset: Offset(3, 3))
-        ],
-      ),
+        child: Material(
+            color: Colors.transparent,
+            borderRadius: borderRadius,
+            child: InkWell(
+                borderRadius: borderRadius,
+                onTap: widget.onPressed,
+                child: Stack(children: [
+                  Align(
+                      alignment: Alignment.center,
+                      child: SvgPicture.asset(widget.svg,
+                          color: Farben.blaugrau, height: 23))
+                ]))),
+        duration: widget.duration,
+        curve: Curves.easeOutExpo,
+        height: 50,
+        width: 50,
+        decoration: BoxDecoration(
+            color: Farben.weiss,
+            border: Border.all(width: 1, color: Farben.blaugrau),
+            borderRadius: borderRadius,
+            boxShadow: [
+              BoxShadow(
+                  blurRadius: 7,
+                  spreadRadius: 0.03,
+                  color: Color.fromRGBO(0, 0, 0, 0.18),
+                  offset: Offset(3, 3))
+            ]
+        )
     );
   }
 }
