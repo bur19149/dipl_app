@@ -144,19 +144,18 @@ class _LeistenButtonState extends State<LeistenButton> {
             Radius.circular(widget.left && widget.fieldExpanded ? 0 : 10));
 
     return AnimatedContainer(
-      child: Stack(children: [
-        Align(
-            alignment: Alignment.center,
-            child: SvgPicture.asset(widget.svg,
-                color: Farben.blaugrau, height: 23)),
-        Material(
-            color: Colors.transparent,
-            borderRadius: borderRadius,
-            child: InkWell(
+      child: Material(
+          color: Colors.transparent,
+          borderRadius: borderRadius,
+          child: InkWell(
               borderRadius: borderRadius,
               onTap: widget.onPressed,
-            ))
-      ]),
+              child: Stack(children: [
+                Align(
+                    alignment: Alignment.center,
+                    child: SvgPicture.asset(widget.svg,
+                        color: Farben.blaugrau, height: 23))
+              ]))),
       duration: widget.duration,
       curve: Curves.easeOutExpo,
       height: 50,
