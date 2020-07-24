@@ -1,3 +1,4 @@
+import 'package:dipl_app/frontend/gui_eingabefelder.dart';
 import 'package:dipl_app/frontend/gui_konstanten.dart';
 import 'package:dipl_app/frontend/gui_menuleiste.dart';
 import 'package:dipl_app/frontend/gui_topLeiste.dart';
@@ -54,28 +55,38 @@ class _TesteWidgetsState extends State<TesteWidgets> {
 
   @override
   Widget build(BuildContext context) {
-    return TempSeite(children: [
-      CustomToggleButton(onTap: () {
-        setState(() {
-          offen = !offen;
-        });
-      }),
-      SizedBox(height: 50),
-      SvgPicture.asset(svgIcons['einstellungen'],
-          color: Farben.blaugrau, height: 50),
-      SizedBox(height: 50),
-      SizedBox(height: 50),
-      LoginRahmen(
-        children: [
-          Placeholder(fallbackHeight: 100),
-          Button(
-            text: 'Anmelden',
-            onPressed: () {},
-            farbe: Buttonfarbe.rot,
-          )
-        ],
-      )
-    ]);
+    return SafeArea(
+        child: Scaffold(
+            body: ListView(
+                padding:
+                    EdgeInsets.only(left: 15, right: 15, top: 50, bottom: 50),
+                children: [
+          CustomToggleButton(onTap: () {
+            setState(() {
+              offen = !offen;
+            });
+          }),
+          SizedBox(height: 50),
+          SvgPicture.asset(svgIcons['einstellungen'],
+              color: Farben.blaugrau, height: 50),
+          SizedBox(height: 50),
+          SizedBox(height: 50),
+          LoginRahmen(children: [
+            Textfeld(
+              text: 'E-Mail Adresse', hintText: 'E-Mail eingeben',
+            ),
+            SizedBox(height: 20),
+            Textfeld(
+              text: 'Token', hintText: 'Token eingeben',
+            ),
+            SizedBox(height: 20),
+            Button(
+              text: 'Anmelden',
+              onPressed: () {},
+              farbe: Buttonfarbe.rot,
+            )
+          ])
+        ])));
   }
 }
 
