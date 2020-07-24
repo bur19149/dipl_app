@@ -56,12 +56,18 @@ class _FeldState extends State<_Feld> {
     return Theme(
         data: ThemeData(primaryColor: Farben.blaugrau),
         child: TextFormField(
-            style: TextStyle(fontFamily: appFont, color: Farben.dunkelgrau, fontSize: Groesse.normal),
+            style: TextStyle(
+                fontFamily: appFont,
+                color: Farben.dunkelgrau,
+                fontSize: Groesse.normal),
             strutStyle: StrutStyle(height: 1.3),
             decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 5, right: 5),
+                contentPadding: EdgeInsets.only(left: 10, right: 10),
                 hintText: widget.hintText,
-                hintStyle: TextStyle(fontFamily: appFont, color: Farben.grau, fontSize: Groesse.normal),
+                hintStyle: TextStyle(
+                    fontFamily: appFont,
+                    color: Farben.grau,
+                    fontSize: Groesse.normal),
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                     borderSide: BorderSide(width: 1, color: Farben.grau)))));

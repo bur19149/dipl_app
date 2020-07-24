@@ -72,10 +72,10 @@ class _TesteWidgetsState extends State<TesteWidgets> {
           SizedBox(height: 50),
           SizedBox(height: 50),
           LoginRahmen(children: [
-            Textfeld(
-              text: 'E-Mail Adresse', hintText: 'E-Mail eingeben',
-            ),
-            SizedBox(height: 20),
+//            Textfeld(
+//              text: 'E-Mail Adresse', hintText: 'E-Mail eingeben',
+//            ),
+//            SizedBox(height: 20),
             Textfeld(
               text: 'Token', hintText: 'Token eingeben',
             ),
