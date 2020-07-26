@@ -19,7 +19,7 @@ class Checkliste extends StatefulWidget {
     ListenText('Navigationsleiste', anmerkung: 'fast fertig'),
     ListenText('SVG-Icons',         anmerkung: 'teilweise importiert'),
     ListenText('Rahmen',            anmerkung: 'fast fertig'),
-    ListenText('Texte',             anmerkung: 'Überarbeitung nötig')
+    ListenText('Texte',             anmerkung: 'fast fertig')
     // @formatter:on
   ];
 
