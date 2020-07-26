@@ -43,8 +43,9 @@ border: OutlineInputBorder(borderSide: BorderSide.none)),
 
 class _Feld extends StatefulWidget {
   final String hintText;
+  final int maxLength;
 
-  const _Feld({this.hintText});
+  const _Feld({this.hintText, this.maxLength = 8});
 
   @override
   State<StatefulWidget> createState() => _FeldState();
@@ -60,6 +61,7 @@ class _FeldState extends State<_Feld> {
                 fontFamily: appFont,
                 color: Farben.dunkelgrau,
                 fontSize: Groesse.normal),
+            maxLength: widget.maxLength,
             strutStyle: StrutStyle(height: 1.3),
             decoration: InputDecoration(
                 contentPadding: EdgeInsets.only(left: 10, right: 10),

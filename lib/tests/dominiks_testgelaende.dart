@@ -77,14 +77,11 @@ class _TesteWidgetsState extends State<TesteWidgets> {
 //            ),
 //            SizedBox(height: 20),
             Textfeld(
-              text: 'Token', hintText: 'Token eingeben',
+              text: 'Token',
+              hintText: 'Token eingeben',
             ),
             SizedBox(height: 20),
-            Button(
-              text: 'Anmelden',
-              onPressed: () {},
-              farbe: Buttonfarbe.rot,
-            )
+            Button(text: 'Anmelden', onPressed: () {}, farbe: Buttonfarbe.rot)
           ])
         ])));
   }

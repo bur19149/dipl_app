@@ -72,7 +72,8 @@ class _ButtonState extends State<Button> {
               .weissHighlight,
           shape:
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0),
-              side: BorderSide(color: buttonFarbe, width: 1.6)),
+              side: widget.gefuellt ? BorderSide.none : BorderSide(
+                  color: buttonFarbe, width: 1.6)),
           onPressed: widget.onPressed,
           child: child,
         )
