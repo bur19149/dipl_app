@@ -26,7 +26,9 @@ class _CustomScaffoldState extends State<ColumnScaffold> {
 
 class ListViewScaffold extends StatefulWidget {
   final List<Widget> children;
+
   ListViewScaffold({this.children = const <Widget>[]});
+
   @override
   State<StatefulWidget> createState() => _ListViewScaffoldState();
 }
@@ -34,13 +36,24 @@ class ListViewScaffold extends StatefulWidget {
 class _ListViewScaffoldState extends State<ListViewScaffold> {
   @override
   Widget build(BuildContext context) {
-    return null;
+    return Scaffold(
+        body: SafeArea(
+            child: ListView(
+      children: widget.children,
+      padding: EdgeInsets.only(
+          left: 15,
+          right: 15,
+          top: MediaQuery.of(context).size.height / 4.5,
+          bottom: MediaQuery.of(context).size.height / 4.5),
+    )));
   }
 }
 
 class CustomPageView extends StatefulWidget {
   final List<Widget> children;
+
   CustomPageView({this.children = const <Widget>[]});
+
   @override
   State<StatefulWidget> createState() => _CustomPageViewState();
 }

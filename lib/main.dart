@@ -1,3 +1,5 @@
+import 'package:dipl_app/frontend/gui_pages.dart';
+import 'package:dipl_app/frontend/pages/gui_login.dart';
 import 'package:dipl_app/tests/checkliste_fertige_elemente.dart';
 import 'package:dipl_app/tests/christians_spielwiese.dart';
 import 'package:dipl_app/tests/dominiks_testgelaende.dart';
@@ -49,11 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          TempSeite(children: [
-                                            Text('Wird noch ausgelagert'),
-                                            Text(
-                                                'Hier kommt später dann die fertige GUI hin')
-                                          ])))),
+                                          LoginPage()))),
                           TempButton(
                               text: 'Testgelände',
                               onPressed: () => Navigator.push(

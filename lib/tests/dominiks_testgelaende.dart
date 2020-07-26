@@ -70,7 +70,6 @@ class _TesteWidgetsState extends State<TesteWidgets> {
           SvgPicture.asset(svgIcons['einstellungen'],
               color: Farben.blaugrau, height: 50),
           SizedBox(height: 50),
-          SizedBox(height: 50),
           LoginRahmen(children: [
 //            Textfeld(
 //              text: 'E-Mail Adresse', hintText: 'E-Mail eingeben',
@@ -79,6 +78,7 @@ class _TesteWidgetsState extends State<TesteWidgets> {
             Textfeld(
               text: 'Token',
               hintText: 'Token eingeben',
+//              maxLength: 8,
             ),
             SizedBox(height: 20),
             Button(text: 'Anmelden', onPressed: () {}, farbe: Buttonfarbe.rot)

@@ -26,6 +26,7 @@ dependencies:
   intl: ^0.16.1
   http: ^0.12.1
   flutter_svg: ^0.17.4
+  mask_text_input_formatter: ^1.0.7
   flutter:
     sdk: flutter
 

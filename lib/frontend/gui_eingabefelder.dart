@@ -6,8 +6,10 @@ import 'gui_konstanten.dart';
 
 class Textfeld extends StatefulWidget {
   final String text, hintText;
+  final int maxLength;
 
-  const Textfeld({this.text = 'Header', this.hintText = 'Header'});
+  const Textfeld(
+      {this.text = 'Header', this.hintText = 'Header', this.maxLength = 64});
 
   @override
   State<StatefulWidget> createState() => _TextfeldState();
@@ -25,6 +27,7 @@ class _TextfeldState extends State<Textfeld> {
       SizedBox(height: 7),
       _Feld(
         hintText: widget.hintText,
+        maxLength: widget.maxLength,
       )
     ]);
   }
@@ -45,7 +48,7 @@ class _Feld extends StatefulWidget {
   final String hintText;
   final int maxLength;
 
-  const _Feld({this.hintText, this.maxLength = 8});
+  const _Feld({this.hintText, this.maxLength = 64});
 
   @override
   State<StatefulWidget> createState() => _FeldState();
@@ -64,6 +67,7 @@ class _FeldState extends State<_Feld> {
             maxLength: widget.maxLength,
             strutStyle: StrutStyle(height: 1.3),
             decoration: InputDecoration(
+                counterText: '',
                 contentPadding: EdgeInsets.only(left: 10, right: 10),
                 hintText: widget.hintText,
                 hintStyle: TextStyle(
