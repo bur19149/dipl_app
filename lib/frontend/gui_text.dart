@@ -5,8 +5,7 @@ import 'gui_konstanten.dart';
 /// Textgroesse normal ist 17 (Muss in der jeweiligen Klasse als Standardwert definiert werden)
 abstract class Groesse {
   static const double normal = 24;
-  static const double klein =
-      9; //TODO keine Ahnung für was das gebraucht wird /shrug
+  static const double klein = 9;
   static const double gross = 38;
 }
 
