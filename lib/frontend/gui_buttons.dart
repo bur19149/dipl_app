@@ -41,23 +41,20 @@ class _ButtonState extends State<Button> {
       default:						       highlightColor = Farben.weissHighlight; 		buttonFarbe = Farben.weiss;		 break; // weiss:    #FFFFFF; weissHighlight:    #F2F2F2
     } // @formatter:on
 
+    Color textColor = widget.gefuellt ? Farben.weiss : buttonFarbe;
+
     Widget child,
         textWidget = Text(widget.text,
-            style: TextStyle(
-                fontSize: Groesse.normal,
-                fontFamily: appFont,
-                fontWeight: FontWeight.w300));
+            style: Schrift(color: textColor));
 
     if (widget.svg != null) {
       child = Row(children: [Expanded(child: Container()),
         SvgPicture.asset(widget.svg, height: 23,
-            color: widget.gefuellt ? Farben.weiss : buttonFarbe),
+            color: textColor),
         SizedBox(width: 12),
         Text(widget.text,
-            style: TextStyle(
-                fontSize: Groesse.normal,
-                fontFamily: appFont,
-                fontWeight: FontWeight.w300)), Expanded(child: Container())
+            style: Schrift(color: textColor)),
+        Expanded(child: Container())
       ]);
     } else {
       child = textWidget;
@@ -66,7 +63,6 @@ class _ButtonState extends State<Button> {
         width: widget.width,
         child: RaisedButton(
           padding: EdgeInsets.only(top: 8, bottom: 8),
-          textColor: widget.gefuellt ? Farben.weiss : buttonFarbe,
           color: widget.gefuellt ? buttonFarbe : Farben.weiss,
           highlightColor: widget.gefuellt ? highlightColor : Farben
               .weissHighlight,

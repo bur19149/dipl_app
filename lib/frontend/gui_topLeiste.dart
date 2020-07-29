@@ -3,6 +3,7 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'gui_konstanten.dart';
+import 'gui_text.dart';
 
 /// Topleiste
 /// Enthält Suchfunktion und Einstellungen
@@ -37,8 +38,8 @@ class _TopleisteState extends State<Topleiste> {
     AnimatedContainer schatten = AnimatedContainer(
         duration: duration,
         child: Container(
-            height: 50,
-            width: 50,
+            height: 40,
+            width: 40,
             decoration: BoxDecoration(boxShadow: [
               BoxShadow(
                   blurRadius: 7,
@@ -51,7 +52,7 @@ class _TopleisteState extends State<Topleiste> {
         schatten,
         Expanded(
             child: SizedBox(
-                height: 50,
+                height: 40,
                 child: Stack(children: [
                   Align(
                       alignment: Alignment.centerRight,
@@ -114,12 +115,14 @@ class _LeistenTextfieldState extends State<_LeistenTextfield> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      style: TextStyle(fontFamily: appFont, fontSize: 20),
+      style: Schrift(
+          fontWeight: FontWeight.w400, fontSize: 20, color: Farben.schwarz),
       strutStyle: StrutStyle(height: 1.6),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.only(left: 5, right: 5),
           hintText: 'Suchen',
-          hintStyle: TextStyle(fontFamily: appFont, color: Farben.grau, fontSize: 20),
+          hintStyle: Schrift(
+              fontWeight: FontWeight.w400, color: Farben.grau, fontSize: 20),
           border: OutlineInputBorder(borderSide: BorderSide.none)),
     );
   }
@@ -183,8 +186,8 @@ class _LeistenButtonState extends State<_LeistenButton> {
                 ]))),
         duration: widget.duration,
         curve: Curves.easeOutExpo,
-        height: 50,
-        width: 50,
+        height: 40,
+        width: 40,
         decoration: BoxDecoration(
             color: Farben.weiss,
             border: Border.all(width: 1, color: Farben.blaugrau),

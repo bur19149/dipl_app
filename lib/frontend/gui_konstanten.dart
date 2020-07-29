@@ -94,4 +94,4 @@ final Map<String, String> svgIcons = { // @formatter:off
   'lupe':          'assets/images/svg/lupe.svg'
 }; // @formatter:on
 
-final String appFont = 'Roboto';
+const String appFont = 'Roboto';

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class ColumnScaffold extends StatefulWidget {
   final List<Widget> children;
+  final double top;
 
-  ColumnScaffold({this.children = const <Widget>[]});
+  ColumnScaffold({this.children = const <Widget>[], this.top});
 
   @override
   State<StatefulWidget> createState() => _CustomScaffoldState();
@@ -12,15 +13,18 @@ class ColumnScaffold extends StatefulWidget {
 class _CustomScaffoldState extends State<ColumnScaffold> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SafeArea(
-            child: Center(
-      child: Padding(
-          padding: EdgeInsets.all(15),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: widget.children)),
-    )));
+    Widget child,
+        column = Column(
+            children: widget.children);
+    if (widget.top != null) {
+      child = Padding(
+          padding: EdgeInsets.only(left: 15, right: 15, top: widget.top),
+          child: column);
+    } else {
+      child =
+          Center(child: Padding(padding: EdgeInsets.all(15), child: column));
+    }
+    return Scaffold(body: SafeArea(child: child));
   }
 }
 

@@ -3,7 +3,6 @@
 import 'package:dipl_app/frontend/gui_konstanten.dart';
 import 'package:dipl_app/frontend/gui_text.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// Navigationsleiste
@@ -252,29 +251,30 @@ class _LeistenButtonChildState extends State<_LeistenButtonChild> {
 
   @override
   Widget build(BuildContext context) {
+    Color color = widget.active ? Farben.rot : Farben.blaugrau;
     return widget.admin
         ? Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       SvgPicture.asset(widget.svg, height: 17,
-          color: widget.active ? Farben.rot : Farben.blaugrau),
+          color: color),
       SizedBox(height: 5),
       Text(
         widget.text,
-        style: TextStyle(
-            fontSize: 9,
-            fontFamily: appFont,
-            color: widget.active ? Farben.rot : Farben.blaugrau),
+        style: Schrift(
+            fontSize: Groesse.klein,
+            fontWeight: FontWeight.w500,
+            color: color),
       )
     ])
         : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       SvgPicture.asset(widget.svg, height: 17,
-          color: widget.active ? Farben.rot : Farben.blaugrau),
+          color: color),
       SizedBox(width: 7),
       Text(
         widget.text,
-        style: TextStyle(
+        style: Schrift(
             fontSize: 12,
-            fontFamily: appFont,
-            color: widget.active ? Farben.rot : Farben.blaugrau),
+            fontWeight: FontWeight.w500,
+            color: color),
       )
     ]);
   }
@@ -335,10 +335,9 @@ class _AdminMenuTextState extends State<_AdminMenuText> {
         child: Container(
             padding: EdgeInsets.only(right: 10, top: 11, bottom: 11),
             child: Text(
-                widget.text, style: TextStyle(fontSize: 18,
-                color: Farben.blaugrau,
-                fontFamily: appFont,
-                fontWeight: FontWeight.w600))));
+                widget.text,
+                style: Schrift(fontSize: 18, fontWeight: FontWeight.w600
+                ))));
   }
 }
 

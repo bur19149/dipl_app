@@ -240,7 +240,7 @@ class UserTermin {
   int                 veranstaltungsID;
   String              ort;
   String              name;
-  String              _beschreibung;
+  String              beschreibung;
   DateTime            zyklusEnde;
   DateTime            anmeldungStart;
   DateTime            anmeldungEnde;
@@ -280,10 +280,6 @@ class UserTermin {
     _plaetze = value;
   }
 
-  set beschreibung(String value) {
-    _beschreibung = pruefungen.prufeName(pruefungen.stringPrufung(value));
-  }
-
   set zyklus(Zyklus value) {
     if (value == null) throw 'Zyklus darf nicht null sein!';
     _zyklus = value;
@@ -293,7 +289,6 @@ class UserTermin {
 
   // @formatter:off
   int      get plaetze          => _plaetze;
-  String   get beschreibung     => _beschreibung;
   Zyklus   get zyklus           => _zyklus;
   // @formatter:on
 
@@ -302,7 +297,7 @@ class UserTermin {
   @override
   String toString() {
     String str = 'Termin:            $name' + (terminID != null ? ' ($terminID)' : '') + '\nAnzahl Plätze:     '
-        '$_plaetze\nOrt:               $ort\nBeschreibung:      $_beschreibung' + (veranstaltungsID != null ? '\nVeranstaltungs-ID: $veranstaltungsID' : '') +
+        '$_plaetze\nOrt:               $ort\nBeschreibung:      $beschreibung' + (veranstaltungsID != null ? '\nVeranstaltungs-ID: $veranstaltungsID' : '') +
         (anmeldungStart != null ? '\nAnmeldestart:      ${converter.dateTimeFormat(anmeldungStart)}' : '') +
         (anmeldungEnde != null ? '\nAnmeldeschluss:    ${converter.dateTimeFormat(anmeldungEnde)}' : '') + (timeVon != null && timeBis != null ? '\nZeitraum:          '
         '${converter.dateTimeFormat(timeVon)} - ${converter.dateTimeFormat(timeBis)}' : '') +

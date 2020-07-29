@@ -1,9 +1,16 @@
+import 'package:configurable_expansion_tile/configurable_expansion_tile.dart';
+import 'package:dipl_app/frontend/pages/gui_termin_bearbeiten.dart';
+import 'package:dipl_app/frontend/pages/gui_terminuebersicht.dart';
+import 'package:dipl_app/frontend/pages/gui_einstellungen.dart';
 import 'package:dipl_app/frontend/gui_eingabefelder.dart';
-import 'package:dipl_app/frontend/gui_konstanten.dart';
 import 'package:dipl_app/frontend/gui_menuleiste.dart';
+import 'package:dipl_app/frontend/gui_konstanten.dart';
 import 'package:dipl_app/frontend/gui_topLeiste.dart';
+import 'package:dipl_app/backend/requests/debug.dart';
+import 'package:dipl_app/backend/requests/user.dart';
 import 'package:dipl_app/frontend/gui_buttons.dart';
 import 'package:dipl_app/frontend/gui_rahmen.dart';
+import 'package:dipl_app/frontend/gui_pages.dart';
 import 'package:dipl_app/frontend/gui_text.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/animation.dart';
@@ -20,11 +27,36 @@ class _DominiksTestgelaendeState extends State<DominiksTestgelaende> {
   Widget build(BuildContext context) {
     return TempSeite(children: [
       // @formatter:off
-      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteMenu())),         text: 'Menüleisten-Test'),
-      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteWidgets())),      text: 'Widgets-Tests'),
-      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteSchriftarten())), text: 'Schriftarten-Tests'),
-      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteTopleiste())),    text: 'Topleisten-Tests')
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteMenu())),            text: 'Menüleisten-Test'),
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteWidgets())),         text: 'Widgets-Tests'),
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteSchriftarten())),    text: 'Schriftarten-Tests'),
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteTopleiste())),       text: 'Topleisten-Tests'),
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TerminUebersichtPage())), text: 'Terminübersicht-Test'),
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteDropDownButton())),  text: 'Dropdown-Button-Test'),
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EinstellungenPage())),    text: 'Teste Einstelungen-Seite'),
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TerminBearbeitenPage())), text: 'Teste Termin-bearbeiten-Seite')
       // @formatter:on
+    ]);
+  }
+}
+
+class TesteDropDownButton extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _TesteDropDownButtonState();
+}
+
+class _TesteDropDownButtonState extends State<TesteDropDownButton> {
+  @override
+  Widget build(BuildContext context) {
+    return ListViewScaffold(children: [
+      Button(onPressed: () {}),
+      DropdownButton(
+        items: [DropdownMenuItem(child: Text('Hallo'))],
+        onChanged: (value) {},
+      ),
+      Container(
+        height: 1000,
+      )
     ]);
   }
 }
@@ -51,7 +83,13 @@ class TesteWidgets extends StatefulWidget {
 }
 
 class _TesteWidgetsState extends State<TesteWidgets> {
-  bool offen = false;
+  bool expanded = false;
+
+  void expand(bool offen) {
+    setState(() {
+      expanded = offen;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,28 +99,19 @@ class _TesteWidgetsState extends State<TesteWidgets> {
                 padding:
                     EdgeInsets.only(left: 15, right: 15, top: 50, bottom: 50),
                 children: [
-          CustomToggleButton(onTap: () {
-            setState(() {
-              offen = !offen;
-            });
-          }),
+          ExpandableRahmen(),
           SizedBox(height: 50),
-          SvgPicture.asset(svgIcons['einstellungen'],
-              color: Farben.blaugrau, height: 50),
+          DateTimeTextfeld(),
           SizedBox(height: 50),
-          LoginRahmen(children: [
-//            Textfeld(
-//              text: 'E-Mail Adresse', hintText: 'E-Mail eingeben',
-//            ),
-//            SizedBox(height: 20),
-            Textfeld(
-              text: 'Token',
-              hintText: 'Token eingeben',
-//              maxLength: 8,
-            ),
-            SizedBox(height: 20),
-            Button(text: 'Anmelden', onPressed: () {}, farbe: Buttonfarbe.rot)
-          ])
+          Container(height: 100, color: Farben.blau),
+          Button(
+              text: 'Terminliste',
+              onPressed: () async {
+                print('1##################');
+                var liste = requestAlleTermine();
+                printListe(await liste);
+                print('2##################');
+              })
         ])));
   }
 }
@@ -126,16 +155,14 @@ class _TesteSchriftartenState extends State<TesteSchriftarten> {
               padding:
                   EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
               children: [
-            CustomText('TextfeldText', textart: Textarten.TextfeldText),
+            Text('TextfeldText', style: Schrift()),
             Container(
-                color: Farben.rot,
-                child:
-                    CustomText('Uberschrift', textart: Textarten.Uberschrift)),
-            CustomText('UnterUberschrift', textart: Textarten.UnterUberschrift),
+                color: Farben.rot, child: Text('Uberschrift', style: Schrift.titel())),
+            Text('UnterUberschrift', style: Schrift.ueberschrift()),
             Container(
                 color: Farben.blau,
-                child: CustomText('WeisseDickeUberschrift',
-                    textart: Textarten.WeisseUberschrift))
+                child: Text('WeisseDickeUberschrift',
+                    style: Schrift.titelFooter())),
           ])),
     ));
   }

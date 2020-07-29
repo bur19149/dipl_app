@@ -1,7 +1,103 @@
 import 'package:dipl_app/frontend/gui_konstanten.dart';
-import 'package:dipl_app/backend/requests/admin.dart';
 import 'package:dipl_app/frontend/gui_text.dart';
 import 'package:flutter/material.dart';
+
+import 'gui_buttons.dart';
+
+// ###################################################################
+
+class ExpandableRahmen extends StatefulWidget {
+  final String header, bottomHeader;
+  final List<Widget> childrenTop, childrenBottom;
+
+  const ExpandableRahmen(
+      {this.header = 'Header',
+      this.bottomHeader = 'Header',
+      this.childrenTop = const [],
+      this.childrenBottom = const []});
+
+  @override
+  State<StatefulWidget> createState() => _ExpandableRahmenState();
+}
+
+class _ExpandableRahmenState extends State<ExpandableRahmen>
+    with SingleTickerProviderStateMixin {
+  bool _isExpanded;
+  AnimationController _controller;
+  Animation<double> _heightFactor;
+
+  @override
+  void initState() {
+    _controller =
+        AnimationController(duration: Duration(milliseconds: 200), vsync: this);
+    _heightFactor = _controller.drive(CurveTween(curve: Curves.easeIn));
+    _isExpanded = PageStorage.of(context)?.readState(context) ?? false;
+    if (_isExpanded) _controller.value = 1.0;
+    super.initState();
+  }
+
+  void _handleTap() {
+    setState(() {
+      _isExpanded = !_isExpanded;
+      if (_isExpanded) {
+        _controller.forward();
+      } else {
+        _controller.reverse().then<void>((void value) {
+          if (!mounted) return;
+          setState(() {});
+        });
+      }
+      PageStorage.of(context)?.writeState(context, _isExpanded);
+    });
+  }
+
+  Widget _buildChildren(BuildContext context, Widget child) {
+    childrenTop = [];
+    childrenTop.addAll([
+      Row(children: [
+        Text(widget.header, style: Schrift.ueberschrift()),
+        Expanded(child: Container()),
+        Kreuz(groesse: 0.5, offen: _isExpanded),
+        SizedBox(width: 5)
+      ]),
+      SizedBox(height: 10)
+    ]);
+    childrenTop.addAll(widget.childrenTop);
+    childrenTop.add(ClipRect(
+        child: Align(heightFactor: _heightFactor.value, child: child)));
+    return InkWell(
+        onTap: () => _handleTap(),
+        child: Rahmen(
+            header: BottomHeader(header: widget.bottomHeader),
+            children: childrenTop));
+  }
+
+  List<Widget> childrenTop, childrenBottom;
+
+  @override
+  Widget build(BuildContext context) {
+    final bool closed = !_isExpanded && _controller.isDismissed;
+
+    return AnimatedBuilder(
+        animation: _controller.view,
+        builder: _buildChildren,
+        child: closed
+            ? null
+            : Container(
+                width: double.infinity,
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Column(children: widget.childrenBottom))));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+}
+
+// ###################################################################
 
 class Rahmen extends StatefulWidget {
   final List<Widget> children;
@@ -105,7 +201,7 @@ class LoginHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: double.infinity,
-        height: 90,
+        height: 80,
         padding: EdgeInsets.only(left: 11),
         decoration: BoxDecoration(
             color: Farben.rot,
@@ -113,15 +209,24 @@ class LoginHeader extends StatelessWidget {
                 topLeft: Radius.circular(9.5), topRight: Radius.circular(9.5))),
         child: Align(
             alignment: Alignment.centerLeft,
-            child: CustomText('Anmelden', textart: Textarten.Uberschrift)));
+            child: Text('Anmelden', style: Schrift.titel())));
   }
 }
 
 class BottomHeader extends StatelessWidget {
+  final String header;
+
+  const BottomHeader({this.header = 'Header'});
+
   @override
   Widget build(BuildContext context) {
     return Container(
+        child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(header, style: Schrift.titelFooter())),
         height: 45,
+        padding: EdgeInsets.only(left: 15),
+        width: double.infinity,
         decoration: BoxDecoration(
             color: Farben.gruen, // TODO variabel
             borderRadius: BorderRadius.only(
@@ -131,15 +236,38 @@ class BottomHeader extends StatelessWidget {
 }
 
 class TopHeader extends StatelessWidget {
+  final Color farbe, rahmen, textfarbe;
+  final String text;
+
+  const TopHeader(
+      {this.farbe = Farben.blaugrau,
+      this.rahmen = Farben.rahmenFarbe,
+      this.textfarbe = Farben.weiss, this.text = 'TopHeader'});
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: 45,
-        decoration: BoxDecoration(
-            color: Farben.gruen, // TODO variabel
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(9.5),
-                topRight: Radius.circular(9.5))));
+    return Column(children: [
+      Container(
+          padding: EdgeInsets.only(left: 11),
+          child: Align(
+              alignment: Alignment.centerLeft,
+              child:
+                  Text(text, style: Schrift.ueberschrift(color: textfarbe))),
+          // TODO
+          height: 45,
+          width: double.infinity,
+          decoration: BoxDecoration(
+              color: farbe,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(9), topRight: Radius.circular(9)))),
+      Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+              border: Border(
+                  top: rahmen == null
+                      ? BorderSide.none
+                      : BorderSide(color: rahmen))))
+    ]);
   }
 }
 
