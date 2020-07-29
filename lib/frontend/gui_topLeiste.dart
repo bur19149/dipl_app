@@ -1,5 +1,6 @@
 // -------------------------------- Imports ---------------------------------
 
+import 'package:dipl_app/frontend/pages/gui_einstellungen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'gui_konstanten.dart';
@@ -24,10 +25,14 @@ class _TopleisteState extends State<Topleiste> {
 
   // ------------------------------ Eventhandler ------------------------------
 
-  void _buttonPressed() {
+  void _searchButtonPressed() {
     setState(() {
       fieldExpanded = !fieldExpanded;
     });
+  }
+
+  void _settingsButtonPressed() {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => EinstellungenPage()));
   }
 
   // --------------------------------- Build ----------------------------------
@@ -84,14 +89,14 @@ class _TopleisteState extends State<Topleiste> {
       ]),
       Row(children: [
         _LeistenButton(
-            onPressed: _buttonPressed,
+            onPressed: _settingsButtonPressed,
             fieldExpanded: fieldExpanded,
             left: true,
             duration: duration,
             svg: svgIcons['einstellungen']),
         Expanded(child: Container()),
         _LeistenButton(
-            onPressed: _buttonPressed,
+            onPressed: _searchButtonPressed,
             fieldExpanded: fieldExpanded,
             left: false,
             duration: duration,
