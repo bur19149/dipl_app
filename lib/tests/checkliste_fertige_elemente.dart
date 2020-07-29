@@ -7,19 +7,22 @@ import 'package:flutter/material.dart';
 class Checkliste extends StatefulWidget {
   final List<Widget> fertig = [
     // @formatter:off
-    ListenText('ToggleButton', widget: CustomToggleButton(onTap: () {})),
-    ListenText('Kreuz',        widget: Kreuz()),
-    ListenText('Standard-Button', anmerkung: 'soweit fertig')
+    ListenText('ToggleButton',    widget: CustomToggleButton(onTap: () {})),
+    ListenText('Kreuz',           widget: Kreuz()),
+    ListenText('Standard-Button', widget: Button(onPressed: () {},width: 100,))
     // @formatter:on
   ];
 
   final List<Widget> unfertig = [
     // @formatter:off
-    ListenText('Topleiste',         anmerkung: 'fast fertig'),
-    ListenText('Navigationsleiste', anmerkung: 'fast fertig'),
-    ListenText('SVG-Icons',         anmerkung: 'teilweise importiert'),
-    ListenText('Rahmen',            anmerkung: 'fast fertig'),
-    ListenText('Texte',             anmerkung: 'fast fertig')
+    ListenText('Topleiste',             anmerkung: 'fast fertig'),
+    ListenText('Navigationsleiste',     anmerkung: 'fast fertig'),
+    ListenText('SVG-Icons',             anmerkung: 'teilweise importiert'),
+    ListenText('Rahmen',                anmerkung: 'fast fertig'),
+    ListenText('Texte',                 anmerkung: 'fast fertig'),
+    ListenText('Einstellungen-Seite',   anmerkung: 'fast fertig'),
+    ListenText('Terminübersicht-Seite', anmerkung: 'fast fertig'),
+    ListenText('Textfeld',              anmerkung: 'fast fertig'),
     // @formatter:on
   ];
 
@@ -108,7 +111,7 @@ class ListenText extends StatelessWidget {
           SizedBox(
             width: 15,
           ),
-          Text(text, style: TextStyle(fontSize: 25)),
+          Text(text, style: TextStyle(fontSize: 21)),
           SizedBox(
             width: 15,
           ),
