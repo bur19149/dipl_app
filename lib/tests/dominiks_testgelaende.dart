@@ -101,7 +101,7 @@ class _TesteWidgetsState extends State<TesteWidgets> {
                 children: [
           ExpandableRahmen(),
           SizedBox(height: 50),
-          DateTimeTextfeld(),
+          Rahmen(children: [Textfeld(dateTime: true, text: 'Datum/Uhrzeit von', hintText: '')]),
           SizedBox(height: 50),
           Container(height: 100, color: Farben.blau),
           Button(

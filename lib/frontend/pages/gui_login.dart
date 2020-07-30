@@ -5,6 +5,7 @@ import '../gui_buttons.dart';
 import '../gui_eingabefelder.dart';
 import '../gui_konstanten.dart';
 import '../gui_rahmen.dart';
+import '../gui_text.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -19,6 +20,7 @@ class _LoginPageState extends State<LoginPage> {
         LoginRahmen(children: [
           Textfeld(
             text: 'Token',
+            headerStyle: Schrift.ueberschrift(),
             hintText: 'Token eingeben',
             maxLength: 8,
           ),
