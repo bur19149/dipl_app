@@ -19,8 +19,8 @@ class Textfeld extends StatefulWidget {
   final String    hintText;    // Hinweistext innerhalb des Textfeldes
   final TextStyle headerStyle; // Formatierung der Überschrift des Textfeldes
   final int       maxLength;   // maximale Anzahl Zeichen innerhalb des Textfeldes
-  final bool      dateTime;
-  final Wrapper   value;
+  final bool      dateTime;    // Ist das Textfeld ein DateTimeTextfeld?
+  final Wrapper   value;       // Inhalt des Textfeldes
   // @formatter:off
 
   // ------------------------------ Konstruktor -------------------------------
@@ -64,14 +64,13 @@ class _Feld extends StatefulWidget {
   // @formatter:off
   final String                   hintText;            // Hinweistext innerhalb des Textfeldes
   final int                      maxLength;           // maximale Anzahl Zeichen innerhalb des Textfeldes
-  final double                   contentPaddingLeft;
-  final double                   contentPaddingRight;
-  final List<TextInputFormatter> inputFormatters;
-  final bool                     dateTime;
-  final bool                     error;
-  final Function(String)         validator;
-  final TextEditingController    controller;
-
+  final double                   contentPaddingLeft;  // Abstand des Textes zum linken Rand des Textfeldes
+  final double                   contentPaddingRight; // Abstand des Textes zum rechten Rand des Textfeldes
+  final List<TextInputFormatter> inputFormatters;     // definiert den zulässigen Textinhalt und ermöglicht es Textmasken zuzuweisen
+  final bool                     dateTime;            // Ist das Textfeld ein DateTimeTextfeld?
+  final bool                     error;               // Ist der eingegebene Text fehlerhaft?
+  final Function(String)         validator;           // Prüfung ob der Inhalt des Textfeldes valide ist
+  final TextEditingController    controller;          // Controller des Textfeldes; wird verwendet um einen Text in das Textfeld zu schreiben
   // @formatter:on
 
   // ------------------------------ Konstruktor -------------------------------
@@ -97,11 +96,10 @@ class _FeldState extends State<_Feld> {
   List<TextInputFormatter> _inputFormatters;
 
   @override
-  void initState() {
-    _inputFormatters =
-        widget.inputFormatters != null ? widget.inputFormatters : [];
+  void initState() { // @formatter:off
+    _inputFormatters = widget.inputFormatters != null ? widget.inputFormatters : [];
     super.initState();
-  }
+  } // @formatter:on
 
   // --------------------------------- Build ----------------------------------
 
@@ -146,9 +144,9 @@ class _DateTimeTextfeld extends StatefulWidget {
   // ------------------------------- Variablen --------------------------------
 
   // @formatter:off
-  final String hintText;
-  final int    maxLength;
-  final Wrapper value;
+  final String  hintText;  // Hinweistext innerhalb des Textfeldes
+  final int     maxLength; // maximale Anzahl Zeichen innerhalb des Textfeldes
+  final Wrapper value;     // Inhalt des Textfeldes
   // @formatter:on
 
   // ------------------------------ Konstruktor -------------------------------
@@ -165,10 +163,10 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
   // ------------------------------- Variablen --------------------------------
 
   // @formatter:off
-  bool                  _focus   = false;
-  bool                  _error   = false;
-  final                 _formKey = GlobalKey<FormState>(); // Key
-  TextEditingController controller;
+  bool                  _focus   = false;                  // Ist das Textfeld aktuell ausgewählt?
+  bool                  _error   = false;                  // Ist der eingegebene Text fehlerhaft?
+  final                 _formKey = GlobalKey<FormState>(); // Key für das Formular; wird zum validieren vom Inhalt des Textfeldes benötigt
+  TextEditingController controller;                        // Controller des Textfeldes; wird verwendet um das Ergebnis des Datepickers in das Textfeld zu schreiben
   // @formatter:on
 
   Future<DateTime> _showCustomDatePicker({@required BuildContext context}) { // @formatter:off
