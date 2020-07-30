@@ -1,6 +1,7 @@
 // -------------------------------- Imports ---------------------------------
 
 import 'package:dipl_app/frontend/gui_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -19,12 +20,13 @@ class Textfeld extends StatefulWidget {
   final TextStyle headerStyle; // Formatierung der Überschrift des Textfeldes
   final int       maxLength;   // maximale Anzahl Zeichen innerhalb des Textfeldes
   final bool      dateTime;
+  final Wrapper   value;
   // @formatter:off
 
   // ------------------------------ Konstruktor -------------------------------
 
   const Textfeld(
-      {this.text = 'Header', this.hintText = 'HintText', this.maxLength = 64, this.headerStyle = const Schrift(), this.dateTime = false});
+      {this.text = 'Header', this.hintText = 'HintText', this.maxLength = 64, this.headerStyle = const Schrift(), this.dateTime = false, this.value});
 
   // ------------------------------- createState ------------------------------
 
@@ -44,7 +46,7 @@ class _TextfeldState extends State<Textfeld> {
               child: Text(widget.text,
                   style: widget.headerStyle))),
       SizedBox(height: 7),
-      widget.dateTime ? _DateTimeTextfeld(
+      widget.dateTime ? _DateTimeTextfeld(value: widget.value,
           hintText: widget.hintText,
           maxLength: widget.maxLength) :
       _Feld(
@@ -136,81 +138,90 @@ class _FeldState extends State<_Feld> {
                     hintStyle: Schrift(color: Farben.grau),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(5)),
-//                        borderSide:
-//                            BorderSide(width: 1, color: Farben.grau)
                     )))));
   }
 }
 
 class _DateTimeTextfeld extends StatefulWidget {
-  final String hintText;
-  final int maxLength;
+  // ------------------------------- Variablen --------------------------------
 
-  const _DateTimeTextfeld({this.hintText = 'HintText', this.maxLength = 64});
+  // @formatter:off
+  final String hintText;
+  final int    maxLength;
+  final Wrapper value;
+  // @formatter:on
+
+  // ------------------------------ Konstruktor -------------------------------
+
+  const _DateTimeTextfeld({this.hintText = 'HintText', this.maxLength = 64, this.value});
+
+  // ------------------------------- createState ------------------------------
 
   @override
   State<StatefulWidget> createState() => _DateTimeTextfeldState();
 }
 
 class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
-  bool expanded = false, focus = false, error = false, teste = false;
-  final _formKey = GlobalKey<FormState>();
-  TextEditingController controller;
+  // ------------------------------- Variablen --------------------------------
 
-  Future<DateTime> _showCustomDatePicker({@required BuildContext context}) {
+  // @formatter:off
+  bool                  _focus   = false;
+  bool                  _error   = false;
+  final                 _formKey = GlobalKey<FormState>(); // Key
+  TextEditingController controller;
+  // @formatter:on
+
+  Future<DateTime> _showCustomDatePicker({@required BuildContext context}) { // @formatter:off
     return showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2000),
-        helpText: 'Wähle Datum',
-        lastDate: DateTime(2030),
-        locale: const Locale("de", "DE"),
-        builder: (BuildContext context, Widget child) => Theme(
+        context:         context,
+        initialDate:     DateTime.now(),
+        firstDate:       DateTime(2000),
+        lastDate:        DateTime(2030),
+        helpText:        'Wähle Datum',
+        fieldLabelText:  'Gib ein Datum ein',
+        errorFormatText: 'Ungültiges Datum!',
+        locale:      const Locale("de", "DE"),
+        builder:     (BuildContext context, Widget child) => Theme(
               data: ThemeData.light().copyWith(
-                buttonTheme:
-                    ButtonThemeData(textTheme: ButtonTextTheme.primary),
+                buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
                 colorScheme: ColorScheme.light(
-                  primary: Farben.rot,
+                  primary:   Farben.rot,
                   onPrimary: Farben.weiss,
-                  surface: Farben.rot,
+                  surface:   Farben.rot,
                   onSurface: Farben.schwarz,
                 ),
                 dialogBackgroundColor: Farben.weiss,
               ),
               child: child,
             ));
-  }
+  } // @formatter:on
 
-  Future<TimeOfDay> _showCustomTimePicker({@required BuildContext context}) {
+  Future<TimeOfDay> _showCustomTimePicker({@required BuildContext context}) { // @formatter:off
     return showTimePicker(
-        context: context,
+        context:     context,
         initialTime: TimeOfDay.now(),
-        builder: (BuildContext context, Widget child) => Theme(
+        builder:     (BuildContext context, Widget child) => Theme(
               data: ThemeData.light().copyWith(
-                buttonTheme:
-                    ButtonThemeData(textTheme: ButtonTextTheme.primary),
+                buttonTheme:  ButtonThemeData(textTheme: ButtonTextTheme.primary),
                 primaryColor: Farben.rot,
-                accentColor: Farben.rot,
-                colorScheme: ColorScheme.light(
-                  primary: Farben.rot,
-                ),
+                accentColor:  Farben.rot,
+                colorScheme:  ColorScheme.light(primary: Farben.rot),
                 dialogBackgroundColor: Farben.weiss,
               ),
               child: child,
             ));
-  }
+  } // @formatter:on
 
-  Future<DateTime> _showDateTimePicker(BuildContext context) async {
+  Future<DateTime> _showDateTimePicker(BuildContext context) async { // @formatter:off
     DateTime dateTime;
     await _showCustomDatePicker(context: context).then((value) async {
       if (value != null) {
         TimeOfDay timeOfDay = await _showCustomTimePicker(context: context);
-        dateTime = DateTime(value.year, value.month, value.day, timeOfDay.hour,
-            timeOfDay.minute);
+        dateTime = DateTime(value.year, value.month, value.day, timeOfDay.hour, timeOfDay.minute);
       }
     });
     return dateTime;
-  }
+  } // @formatter:on
 
   String _convertDate(String value) { // @formatter:off
     var list = RegExp(r'(\d{2})\.(\d{2})\.(\d{4})\s(\d{2}):(\d{2})').allMatches(value).elementAt(0);
@@ -239,22 +250,27 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
     super.initState();
   }
 
+  // --------------------------------- Build ----------------------------------
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { // @formatter:off
     var _feld = _Feld(controller: controller,
         validator: (value) {
           if (value.isEmpty) return null;
           try {
-            print('ConvertDate: [${_convertDate(value)}]');
-            if (_isValidDate(_convertDate(value))) return null;
+            var converted = _convertDate(value);
+            if (_isValidDate(converted)) {
+              widget.value.value = DateTime.parse(converted);
+              return null;
+            }
           } catch (e) {}
           return 'Ungültiges Datum!';
         },
-        error: error,
+        error: _error,
         inputFormatters: [MaskTextInputFormatter(mask: '##.##.#### ##:##')],
-        dateTime: true,
         contentPaddingRight: 48,
-        hintText: widget.hintText,
+        dateTime:  true,
+        hintText:  widget.hintText,
         maxLength: widget.maxLength);
 
     return Form(
@@ -262,45 +278,47 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
         child: InkWell(
             onFocusChange: (change) =>
                 setState(() {
-                  focus = change;
-                  if (!focus) error = !_formKey.currentState.validate();
+                  _focus = change;
+                  if (!_focus) _error = !_formKey.currentState.validate();
                 }),
             child: Container(
-                height: 63,
+                height: _error ? 63 : 40,
                 child: Stack(children: [
                   _feld,
                   Align(
                       alignment: Alignment.topRight,
                       child: InkWell(onTap: () async {
                         var dateTime = await _showDateTimePicker(context);
-                        if (dateTime != null) controller.text =
-                            DateFormat('dd.MM.yyyy HH:mm').format(dateTime);
-                        setState(() {
-                          error = !_formKey.currentState.validate();
-                        });
-                      }, child: AnimatedContainer(
-                        width: 40,
-                        height: 40,
-                        duration: Duration(milliseconds: 100),
-                        child: Stack(children: [
-                          Align(
-                              alignment: Alignment.center,
-                              child: SvgPicture.asset(svgIcons['kalender'],
-                                  color: error ? Farben.rot : (focus ? Farben
-                                      .dunkelgrau : Farben.blaugrau),
-                                  height: 22))
-                        ]),
-                        decoration: BoxDecoration(
-                            color: Farben.weiss,
-                            border: focus
-                                ? Border.all(width: 2, color: error ? Farben
-                                .rot : Farben.dunkelgrau)
-                                : Border.all(width: 1.2, color: error ? Farben
-                                .rot : Color.fromRGBO(155, 155, 155, 1)),
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(5),
-                                bottomRight: Radius.circular(5))),
-                      ))),
+                        if (dateTime != null) {
+                          controller.text = DateFormat('dd.MM.yyyy HH:mm').format(dateTime);
+                          widget.value.value = dateTime;
+                        }
+                        setState(() { _error = !_formKey.currentState.validate(); });
+                      },  child: AnimatedContainer(
+                          width:  40,
+                          height: 40,
+                          duration: Duration(milliseconds: 100),
+                          child: Stack(children: [
+                            Align(
+                                alignment: Alignment.center,
+                                child: SvgPicture.asset(svgIcons['kalender'],
+                                    height: 22,
+                                    color: _error ? Farben.rot        : (
+                                           _focus ? Farben.dunkelgrau : Farben.blaugrau)))
+                          ]),
+                          decoration: BoxDecoration(
+                              color: Farben.weiss,
+                              border: _focus ? Border.all(width: 2,   color: _error ? Farben.rot : Farben.dunkelgrau)
+                                             : Border.all(width: 1.2, color: _error ? Farben.rot : Color.fromRGBO(155, 155, 155, 1)),
+                              borderRadius: BorderRadius.only(
+                                  topRight:    Radius.circular(5),
+                                  bottomRight: Radius.circular(5)))
+                      )))
                 ]))));
-  }
+  } // @formatter:on
+}
+
+class Wrapper {
+  var value;
+  Wrapper({this.value});
 }

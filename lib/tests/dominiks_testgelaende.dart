@@ -84,11 +84,18 @@ class TesteWidgets extends StatefulWidget {
 
 class _TesteWidgetsState extends State<TesteWidgets> {
   bool expanded = false;
+  Wrapper dateTime;
 
   void expand(bool offen) {
     setState(() {
       expanded = offen;
     });
+  }
+
+  @override
+  void initState() {
+    dateTime = Wrapper();
+    super.initState();
   }
 
   @override
@@ -101,7 +108,8 @@ class _TesteWidgetsState extends State<TesteWidgets> {
                 children: [
           ExpandableRahmen(),
           SizedBox(height: 50),
-          Rahmen(children: [Textfeld(dateTime: true, text: 'Datum/Uhrzeit von', hintText: '')]),
+          Button(text: 'print Datum', onPressed: () => print('Datum: [${dateTime.value}]')),
+          Rahmen(children: [Textfeld(dateTime: true, text: 'Datum/Uhrzeit von', hintText: '', value: dateTime)]),
           SizedBox(height: 50),
           Container(height: 100, color: Farben.blau),
           Button(
