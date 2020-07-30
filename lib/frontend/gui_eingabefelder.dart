@@ -67,6 +67,7 @@ class _Feld extends StatefulWidget {
   final bool                     dateTime;
   final bool                     error;
   final Function(String)         validator;
+  final TextEditingController    controller;
 
   // @formatter:on
 
@@ -80,7 +81,8 @@ class _Feld extends StatefulWidget {
       this.inputFormatters,
       this.dateTime = false,
       this.validator,
-      this.error = false});
+      this.error = false,
+      this.controller});
 
   // ------------------------------- createState ------------------------------
 
@@ -103,10 +105,12 @@ class _FeldState extends State<_Feld> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-            height: widget.error ? 63 : 40,
+        height: widget.error ? 63 : 40,
         child: Theme(
-            data: ThemeData(primaryColor: Farben.blaugrau, errorColor: Farben.rot),
+            data: ThemeData(
+                primaryColor: Farben.blaugrau, errorColor: Farben.rot),
             child: TextFormField(
+                controller: widget.controller,
                 validator: widget.validator == null
                     ? (text) => null
                     : widget.validator,
@@ -117,7 +121,8 @@ class _FeldState extends State<_Feld> {
                 maxLength: widget.maxLength,
                 inputFormatters: _inputFormatters,
                 strutStyle: StrutStyle(height: 1.3),
-                decoration: InputDecoration(errorStyle: Schrift(fontSize: 12, color: Farben.rot),
+                decoration: InputDecoration(
+                    errorStyle: Schrift(fontSize: 12, color: Farben.rot),
                     focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(5)),
                         borderSide:
@@ -132,9 +137,7 @@ class _FeldState extends State<_Feld> {
                       borderRadius: BorderRadius.all(Radius.circular(5)),
 //                        borderSide:
 //                            BorderSide(width: 1, color: Farben.grau)
-                    ))))
-    )
-        ;
+                    )))));
   }
 }
 
@@ -151,8 +154,16 @@ class _DateTimeTextfeld extends StatefulWidget {
 class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
   bool expanded = false, focus = false, error = false, teste = false;
   final _formKey = GlobalKey<FormState>();
+  TextEditingController controller;
 
-
+  String _convertDate(String value) { // @formatter:off
+    var list = RegExp(r'(\d{2})\.(\d{2})\.(\d{4})\s(\d{2}):(\d{2})').allMatches(value).elementAt(0);
+    return '${list.group(3).toString().padLeft(4, '0')}-'
+           '${list.group(2).toString().padLeft(2, '0')}-'
+           '${list.group(1).toString().padLeft(2, '0')} '
+           '${list.group(4).toString().padLeft(2, '0')}:'
+           '${list.group(5).toString().padLeft(2, '0')}:00';
+  } // @formatter:on
 
   bool _isValidDate(String input) {
     return input == _toOriginalFormatString(DateTime.parse(input));
@@ -166,18 +177,22 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
            '${dateTime.minute.toString().padLeft(2, '0')}:00';
   } // @formatter:on
 
-
-
+  @override
+  void initState() {
+    controller = TextEditingController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var _feld = _Feld(
+    var _feld = _Feld(controller: controller,
         validator: (value) {
-          print('Datum: [$value] ##############################');
           try {
-          if(_isValidDate(value)) return null;
-          } catch (e) {print('**************************************\n\n$e\n\n**************************************');}
-          return 'Ungültiges Datum!';},
+            print('ConvertDate: [${_convertDate(value)}]');
+            if (_isValidDate(_convertDate(value))) return null;
+          } catch (e) {}
+          return 'Ungültiges Datum!';
+        },
         error: error,
         inputFormatters: [MaskTextInputFormatter(mask: '##.##.#### ##:##')],
         dateTime: true,
@@ -185,49 +200,49 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
         hintText: widget.hintText,
         maxLength: widget.maxLength);
 
-    return Column(children: [
-      Button(
-        onPressed: () {
-          teste = !teste;
-        },
-      ),
-      Form(
-          key: _formKey,
-          child: InkWell(
-              onFocusChange: (change) => setState(() {
-                    focus = change;
-                    if (!_formKey.currentState.validate())
-                      error = true;
-                    else
-                      error = false;
-                  }),
-              child: Container(
-                  height: 63,
-                  child: Stack(children: [
-                    _feld,
-                    Align(
-                        alignment: Alignment.topRight,
-                        child: AnimatedContainer(
-                          width: 40,
-                          height: 40,
-                          duration: Duration(milliseconds: 100),
-                          child: Stack(children: [
-                            Align(
-                                alignment: Alignment.center,
-                                child: SvgPicture.asset(svgIcons['kalender'],
-                                    color: error ? Farben.rot : (focus ? Farben.dunkelgrau : Farben.blaugrau),
-                                    height: 22))
-                          ]),
-                          decoration: BoxDecoration(
-                              color: Farben.weiss,
-                              border: focus
-                                  ? Border.all(width: 2,   color: error ? Farben.rot : Farben.dunkelgrau)
-                                  : Border.all(width: 1.2, color: error ? Farben.rot : Color.fromRGBO(155, 155, 155, 1)),
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(5),
-                                  bottomRight: Radius.circular(5))),
-                        )),
-                  ]))))
-    ]);
+    return Form(
+        key: _formKey,
+        child: InkWell(
+            onFocusChange: (change) =>
+                setState(() {
+                  focus = change;
+                  if (!focus) error = !_formKey.currentState.validate();
+                }),
+            child: Container(
+                height: 63,
+                child: Stack(children: [
+                  _feld,
+                  Align(
+                      alignment: Alignment.topRight,
+                      child: InkWell(onTap: () {
+                        print('Test#################');
+                        controller.text = '01.08.1997 19:56';
+                        setState(() {
+                          error = !_formKey.currentState.validate();
+                        });
+                      }, child: AnimatedContainer(
+                        width: 40,
+                        height: 40,
+                        duration: Duration(milliseconds: 100),
+                        child: Stack(children: [
+                          Align(
+                              alignment: Alignment.center,
+                              child: SvgPicture.asset(svgIcons['kalender'],
+                                  color: error ? Farben.rot : (focus ? Farben
+                                      .dunkelgrau : Farben.blaugrau),
+                                  height: 22))
+                        ]),
+                        decoration: BoxDecoration(
+                            color: Farben.weiss,
+                            border: focus
+                                ? Border.all(width: 2, color: error ? Farben
+                                .rot : Farben.dunkelgrau)
+                                : Border.all(width: 1.2, color: error ? Farben
+                                .rot : Color.fromRGBO(155, 155, 155, 1)),
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(5),
+                                bottomRight: Radius.circular(5))),
+                      ))),
+                ]))));
   }
 }
