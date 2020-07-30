@@ -15,18 +15,21 @@ class Textfeld extends StatefulWidget {
   // ------------------------------- Variablen --------------------------------
 
   // @formatter:off
-  final String    text;        // Überschrift des Textfeldes
-  final String    hintText;    // Hinweistext innerhalb des Textfeldes
-  final TextStyle headerStyle; // Formatierung der Überschrift des Textfeldes
-  final int       maxLength;   // maximale Anzahl Zeichen innerhalb des Textfeldes
-  final bool      dateTime;    // Ist das Textfeld ein DateTimeTextfeld?
-  final Wrapper   value;       // Inhalt des Textfeldes
+  final String    text;                           // Überschrift des Textfeldes
+  final String    hintText;                       // Hinweistext innerhalb des Textfeldes
+  final String    bottomHintText;                 // Hinweistext unterhalb des Textfeldes
+  final TextStyle headerStyle;                    // Formatierung der Überschrift des Textfeldes
+  final int       maxLength;                      // maximale Anzahl Zeichen innerhalb des Textfeldes
+  final bool      dateTime;                       // Ist das Textfeld ein DateTimeTextfeld?
+  final Wrapper   value;                          // Inhalt des Textfeldes
+  final List<TextInputFormatter> inputFormatters; // definiert den zulässigen Textinhalt und ermöglicht es Textmasken zuzuweisen
+  final bool multiline;
   // @formatter:off
 
   // ------------------------------ Konstruktor -------------------------------
 
   const Textfeld(
-      {this.text = 'Header', this.hintText = 'HintText', this.maxLength = 64, this.headerStyle = const Schrift(), this.dateTime = false, this.value});
+      {this.text = 'Header', this.hintText = 'HintText', this.maxLength = 64, this.headerStyle = const Schrift(), this.dateTime = false, this.value, this.inputFormatters, this.bottomHintText, this.multiline = false});
 
   // ------------------------------- createState ------------------------------
 
@@ -35,6 +38,24 @@ class Textfeld extends StatefulWidget {
 }
 
 class _TextfeldState extends State<Textfeld> {
+  // ------------------------------- Variablen --------------------------------
+
+  // @formatter:off
+  String  hintText; // Hinweistext innerhalb des Textfeldes
+  // @formatter:on
+
+  // -------------------------------- initState -------------------------------
+
+  @override
+  void initState() {
+    if (widget.dateTime && widget.hintText == 'HintText') {
+      hintText = '';
+    } else {
+      hintText = widget.hintText;
+    }
+    super.initState();
+  }
+
   // --------------------------------- Build ----------------------------------
 
   @override
@@ -43,16 +64,28 @@ class _TextfeldState extends State<Textfeld> {
       Container(
           child: Align(
               alignment: Alignment.centerLeft,
-              child: Text(widget.text,
-                  style: widget.headerStyle))),
+              child: Text(widget.text, style: widget.headerStyle))),
       SizedBox(height: 7),
-      widget.dateTime ? _DateTimeTextfeld(value: widget.value,
-          hintText: widget.hintText,
-          maxLength: widget.maxLength) :
-      _Feld(
-        hintText: widget.hintText,
-        maxLength: widget.maxLength,
-      )
+      widget.dateTime
+          ? _DateTimeTextfeld(
+              value: widget.value ?? Wrapper(),
+              hintText: hintText,
+              maxLength: widget.maxLength)
+          : _Feld(
+              inputFormatters: widget.inputFormatters ?? [],
+              multiline: widget.multiline,
+              hintText: hintText,
+              maxLength: widget.maxLength,
+            ),
+      widget.bottomHintText == null
+          ? Container()
+          : Container(
+              height: 25,
+              padding: EdgeInsets.only(left: 9),
+              child: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Text(widget.bottomHintText,
+                      style: Schrift(color: Farben.grau, fontSize: 15))))
     ]);
   }
 }
@@ -71,20 +104,20 @@ class _Feld extends StatefulWidget {
   final bool                     error;               // Ist der eingegebene Text fehlerhaft?
   final Function(String)         validator;           // Prüfung ob der Inhalt des Textfeldes valide ist
   final TextEditingController    controller;          // Controller des Textfeldes; wird verwendet um einen Text in das Textfeld zu schreiben
+  final bool multiline;
   // @formatter:on
 
   // ------------------------------ Konstruktor -------------------------------
 
-  const _Feld(
-      {this.hintText,
-      this.maxLength = 64,
-      this.contentPaddingLeft = 10,
-      this.contentPaddingRight = 10,
-      this.inputFormatters,
-      this.dateTime = false,
-      this.validator,
-      this.error = false,
-      this.controller});
+  const _Feld({this.hintText,
+    this.maxLength = 64,
+    this.contentPaddingLeft = 10,
+    this.contentPaddingRight = 10,
+    this.inputFormatters,
+    this.dateTime = false,
+    this.validator,
+    this.error = false,
+    this.controller, this.multiline = false});
 
   // ------------------------------- createState ------------------------------
 
@@ -106,11 +139,11 @@ class _FeldState extends State<_Feld> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: widget.error ? 63 : 40,
+        height: widget.error ? (widget.multiline ? 93 : 63) : (widget.multiline ? 70 : 40),
         child: Theme(
             data: ThemeData(
                 primaryColor: Farben.blaugrau, errorColor: Farben.rot),
-            child: TextFormField(
+            child: TextFormField(minLines: widget.multiline ? 2 : null, maxLines: widget.multiline ? null : 1,
                 controller: widget.controller,
                 validator: widget.validator == null
                     ? (text) => null
@@ -127,11 +160,11 @@ class _FeldState extends State<_Feld> {
                     focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(5)),
                         borderSide:
-                            BorderSide(width: 2, color: Farben.dunkelgrau)),
+                        BorderSide(width: 2, color: Farben.dunkelgrau)),
                     counterText: '',
                     contentPadding: EdgeInsets.only(
                         left: widget.contentPaddingLeft,
-                        right: widget.contentPaddingRight),
+                        right: widget.contentPaddingRight, top: widget.multiline ? 10: 0, bottom: widget.multiline ? 10: 0),
                     hintText: widget.hintText,
                     hintStyle: Schrift(color: Farben.grau),
                     border: OutlineInputBorder(
@@ -151,7 +184,8 @@ class _DateTimeTextfeld extends StatefulWidget {
 
   // ------------------------------ Konstruktor -------------------------------
 
-  const _DateTimeTextfeld({this.hintText = 'HintText', this.maxLength = 64, this.value});
+  const _DateTimeTextfeld(
+      {this.hintText = 'HintText', this.maxLength = 64, this.value});
 
   // ------------------------------- createState ------------------------------
 
@@ -169,6 +203,9 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
   TextEditingController controller;                        // Controller des Textfeldes; wird verwendet um das Ergebnis des Datepickers in das Textfeld zu schreiben
   // @formatter:on
 
+  // ---------------------------- DateTime-Picker -----------------------------
+
+  /// definiert das Aussehen des DatePickers
   Future<DateTime> _showCustomDatePicker({@required BuildContext context}) { // @formatter:off
     return showDatePicker(
         context:         context,
@@ -194,6 +231,7 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
             ));
   } // @formatter:on
 
+  /// definiert das Aussehen des TimePickers
   Future<TimeOfDay> _showCustomTimePicker({@required BuildContext context}) { // @formatter:off
     return showTimePicker(
         context:     context,
@@ -210,6 +248,7 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
             ));
   } // @formatter:on
 
+  /// Verknüft Date- & TimePicker und blendet diese ein. Liefert ein Future<DateTime> zurück
   Future<DateTime> _showDateTimePicker(BuildContext context) async { // @formatter:off
     DateTime dateTime;
     await _showCustomDatePicker(context: context).then((value) async {
@@ -221,6 +260,9 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
     return dateTime;
   } // @formatter:on
 
+  // --------------------------- Validitätsprüfung ----------------------------
+
+  /// Konvertiert den Inhalt des Textfeldes in einen für DateTime verwertbaren String
   String _convertDate(String value) { // @formatter:off
     var list = RegExp(r'(\d{2})\.(\d{2})\.(\d{4})\s(\d{2}):(\d{2})').allMatches(value).elementAt(0);
     return '${list.group(3).toString().padLeft(4, '0')}-'
@@ -230,10 +272,13 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
            '${list.group(5).toString().padLeft(2, '0')}:00';
   } // @formatter:on
 
+  /// Prüft ob der Datums-String zulässig ist
   bool _isValidDate(String input) {
     return input == _toOriginalFormatString(DateTime.parse(input));
   }
 
+  /// Wandelt das DateTime in einen String um
+  /// Wird für _isValidDate benötigt, da DateFormat in diesem Fall nicht funktioniert, bzw. das Ergebnis von _isValidDate verfälscht
   String _toOriginalFormatString(DateTime dateTime) { // @formatter:off
     return '${dateTime.year  .toString().padLeft(4, '0')}-'
            '${dateTime.month .toString().padLeft(2, '0')}-'
@@ -241,6 +286,8 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
            '${dateTime.hour  .toString().padLeft(2, '0')}:'
            '${dateTime.minute.toString().padLeft(2, '0')}:00';
   } // @formatter:on
+
+  // -------------------------------- initState -------------------------------
 
   @override
   void initState() {
@@ -306,7 +353,7 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
                           ]),
                           decoration: BoxDecoration(
                               color: Farben.weiss,
-                              border: _focus ? Border.all(width: 2,   color: _error ? Farben.rot : Farben.dunkelgrau)
+                              border: _focus ? Border.all(width:   2, color: _error ? Farben.rot : Farben.dunkelgrau)
                                              : Border.all(width: 1.2, color: _error ? Farben.rot : Color.fromRGBO(155, 155, 155, 1)),
                               borderRadius: BorderRadius.only(
                                   topRight:    Radius.circular(5),
@@ -316,7 +363,9 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
   } // @formatter:on
 }
 
+/// Wrapper um Variablen an Parent-Widgets weiterzugeben zu können
 class Wrapper {
   var value;
+
   Wrapper({this.value});
 }

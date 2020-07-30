@@ -20,10 +20,12 @@ class _TerminBearbeitenPageState extends State<TerminBearbeitenPage> {
         Align(
             alignment: Alignment.centerLeft,
             child: Text('Termin bearbeiten', style: Schrift.ueberschrift())),
-        Textfeld(text: 'Termin Name', headerStyle: Schrift()),
-        Textfeld(text: 'Beschreibung', headerStyle: Schrift()),
-        Textfeld(text: 'Ort', headerStyle: Schrift()),
-        Textfeld(text: 'Anzahl freier Plätze', headerStyle: Schrift()),
+        Textfeld(text: 'Termin Name', hintText: 'Name des Termins'),
+        Textfeld(text: 'Beschreibung', hintText: 'Terminbeschreibung', multiline: true),
+        Textfeld(text: 'Ort', hintText: 'Wohnort'),
+        Textfeld(text: 'Anzahl freier Plätze', hintText: 'Platzanzahl', bottomHintText: '0 um Beschränkung aufzuheben'),
+        Textfeld(text: 'Datum/Uhrzeit von', dateTime: true),
+        Textfeld(text: 'Datum/Uhrzeit bis', dateTime: true),
         Row(children: [
           Expanded(child: Container()),
           Text('Öffentlich', style: Schrift()),

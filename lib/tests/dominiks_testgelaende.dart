@@ -109,7 +109,7 @@ class _TesteWidgetsState extends State<TesteWidgets> {
           ExpandableRahmen(),
           SizedBox(height: 50),
           Button(text: 'print Datum', onPressed: () => print('Datum: [${dateTime.value}]')),
-          Rahmen(children: [Textfeld(dateTime: true, text: 'Datum/Uhrzeit von', hintText: '', value: dateTime)]),
+          Rahmen(children: [Textfeld(dateTime: true, text: 'Datum/Uhrzeit von', value: dateTime)]),
           SizedBox(height: 50),
           Container(height: 100, color: Farben.blau),
           Button(
