@@ -4,6 +4,7 @@ import 'package:dipl_app/frontend/gui_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'gui_konstanten.dart';
 import 'gui_buttons.dart';
@@ -156,6 +157,60 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController controller;
 
+
+
+
+  Future<DateTime> _showCustomDatePicker({@required BuildContext context}) {
+    return showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2030),
+        builder: (BuildContext context, Widget child) => Theme(
+          data: ThemeData.light().copyWith(
+            buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+            colorScheme: ColorScheme.light(
+              primary: Farben.rot,
+              onPrimary: Farben.weiss,
+              surface: Farben.rot,
+              onSurface: Farben.schwarz,
+            ),
+            dialogBackgroundColor: Farben.weiss,
+          ),
+          child: child,
+        ));
+  }
+
+  Future<TimeOfDay> _showCustomTimePicker({@required BuildContext context}) {
+    return showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+        builder: (BuildContext context, Widget child) => Theme(
+          data: ThemeData.light().copyWith(
+            buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+            primaryColor: Farben.rot,
+            accentColor: Farben.rot,
+            colorScheme: ColorScheme.light(
+              primary: Farben.rot,
+            ),
+            dialogBackgroundColor: Farben.weiss,
+          ),
+          child: child,
+        ));
+  }
+
+  Future<DateTime> _showDateTimePicker(BuildContext context) async {
+    DateTime dateTime;
+    await _showCustomDatePicker(context: context).then((value) async {
+      if (value != null) {
+        TimeOfDay timeOfDay = await _showCustomTimePicker(context: context);
+        dateTime = DateTime(
+            value.year, value.month, value.day, timeOfDay.hour, timeOfDay.minute);
+      }
+    });
+    return dateTime;
+  }
+
   String _convertDate(String value) { // @formatter:off
     var list = RegExp(r'(\d{2})\.(\d{2})\.(\d{4})\s(\d{2}):(\d{2})').allMatches(value).elementAt(0);
     return '${list.group(3).toString().padLeft(4, '0')}-'
@@ -187,6 +242,7 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
   Widget build(BuildContext context) {
     var _feld = _Feld(controller: controller,
         validator: (value) {
+          if (value.isEmpty) return null;
           try {
             print('ConvertDate: [${_convertDate(value)}]');
             if (_isValidDate(_convertDate(value))) return null;
@@ -214,9 +270,9 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
                   _feld,
                   Align(
                       alignment: Alignment.topRight,
-                      child: InkWell(onTap: () {
-                        print('Test#################');
-                        controller.text = '01.08.1997 19:56';
+                      child: InkWell(onTap: () async {
+                        var dateTime = await _showDateTimePicker(context);
+                        if(dateTime != null) controller.text = DateFormat('dd.MM.yyyy HH:mm').format(dateTime);
                         setState(() {
                           error = !_formKey.currentState.validate();
                         });
