@@ -157,28 +157,28 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController controller;
 
-
-
-
   Future<DateTime> _showCustomDatePicker({@required BuildContext context}) {
     return showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2000),
+        helpText: 'Wähle Datum',
         lastDate: DateTime(2030),
+        locale: const Locale("de", "DE"),
         builder: (BuildContext context, Widget child) => Theme(
-          data: ThemeData.light().copyWith(
-            buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
-            colorScheme: ColorScheme.light(
-              primary: Farben.rot,
-              onPrimary: Farben.weiss,
-              surface: Farben.rot,
-              onSurface: Farben.schwarz,
-            ),
-            dialogBackgroundColor: Farben.weiss,
-          ),
-          child: child,
-        ));
+              data: ThemeData.light().copyWith(
+                buttonTheme:
+                    ButtonThemeData(textTheme: ButtonTextTheme.primary),
+                colorScheme: ColorScheme.light(
+                  primary: Farben.rot,
+                  onPrimary: Farben.weiss,
+                  surface: Farben.rot,
+                  onSurface: Farben.schwarz,
+                ),
+                dialogBackgroundColor: Farben.weiss,
+              ),
+              child: child,
+            ));
   }
 
   Future<TimeOfDay> _showCustomTimePicker({@required BuildContext context}) {
@@ -186,17 +186,18 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
         context: context,
         initialTime: TimeOfDay.now(),
         builder: (BuildContext context, Widget child) => Theme(
-          data: ThemeData.light().copyWith(
-            buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
-            primaryColor: Farben.rot,
-            accentColor: Farben.rot,
-            colorScheme: ColorScheme.light(
-              primary: Farben.rot,
-            ),
-            dialogBackgroundColor: Farben.weiss,
-          ),
-          child: child,
-        ));
+              data: ThemeData.light().copyWith(
+                buttonTheme:
+                    ButtonThemeData(textTheme: ButtonTextTheme.primary),
+                primaryColor: Farben.rot,
+                accentColor: Farben.rot,
+                colorScheme: ColorScheme.light(
+                  primary: Farben.rot,
+                ),
+                dialogBackgroundColor: Farben.weiss,
+              ),
+              child: child,
+            ));
   }
 
   Future<DateTime> _showDateTimePicker(BuildContext context) async {
@@ -204,8 +205,8 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
     await _showCustomDatePicker(context: context).then((value) async {
       if (value != null) {
         TimeOfDay timeOfDay = await _showCustomTimePicker(context: context);
-        dateTime = DateTime(
-            value.year, value.month, value.day, timeOfDay.hour, timeOfDay.minute);
+        dateTime = DateTime(value.year, value.month, value.day, timeOfDay.hour,
+            timeOfDay.minute);
       }
     });
     return dateTime;
@@ -272,7 +273,8 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
                       alignment: Alignment.topRight,
                       child: InkWell(onTap: () async {
                         var dateTime = await _showDateTimePicker(context);
-                        if(dateTime != null) controller.text = DateFormat('dd.MM.yyyy HH:mm').format(dateTime);
+                        if (dateTime != null) controller.text =
+                            DateFormat('dd.MM.yyyy HH:mm').format(dateTime);
                         setState(() {
                           error = !_formKey.currentState.validate();
                         });

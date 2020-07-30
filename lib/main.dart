@@ -6,6 +6,7 @@ import 'package:dipl_app/tests/dominiks_testgelaende.dart';
 import 'package:dipl_app/tests/saschas_labor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,6 +18,12 @@ class MyApp extends StatelessWidget {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp]); // sperrt Bildschirmrotation
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate
+      ],
+      supportedLocales: [
+        const Locale("de","DE")
+      ],
       title: 'orgApp',
       theme: ThemeData(
         primarySwatch: Colors.red,
