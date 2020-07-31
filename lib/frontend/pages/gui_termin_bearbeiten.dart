@@ -66,7 +66,7 @@ class _TerminBearbeitenPageState extends State<TerminBearbeitenPage> {
         Align(
             alignment: Alignment.centerLeft,
             child: Text('Angemeldete Gruppenleiter',
-                style: Schrift.ueberschrift()))
+                style: Schrift.ueberschrift())), Teiler(), Rahmen(header: TopHeader())
       ]),
       Teiler(rahmenTrenner: true),
       Rahmen(children: [

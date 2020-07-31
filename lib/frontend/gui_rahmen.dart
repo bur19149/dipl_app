@@ -1,14 +1,23 @@
+// -------------------------------- Imports ---------------------------------
+
 import 'package:dipl_app/frontend/gui_konstanten.dart';
 import 'package:dipl_app/frontend/gui_text.dart';
 import 'package:flutter/material.dart';
-
 import 'gui_buttons.dart';
 import 'gui_pages.dart';
 
+/// ausklappbarer innerer Rahmen
+/// wird beim Termin erstellen und bearbeiten verwendet
 class ExpandableInnerRahmen extends StatefulWidget {
-  final List<Widget> children;
+  // ------------------------------- Variablen --------------------------------
+
+  final List<Widget> children; // Rahmeninhalt
+
+  // ------------------------------ Konstruktor -------------------------------
 
   const ExpandableInnerRahmen({this.children});
+
+  // ------------------------------- createState ------------------------------
 
   @override
   _ExpandableInnerRahmenState createState() => _ExpandableInnerRahmenState();
@@ -16,9 +25,15 @@ class ExpandableInnerRahmen extends StatefulWidget {
 
 class _ExpandableInnerRahmenState extends State<ExpandableInnerRahmen>
     with SingleTickerProviderStateMixin {
-  bool _isExpanded;
-  AnimationController _controller;
-  Animation<double> _heightFactor;
+  // ------------------------------- Variablen --------------------------------
+
+  // @formatter:off
+  bool                _isExpanded;   // Ist der Rahmen sichtbar/ausgefahren?
+  AnimationController _controller;   // Controller des Widgets / der Animation, definiert die Animationszeit
+  Animation<double>   _heightFactor; // definiert die Animation (Kurve usw.)
+  // @formatter:on
+
+  // ------------------------------ Eventhandler ------------------------------
 
   void _handleTap() {
     setState(() {
@@ -35,15 +50,18 @@ class _ExpandableInnerRahmenState extends State<ExpandableInnerRahmen>
     });
   }
 
+  // -------------------------------- initState -------------------------------
+
   @override
-  void initState() {
-    _controller =
-        AnimationController(duration: Duration(milliseconds: 200), vsync: this);
+  void initState() { // @formatter:off
+    _controller   = AnimationController(duration: Duration(milliseconds: 200), vsync: this);
     _heightFactor = _controller.drive(CurveTween(curve: Curves.easeIn));
-    _isExpanded = PageStorage.of(context)?.readState(context) ?? false;
+    _isExpanded   = PageStorage.of(context)?.readState(context) ?? false;
     if (_isExpanded) _controller.value = 1.0;
     super.initState();
-  }
+  } // @formatter:on
+
+  // --------------------------------- Build ----------------------------------
 
   Widget _buildChildren(BuildContext context, Widget child) {
     return Column(children: [
@@ -81,19 +99,24 @@ class _ExpandableInnerRahmenState extends State<ExpandableInnerRahmen>
                 width: double.infinity,
                 child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Rahmen(children: widget.children ?? [], shadow: false))));
+                    child: Rahmen(
+                        children: widget.children ?? [], shadow: false))));
   }
 }
 
-// ###################################################################
-
+/// ausklappbarer Rahmen
+/// wird bei der Terminübersicht verwendet (Terminkarten)
 class ExpandableRahmen extends StatefulWidget {
+  // ------------------------------- Variablen --------------------------------
+
   // @formatter:off
-  final String       header;
-  final String       bottomHeader;
-  final List<Widget> childrenTop;
-  final List<Widget> childrenBottom;
+  final String       header;         // Titel/Überschrift des Rahmens
+  final String       bottomHeader;   // Text in der Fußleiste
+  final List<Widget> childrenTop;    // immer sichtbarer Teil des Rahmens
+  final List<Widget> childrenBottom; // ein- und ausblendbarer Teil des Rahmens
   // @formatter:on
+
+  // ------------------------------ Konstruktor -------------------------------
 
   const ExpandableRahmen( // @formatter:off
       {this.header        = 'Header',
@@ -102,28 +125,24 @@ class ExpandableRahmen extends StatefulWidget {
       this.childrenBottom = const []});
   // @formatter:on
 
+  // ------------------------------- createState ------------------------------
+
   @override
   State<StatefulWidget> createState() => _ExpandableRahmenState();
 }
 
 class _ExpandableRahmenState extends State<ExpandableRahmen>
     with SingleTickerProviderStateMixin {
+  // ------------------------------- Variablen --------------------------------
+
   // @formatter:off
-  bool                _isExpanded;
-  AnimationController _controller;
-  Animation<double>   _heightFactor;
-  List<Widget>        _childrenTop;
-  List<Widget>        _childrenBottom;
+  bool                _isExpanded;     // Ist der Rahmen sichtbar/ausgefahren?
+  AnimationController _controller;     // Controller des Widgets / der Animation, definiert die Animationszeit
+  Animation<double>   _heightFactor;   // definiert die Animation (Kurve usw.)
+  List<Widget>        _childrenTop;    // immer sichtbarer Teil des Rahmens
   // @ormatter:on
 
-  @override
-  void initState() { // @formatter:off
-    _controller   = AnimationController(duration: Duration(milliseconds: 200), vsync: this);
-    _heightFactor = _controller.drive(CurveTween(curve: Curves.easeIn));
-    _isExpanded   = PageStorage.of(context)?.readState(context) ?? false;
-    if (_isExpanded) _controller.value = 1.0;
-    super.initState();
-  } // @formatter:on
+  // ------------------------------ Eventhandler ------------------------------
 
   void _handleTap() {
     setState(() {
@@ -139,6 +158,19 @@ class _ExpandableRahmenState extends State<ExpandableRahmen>
       PageStorage.of(context)?.writeState(context, _isExpanded);
     });
   }
+
+  // -------------------------------- initState -------------------------------
+
+  @override
+  void initState() { // @formatter:off
+    _controller   = AnimationController(duration: Duration(milliseconds: 200), vsync: this);
+    _heightFactor = _controller.drive(CurveTween(curve: Curves.easeIn));
+    _isExpanded   = PageStorage.of(context)?.readState(context) ?? false;
+    if (_isExpanded) _controller.value = 1.0;
+    super.initState();
+  } // @formatter:on
+
+  // --------------------------------- Build ----------------------------------
 
   Widget _buildChildren(BuildContext context, Widget child) {
     _childrenTop = [];
@@ -176,6 +208,8 @@ class _ExpandableRahmenState extends State<ExpandableRahmen>
                 child: Column(children: widget.childrenBottom))));
   }
 
+  // -------------------------------- Dispose ---------------------------------
+
   @override
   void dispose() {
     _controller.dispose();
@@ -183,28 +217,41 @@ class _ExpandableRahmenState extends State<ExpandableRahmen>
   }
 }
 
-// ###################################################################
-
+/// Standard-Rahmen
 class Rahmen extends StatefulWidget {
-  final List<Widget> children;
-  final Widget header;
-  final bool shadow;
+  // ------------------------------- Variablen --------------------------------
 
-  Rahmen({this.children = const [], this.header, this.shadow = true});
+  // @formatter:off
+  final List<Widget> children; // Inhalt des Rahmens
+  final Widget       header;   // optionaler Header des Rahmens
+  final bool         shadow;   // Hat der Rahmen einen Schatten?
+  // @formatter:on
+
+  // ------------------------------ Konstruktor -------------------------------
+
+  const Rahmen({this.children = const [], this.header, this.shadow = true});
+
+  // ------------------------------- createState ------------------------------
 
   @override
   State<StatefulWidget> createState() => _RahmenState();
 }
 
 class _RahmenState extends State<Rahmen> {
+  // --------------------------------- Build ----------------------------------
+
   @override
   Widget build(BuildContext context) {
-    Widget topWidget = Container(),
-        bottomWidget = Container();
+    Widget topWidget = Container(); // optionaler Header (oben)
+    Widget bottomWidget = Container(); // optionaler Header (unten)
+
+    // Prüfungen: Existiert Header? Wenn ja, welcher?
 
     if (widget.header is LoginHeader || widget.header is TopHeader)
       topWidget = widget.header;
     if (widget.header is BottomHeader) bottomWidget = widget.header;
+
+    // setze Rahmeninhalt zusammen
 
     List<Widget> children = [];
     children.addAll([
@@ -214,6 +261,8 @@ class _RahmenState extends State<Rahmen> {
           child: Column(children: widget.children)),
       bottomWidget
     ]);
+
+    // Build
 
     return Container(
         width: double.infinity,
@@ -233,23 +282,37 @@ class _RahmenState extends State<Rahmen> {
   }
 }
 
+/// Rahmen zur Darstellung von Terminen
+/// wird bei der Terminübersicht verwendet (Terminkarten)
 class TerminRahmen extends StatefulWidget {
-  final List<Widget> children;
+  // ------------------------------- Variablen --------------------------------
 
-  TerminRahmen({this.children = const []});
+  final List<Widget> children; // Inhalt des Rahmens
+
+  // ------------------------------ Konstruktor -------------------------------
+
+  const TerminRahmen({this.children = const []});
+
+  // ------------------------------- createState ------------------------------
 
   @override
   State<StatefulWidget> createState() => _TerminRahmenState();
 }
 
 class _TerminRahmenState extends State<TerminRahmen> {
-  bool _offen = false;
+  // ------------------------------- Variablen --------------------------------
+
+  bool _offen = false; // Ist der Rahmen gerade geöffnet?
+
+  // ------------------------------ Eventhandler ------------------------------
 
   void _oeffnen() {
     setState(() {
       _offen = !_offen;
     });
   }
+
+  // --------------------------------- Build ----------------------------------
 
   @override
   Widget build(BuildContext context) {
@@ -271,10 +334,17 @@ class _TerminRahmenState extends State<TerminRahmen> {
   }
 }
 
+/// Rahmen der Loginseite
 class LoginRahmen extends StatelessWidget {
-  final List<Widget> children;
+  // ------------------------------- Variablen --------------------------------
 
-  LoginRahmen({this.children});
+  final List<Widget> children; // Inhalt des Rahmens
+
+  // ------------------------------ Konstruktor -------------------------------
+
+  const LoginRahmen({this.children});
+
+  // --------------------------------- Build ----------------------------------
 
   @override
   Widget build(BuildContext context) {
@@ -285,7 +355,10 @@ class LoginRahmen extends StatelessWidget {
   }
 }
 
+/// Header der Loginseite
 class LoginHeader extends StatelessWidget {
+  // --------------------------------- Build ----------------------------------
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -302,10 +375,21 @@ class LoginHeader extends StatelessWidget {
   }
 }
 
+/// Fußleiste
+/// wird bei Terminkarten verwendet
 class BottomHeader extends StatelessWidget {
-  final String header;
+  // ------------------------------- Variablen --------------------------------
 
-  const BottomHeader({this.header = 'Header'});
+  // @formatter:off
+  final String header; // Headertext
+  final Color  color;  // Farbe des Headers
+  // @formatter:on
+
+  // ------------------------------ Konstruktor -------------------------------
+
+  const BottomHeader({this.header = 'Header', this.color = Farben.gruen});
+
+  // --------------------------------- Build ----------------------------------
 
   @override
   Widget build(BuildContext context) {
@@ -317,21 +401,35 @@ class BottomHeader extends StatelessWidget {
         padding: EdgeInsets.only(left: 15),
         width: double.infinity,
         decoration: BoxDecoration(
-            color: Farben.gruen, // TODO variabel
+            color: color,
             borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(9.5),
                 bottomRight: Radius.circular(9.5))));
   }
 }
 
+/// einfacher Header für Standard-Rahmen
 class TopHeader extends StatelessWidget {
-  final Color farbe, rahmen, textfarbe;
-  final String text;
+  // ------------------------------- Variablen --------------------------------
 
-  const TopHeader({this.farbe = Farben.blaugrau,
-    this.rahmen = Farben.rahmenFarbe,
+  // @formatter:off
+  final Color  farbe;     // Farbe des Headers
+  final Color  rahmen;    // Farbe des Rahmens
+  final Color  textfarbe; // Farbe des Headertexts
+  final String text;      // Headertext
+  // @formatter:on
+
+  // ------------------------------ Konstruktor -------------------------------
+
+  // @formatter:off
+  const TopHeader({
+    this.farbe     = Farben.blaugrau,
+    this.rahmen    = Farben.rahmenFarbe,
     this.textfarbe = Farben.weiss,
-    this.text = 'TopHeader'});
+    this.text      = 'TopHeader'});
+  // @formatter:on
+
+  // --------------------------------- Build ----------------------------------
 
   @override
   Widget build(BuildContext context) {
@@ -359,28 +457,34 @@ class TopHeader extends StatelessWidget {
   }
 }
 
+/// Kreuz welches rechts oben beim ExpandableRahmen angezeigt wird.
 class Kreuz extends StatefulWidget {
-  final bool offen;
-  final Duration duration = Duration(milliseconds: 250);
-  final double groesse;
+  // ------------------------------- Variablen --------------------------------
 
-  Kreuz({this.offen = false, this.groesse = 1});
+  // @formatter:off
+  final bool   offen;   // Ist der Rahmen aktuell geöffnet?
+  final double groesse; // Größe des Kreuzes (Multiplikator für Stanardgröße 60)
+  // @formatter:on
+
+  // ------------------------------ Konstruktor -------------------------------
+
+  const Kreuz({this.offen = false, this.groesse = 1});
+
+  // ------------------------------- createState ------------------------------
 
   @override
   State<StatefulWidget> createState() => _KreuzState();
 }
 
 class _KreuzState extends State<Kreuz> with TickerProviderStateMixin {
-  AnimationController _controller;
+  // ------------------------------- Variablen --------------------------------
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: widget.duration,
-      vsync: this,
-    );
-  }
+  // @formatter:off
+  AnimationController _controller;
+  Duration            duration = Duration(milliseconds: 250);
+  // @formatter:on
+
+  // ---------------------------- didUpdateWidget -----------------------------
 
   @override
   void didUpdateWidget(Kreuz oldWidget) {
@@ -391,6 +495,19 @@ class _KreuzState extends State<Kreuz> with TickerProviderStateMixin {
     }
     super.didUpdateWidget(oldWidget);
   }
+
+  // -------------------------------- initState -------------------------------
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: duration,
+      vsync: this,
+    );
+  }
+
+  // --------------------------------- Build ----------------------------------
 
   @override
   Widget build(BuildContext context) {
@@ -409,7 +526,7 @@ class _KreuzState extends State<Kreuz> with TickerProviderStateMixin {
                           color: Farben.rot,
                           height: widget.offen ? 0 : 50 * widget.groesse,
                           width: 11.5 * widget.groesse,
-                          duration: widget.duration,
+                          duration: duration,
                         )),
                     Align(
                         alignment: Alignment.center,

@@ -310,6 +310,7 @@ class _AdminMenuState extends State<_AdminMenu> {
   }
 }
 
+/// Text innerhalb des Admin-Menüs
 class _AdminMenuText extends StatefulWidget {
   // ------------------------------- Variablen --------------------------------
 

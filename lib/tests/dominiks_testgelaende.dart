@@ -108,6 +108,7 @@ class _TesteWidgetsState extends State<TesteWidgets> {
                 padding:
                     EdgeInsets.only(left: 15, right: 15, top: 50, bottom: 50),
                 children: [
+                  Rahmen(header: TopHeader()), Teiler(rahmenTrenner: true),
           ExpandableRahmen(
               childrenTop: [Text('Hallo')],
               childrenBottom: [Text('Hallo Welt')]),

@@ -1,14 +1,12 @@
 // -------------------------------- Imports ---------------------------------
 
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:dipl_app/frontend/gui_text.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'gui_konstanten.dart';
-import 'gui_buttons.dart';
 
 /// Standard-Textfeld mit Überschrift
 class Textfeld extends StatefulWidget {
@@ -23,7 +21,7 @@ class Textfeld extends StatefulWidget {
   final bool      dateTime;                       // Ist das Textfeld ein DateTimeTextfeld?
   final Wrapper   value;                          // Inhalt des Textfeldes
   final List<TextInputFormatter> inputFormatters; // definiert den zulässigen Textinhalt und ermöglicht es Textmasken zuzuweisen
-  final bool multiline;
+  final bool multiline;                           // Hat das Textfeld mehrere Zeilen?
   // @formatter:off
 
   // ------------------------------ Konstruktor -------------------------------
