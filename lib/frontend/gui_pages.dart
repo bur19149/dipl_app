@@ -13,9 +13,7 @@ class ColumnScaffold extends StatefulWidget {
 class _CustomScaffoldState extends State<ColumnScaffold> {
   @override
   Widget build(BuildContext context) {
-    Widget child,
-        column = Column(
-            children: widget.children);
+    Widget child, column = Column(children: widget.children);
     if (widget.top != null) {
       child = Padding(
           padding: EdgeInsets.only(left: 15, right: 15, top: widget.top),
@@ -67,4 +65,10 @@ class _CustomPageViewState extends State<CustomPageView> {
   Widget build(BuildContext context) {
     return null;
   }
+}
+
+/// Teilelement
+class Teiler extends SizedBox {
+  const Teiler({double height = 20, double width = 10, bool buttonTrenner = false})
+      : super(height: buttonTrenner ? 5 : height, width: width);
 }

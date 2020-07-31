@@ -20,12 +20,25 @@ class _TerminBearbeitenPageState extends State<TerminBearbeitenPage> {
         Align(
             alignment: Alignment.centerLeft,
             child: Text('Termin bearbeiten', style: Schrift.ueberschrift())),
+        Teiler(),
         Textfeld(text: 'Termin Name', hintText: 'Name des Termins'),
-        Textfeld(text: 'Beschreibung', hintText: 'Terminbeschreibung', multiline: true),
+        Teiler(),
+        Textfeld(
+            text: 'Beschreibung',
+            hintText: 'Terminbeschreibung',
+            multiline: true),
+        Teiler(),
         Textfeld(text: 'Ort', hintText: 'Wohnort'),
-        Textfeld(text: 'Anzahl freier Plätze', hintText: 'Platzanzahl', bottomHintText: '0 um Beschränkung aufzuheben'),
+        Teiler(),
+        Textfeld(
+            text: 'Anzahl freier Plätze',
+            hintText: 'Platzanzahl',
+            bottomHintText: '0 um Beschränkung aufzuheben'),
+        Teiler(),
         Textfeld(text: 'Datum/Uhrzeit von', dateTime: true),
+        Teiler(),
         Textfeld(text: 'Datum/Uhrzeit bis', dateTime: true),
+        Teiler(),
         Row(children: [
           Expanded(child: Container()),
           Text('Öffentlich', style: Schrift()),
@@ -36,15 +49,18 @@ class _TerminBearbeitenPageState extends State<TerminBearbeitenPage> {
           ),
           Expanded(child: Container())
         ]),
+        Teiler(buttonTrenner: true),
         Button(
           text: 'Termin löschen',
           farbe: Buttonfarbe.rot,
           onPressed: () {},
         ),
+        Teiler(buttonTrenner: true),
         Button(
           text: 'Abbrechen',
           onPressed: () {},
         ),
+        Teiler(buttonTrenner: true),
         Button(
           text: 'Änderungen übernehmen',
           farbe: Buttonfarbe.gruen,

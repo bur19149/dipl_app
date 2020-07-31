@@ -69,8 +69,7 @@ class _TextfeldState extends State<Textfeld> {
       widget.dateTime
           ? _DateTimeTextfeld(
               value: widget.value ?? Wrapper(),
-              hintText: hintText,
-              maxLength: widget.maxLength)
+              hintText: hintText)
           : _Feld(
               inputFormatters: widget.inputFormatters ?? [],
               multiline: widget.multiline,
@@ -102,9 +101,9 @@ class _Feld extends StatefulWidget {
   final List<TextInputFormatter> inputFormatters;     // definiert den zulässigen Textinhalt und ermöglicht es Textmasken zuzuweisen
   final bool                     dateTime;            // Ist das Textfeld ein DateTimeTextfeld?
   final bool                     error;               // Ist der eingegebene Text fehlerhaft?
+  final bool                     multiline;           // Hat das Textfeld mehrere Zeilen?
   final Function(String)         validator;           // Prüfung ob der Inhalt des Textfeldes valide ist
   final TextEditingController    controller;          // Controller des Textfeldes; wird verwendet um einen Text in das Textfeld zu schreiben
-  final bool multiline;
   // @formatter:on
 
   // ------------------------------ Konstruktor -------------------------------
@@ -126,7 +125,12 @@ class _Feld extends StatefulWidget {
 }
 
 class _FeldState extends State<_Feld> {
-  List<TextInputFormatter> _inputFormatters;
+  // ------------------------------- Variablen --------------------------------
+
+  List<
+      TextInputFormatter> _inputFormatters; // definiert den zulässigen Textinhalt und ermöglicht es Textmasken zuzuweisen
+
+  // -------------------------------- initState -------------------------------
 
   @override
   void initState() { // @formatter:off
@@ -139,11 +143,14 @@ class _FeldState extends State<_Feld> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: widget.error ? (widget.multiline ? 93 : 63) : (widget.multiline ? 70 : 40),
+        height: widget.error ? (widget.multiline ? 93 : 63) : (widget.multiline
+            ? 70
+            : 40),
         child: Theme(
             data: ThemeData(
                 primaryColor: Farben.blaugrau, errorColor: Farben.rot),
-            child: TextFormField(minLines: widget.multiline ? 2 : null, maxLines: widget.multiline ? null : 1,
+            child: TextFormField(minLines: widget.multiline ? 2 : null,
+                maxLines: widget.multiline ? null : 1,
                 controller: widget.controller,
                 validator: widget.validator == null
                     ? (text) => null
@@ -164,7 +171,9 @@ class _FeldState extends State<_Feld> {
                     counterText: '',
                     contentPadding: EdgeInsets.only(
                         left: widget.contentPaddingLeft,
-                        right: widget.contentPaddingRight, top: widget.multiline ? 10: 0, bottom: widget.multiline ? 10: 0),
+                        right: widget.contentPaddingRight,
+                        top: widget.multiline ? 10 : 0,
+                        bottom: widget.multiline ? 10 : 0),
                     hintText: widget.hintText,
                     hintStyle: Schrift(color: Farben.grau),
                     border: OutlineInputBorder(
@@ -173,19 +182,19 @@ class _FeldState extends State<_Feld> {
   }
 }
 
+/// Textfeld zur Eingabe von Zeitangaben
 class _DateTimeTextfeld extends StatefulWidget {
   // ------------------------------- Variablen --------------------------------
 
   // @formatter:off
   final String  hintText;  // Hinweistext innerhalb des Textfeldes
-  final int     maxLength; // maximale Anzahl Zeichen innerhalb des Textfeldes
   final Wrapper value;     // Inhalt des Textfeldes
   // @formatter:on
 
   // ------------------------------ Konstruktor -------------------------------
 
   const _DateTimeTextfeld(
-      {this.hintText = 'HintText', this.maxLength = 64, this.value});
+      {this.hintText = 'HintText', this.value});
 
   // ------------------------------- createState ------------------------------
 
@@ -312,11 +321,11 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
           return 'Ungültiges Datum!';
         },
         error: _error,
-        inputFormatters: [MaskTextInputFormatter(mask: '##.##.#### ##:##')],
+        inputFormatters: [DateTimeInputFormatter(), MaskTextInputFormatter(mask: '##.##.#### ##:##')],
         contentPaddingRight: 48,
         dateTime:  true,
         hintText:  widget.hintText,
-        maxLength: widget.maxLength);
+        maxLength: 16);
 
     return Form(
         key: _formKey,
@@ -369,3 +378,31 @@ class Wrapper {
 
   Wrapper({this.value});
 }
+
+/// Formatter für DateTime-Textfelder
+class DateTimeInputFormatter extends TextInputFormatter { // @formatter:off
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    var text = newValue.text, length = text.length;
+    switch (length) {
+      case  1: return RegExp(r'[0-9]')                                                                                                 .hasMatch(text) ? newValue : oldValue;
+      case  2: return RegExp(r'(?:0[1-9]|[12]\d|3[01])')                                                                               .hasMatch(text) ? newValue : oldValue;
+      case  3: return RegExp(r'(?:0[1-9]|[12]\d|3[01])(?:\.|[01])')                                                                    .hasMatch(text) ? newValue : oldValue;
+      case  4: return RegExp(r'(?:0[1-9]|[12]\d|3[01])(?:\.|[01])')                                                                    .hasMatch(text) ? newValue : oldValue;
+      case  5: return RegExp(r'(?:0[1-9]|[12]\d|3[01])\.(?:0[1-9]|1[012])')                                                            .hasMatch(text) ? newValue : oldValue;
+      case  6: return RegExp(r'(?:0[1-9]|[12]\d|3[01])\.(?:0[1-9]|1[012])(?:\.|[12])')                                                 .hasMatch(text) ? newValue : oldValue;
+      case  7: return RegExp(r'(?:0[1-9]|[12]\d|3[01])\.(?:0[1-9]|1[012])\.[12]')                                                      .hasMatch(text) ? newValue : oldValue;
+      case  8: return RegExp(r'(?:0[1-9]|[12]\d|3[01])\.(?:0[1-9]|1[012])\.(?:19|20)')                                                 .hasMatch(text) ? newValue : oldValue;
+      case  9: return RegExp(r'(?:0[1-9]|[12]\d|3[01])\.(?:0[1-9]|1[012])\.(?:199|20[0123])')                                          .hasMatch(text) ? newValue : oldValue;
+      case 10: return RegExp(r'(?:0[1-9]|[12]\d|3[01])\.(?:0[1-9]|1[012])\.(?:199\d|20(?:[012]\d|30))')                                .hasMatch(text) ? newValue : oldValue;
+      case 11: return RegExp(r'(?:0[1-9]|[12]\d|3[01])\.(?:0[1-9]|1[012])\.(?:199\d|20(?:[012]\d|30))(?:\s|[012])')                    .hasMatch(text) ? newValue : oldValue;
+      case 12: return RegExp(r'(?:0[1-9]|[12]\d|3[01])\.(?:0[1-9]|1[012])\.(?:199\d|20(?:[012]\d|30))\s[012]')                         .hasMatch(text) ? newValue : oldValue;
+      case 13: return RegExp(r'(?:0[1-9]|[12]\d|3[01])\.(?:0[1-9]|1[012])\.(?:199\d|20(?:[012]\d|30))\s(?:[01]\d|2[0-3])')             .hasMatch(text) ? newValue : oldValue;
+      case 14: return RegExp(r'(?:0[1-9]|[12]\d|3[01])\.(?:0[1-9]|1[012])\.(?:199\d|20(?:[012]\d|30))\s(?:[01]\d|2[0-3])(?:\:|[0-5])') .hasMatch(text) ? newValue : oldValue;
+      case 15: return RegExp(r'(?:0[1-9]|[12]\d|3[01])\.(?:0[1-9]|1[012])\.(?:199\d|20(?:[012]\d|30))\s(?:[01]\d|2[0-3])\:[0-5]')      .hasMatch(text) ? newValue : oldValue;
+      case 16: return RegExp(r'(?:0[1-9]|[12]\d|3[01])\.(?:0[1-9]|1[012])\.(?:199\d|20(?:[012]\d|30))\s(?:[01]\d|2[0-3])\:[0-5]\d')    .hasMatch(text) ? newValue : oldValue;
+      default:
+        return newValue;
+    }
+  }
+} // @formatter:on
