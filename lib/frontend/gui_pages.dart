@@ -69,6 +69,6 @@ class _CustomPageViewState extends State<CustomPageView> {
 
 /// Teilelement
 class Teiler extends SizedBox {
-  const Teiler({double height = 20, double width = 10, bool buttonTrenner = false})
-      : super(height: buttonTrenner ? 5 : height, width: width);
+  const Teiler({double height = 20, double width = 10, bool buttonTrenner = false, bool rahmenTrenner = false})
+      : super(height: buttonTrenner ? 5 : (rahmenTrenner ? 30 : height), width: width);
 }

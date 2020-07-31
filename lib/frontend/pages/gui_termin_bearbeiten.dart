@@ -44,7 +44,6 @@ class _TerminBearbeitenPageState extends State<TerminBearbeitenPage> {
           Teiler(),
           Textfeld(text: 'Öffentlich bis', dateTime: true),
         ]),
-        Teiler(),
         Button(
           text: 'Termin löschen',
           farbe: Buttonfarbe.rot,
@@ -61,6 +60,30 @@ class _TerminBearbeitenPageState extends State<TerminBearbeitenPage> {
           farbe: Buttonfarbe.gruen,
           onPressed: () {},
         ),
+      ]),
+      Teiler(rahmenTrenner: true),
+      Rahmen(children: [
+        Align(
+            alignment: Alignment.centerLeft,
+            child: Text('Angemeldete Gruppenleiter',
+                style: Schrift.ueberschrift()))
+      ]),
+      Teiler(rahmenTrenner: true),
+      Rahmen(children: [
+        Align(
+            alignment: Alignment.centerLeft,
+            child: Text('Kinder Anmeldungen', style: Schrift.ueberschrift()))
+      ]),
+      Teiler(rahmenTrenner: true),
+      Rahmen(children: [
+        Align(
+            alignment: Alignment.centerLeft,
+            child: Text('Nachträglich zum Termin anmelden',
+                style: Schrift.ueberschrift())),
+        Teiler(),
+        Placeholder(fallbackHeight: 70),
+        Teiler(),
+        Textfeld(text: 'Kommentar', hintText: 'optionaler Kommentar')
       ])
     ]);
   }

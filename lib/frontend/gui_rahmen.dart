@@ -64,7 +64,8 @@ class _ExpandableInnerRahmenState extends State<ExpandableInnerRahmen>
           curve: Curves.easeIn,
           opacity: _isExpanded ? 1 : 0,
           child: ClipRect(
-              child: Align(heightFactor: _heightFactor.value, child: child)))
+              child: Align(heightFactor: _heightFactor.value, child: child))),
+      Teiler(height: _isExpanded ? 20 : 0)
     ]);
   }
 
