@@ -3,28 +3,37 @@ import 'package:dipl_app/frontend/gui_text.dart';
 import 'package:flutter/material.dart';
 
 import 'gui_buttons.dart';
+import 'gui_pages.dart';
 
-// ###################################################################
+class ExpandableInnerRahmen extends StatefulWidget {
+  final List<Widget> children;
 
-class ExpandableRahmen extends StatefulWidget {
-  final String header, bottomHeader;
-  final List<Widget> childrenTop, childrenBottom;
-
-  const ExpandableRahmen(
-      {this.header = 'Header',
-      this.bottomHeader = 'Header',
-      this.childrenTop = const [],
-      this.childrenBottom = const []});
+  const ExpandableInnerRahmen({this.children});
 
   @override
-  State<StatefulWidget> createState() => _ExpandableRahmenState();
+  _ExpandableInnerRahmenState createState() => _ExpandableInnerRahmenState();
 }
 
-class _ExpandableRahmenState extends State<ExpandableRahmen>
+class _ExpandableInnerRahmenState extends State<ExpandableInnerRahmen>
     with SingleTickerProviderStateMixin {
   bool _isExpanded;
   AnimationController _controller;
   Animation<double> _heightFactor;
+
+  void _handleTap() {
+    setState(() {
+      _isExpanded = !_isExpanded;
+      if (_isExpanded) {
+        _controller.forward();
+      } else {
+        _controller.reverse().then<void>((void value) {
+          if (!mounted) return;
+          setState(() {});
+        });
+      }
+      PageStorage.of(context)?.writeState(context, _isExpanded);
+    });
+  }
 
   @override
   void initState() {
@@ -35,6 +44,85 @@ class _ExpandableRahmenState extends State<ExpandableRahmen>
     if (_isExpanded) _controller.value = 1.0;
     super.initState();
   }
+
+  Widget _buildChildren(BuildContext context, Widget child) {
+    return Column(children: [
+      Row(children: [
+        Expanded(child: Container()),
+        Text('Öffentlich', style: Schrift()),
+        SizedBox(width: 30),
+        CustomToggleButton(
+          size: 70,
+          value: false,
+          onTap: () => _handleTap(),
+        ),
+        Expanded(child: Container())
+      ]),
+      Teiler(),
+      AnimatedOpacity(
+          duration: Duration(milliseconds: 200),
+          curve: Curves.easeIn,
+          opacity: _isExpanded ? 1 : 0,
+          child: ClipRect(
+              child: Align(heightFactor: _heightFactor.value, child: child)))
+    ]);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bool closed = !_isExpanded && _controller.isDismissed;
+    return AnimatedBuilder(
+        animation: _controller.view,
+        builder: _buildChildren,
+        child: closed
+            ? null
+            : Container(
+                width: double.infinity,
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Rahmen(children: widget.children ?? [], shadow: false))));
+  }
+}
+
+// ###################################################################
+
+class ExpandableRahmen extends StatefulWidget {
+  // @formatter:off
+  final String       header;
+  final String       bottomHeader;
+  final List<Widget> childrenTop;
+  final List<Widget> childrenBottom;
+  // @formatter:on
+
+  const ExpandableRahmen( // @formatter:off
+      {this.header        = 'Header',
+      this.bottomHeader   = 'Header',
+      this.childrenTop    = const [],
+      this.childrenBottom = const []});
+  // @formatter:on
+
+  @override
+  State<StatefulWidget> createState() => _ExpandableRahmenState();
+}
+
+class _ExpandableRahmenState extends State<ExpandableRahmen>
+    with SingleTickerProviderStateMixin {
+  // @formatter:off
+  bool                _isExpanded;
+  AnimationController _controller;
+  Animation<double>   _heightFactor;
+  List<Widget>        _childrenTop;
+  List<Widget>        _childrenBottom;
+  // @ormatter:on
+
+  @override
+  void initState() { // @formatter:off
+    _controller   = AnimationController(duration: Duration(milliseconds: 200), vsync: this);
+    _heightFactor = _controller.drive(CurveTween(curve: Curves.easeIn));
+    _isExpanded   = PageStorage.of(context)?.readState(context) ?? false;
+    if (_isExpanded) _controller.value = 1.0;
+    super.initState();
+  } // @formatter:on
 
   void _handleTap() {
     setState(() {
@@ -52,27 +140,24 @@ class _ExpandableRahmenState extends State<ExpandableRahmen>
   }
 
   Widget _buildChildren(BuildContext context, Widget child) {
-    childrenTop = [];
-    childrenTop.addAll([
+    _childrenTop = [];
+    _childrenTop.addAll([
       Row(children: [
         Text(widget.header, style: Schrift.ueberschrift()),
         Expanded(child: Container()),
         Kreuz(groesse: 0.5, offen: _isExpanded),
         SizedBox(width: 5)
       ]),
-      SizedBox(height: 10)
+      SizedBox(height: 10),
+      ...widget.childrenTop,
+      ClipRect(child: Align(heightFactor: _heightFactor.value, child: child))
     ]);
-    childrenTop.addAll(widget.childrenTop);
-    childrenTop.add(ClipRect(
-        child: Align(heightFactor: _heightFactor.value, child: child)));
     return InkWell(
         onTap: () => _handleTap(),
         child: Rahmen(
             header: BottomHeader(header: widget.bottomHeader),
-            children: childrenTop));
+            children: _childrenTop));
   }
-
-  List<Widget> childrenTop, childrenBottom;
 
   @override
   Widget build(BuildContext context) {
@@ -84,10 +169,10 @@ class _ExpandableRahmenState extends State<ExpandableRahmen>
         child: closed
             ? null
             : Container(
-                width: double.infinity,
-                child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Column(children: widget.childrenBottom))));
+            width: double.infinity,
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Column(children: widget.childrenBottom))));
   }
 
   @override
@@ -102,8 +187,9 @@ class _ExpandableRahmenState extends State<ExpandableRahmen>
 class Rahmen extends StatefulWidget {
   final List<Widget> children;
   final Widget header;
+  final bool shadow;
 
-  Rahmen({this.children = const [], this.header});
+  Rahmen({this.children = const [], this.header, this.shadow = true});
 
   @override
   State<StatefulWidget> createState() => _RahmenState();
@@ -112,7 +198,8 @@ class Rahmen extends StatefulWidget {
 class _RahmenState extends State<Rahmen> {
   @override
   Widget build(BuildContext context) {
-    Widget topWidget = Container(), bottomWidget = Container();
+    Widget topWidget = Container(),
+        bottomWidget = Container();
 
     if (widget.header is LoginHeader || widget.header is TopHeader)
       topWidget = widget.header;
@@ -131,11 +218,12 @@ class _RahmenState extends State<Rahmen> {
         width: double.infinity,
         decoration: BoxDecoration(
             boxShadow: [
-              BoxShadow(
+              widget.shadow ? BoxShadow(
                   blurRadius: 7,
                   spreadRadius: 0.03,
                   color: Color.fromRGBO(0, 0, 0, 0.18),
-                  offset: Offset(3, 3))
+                  offset: Offset(3, 3)) : BoxShadow(
+                  color: Color.fromRGBO(0, 0, 0, 0))
             ],
             color: Farben.weiss,
             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -239,10 +327,10 @@ class TopHeader extends StatelessWidget {
   final Color farbe, rahmen, textfarbe;
   final String text;
 
-  const TopHeader(
-      {this.farbe = Farben.blaugrau,
-      this.rahmen = Farben.rahmenFarbe,
-      this.textfarbe = Farben.weiss, this.text = 'TopHeader'});
+  const TopHeader({this.farbe = Farben.blaugrau,
+    this.rahmen = Farben.rahmenFarbe,
+    this.textfarbe = Farben.weiss,
+    this.text = 'TopHeader'});
 
   @override
   Widget build(BuildContext context) {
@@ -251,8 +339,7 @@ class TopHeader extends StatelessWidget {
           padding: EdgeInsets.only(left: 11),
           child: Align(
               alignment: Alignment.centerLeft,
-              child:
-                  Text(text, style: Schrift.ueberschrift(color: textfarbe))),
+              child: Text(text, style: Schrift.ueberschrift(color: textfarbe))),
           // TODO
           height: 45,
           width: double.infinity,

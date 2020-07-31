@@ -106,10 +106,16 @@ class _TesteWidgetsState extends State<TesteWidgets> {
                 padding:
                     EdgeInsets.only(left: 15, right: 15, top: 50, bottom: 50),
                 children: [
-          ExpandableRahmen(),
+          ExpandableRahmen(
+              childrenTop: [Text('Hallo')],
+              childrenBottom: [Text('Hallo Welt')]),
           SizedBox(height: 50),
-          Button(text: 'print Datum', onPressed: () => print('Datum: [${dateTime.value}]')),
-          Rahmen(children: [Textfeld(dateTime: true, text: 'Datum/Uhrzeit von', value: dateTime)]),
+          Button(
+              text: 'print Datum',
+              onPressed: () => print('Datum: [${dateTime.value}]')),
+          Rahmen(children: [
+            Textfeld(dateTime: true, text: 'Datum/Uhrzeit von', value: dateTime)
+          ]),
           SizedBox(height: 50),
           Container(height: 100, color: Farben.blau),
           Button(
@@ -165,7 +171,8 @@ class _TesteSchriftartenState extends State<TesteSchriftarten> {
               children: [
             Text('TextfeldText', style: Schrift()),
             Container(
-                color: Farben.rot, child: Text('Uberschrift', style: Schrift.titel())),
+                color: Farben.rot,
+                child: Text('Uberschrift', style: Schrift.titel())),
             Text('UnterUberschrift', style: Schrift.ueberschrift()),
             Container(
                 color: Farben.blau,

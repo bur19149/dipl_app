@@ -39,17 +39,12 @@ class _TerminBearbeitenPageState extends State<TerminBearbeitenPage> {
         Teiler(),
         Textfeld(text: 'Datum/Uhrzeit bis', dateTime: true),
         Teiler(),
-        Row(children: [
-          Expanded(child: Container()),
-          Text('Öffentlich', style: Schrift()),
-          SizedBox(width: 30),
-          CustomToggleButton(
-            size: 70,
-            onTap: () {},
-          ),
-          Expanded(child: Container())
+        ExpandableInnerRahmen(children: [
+          Textfeld(text: 'Öffentlich ab', dateTime: true),
+          Teiler(),
+          Textfeld(text: 'Öffentlich bis', dateTime: true),
         ]),
-        Teiler(buttonTrenner: true),
+        Teiler(),
         Button(
           text: 'Termin löschen',
           farbe: Buttonfarbe.rot,

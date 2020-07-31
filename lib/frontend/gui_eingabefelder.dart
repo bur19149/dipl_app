@@ -29,7 +29,15 @@ class Textfeld extends StatefulWidget {
   // ------------------------------ Konstruktor -------------------------------
 
   const Textfeld(
-      {this.text = 'Header', this.hintText = 'HintText', this.maxLength = 64, this.headerStyle = const Schrift(), this.dateTime = false, this.value, this.inputFormatters, this.bottomHintText, this.multiline = false});
+      {this.text = 'Header',
+        this.hintText = 'HintText',
+        this.maxLength = 64,
+        this.headerStyle = const Schrift(),
+        this.dateTime = false,
+        this.value,
+        this.inputFormatters,
+        this.bottomHintText,
+        this.multiline = false});
 
   // ------------------------------- createState ------------------------------
 
@@ -49,7 +57,7 @@ class _TextfeldState extends State<Textfeld> {
   @override
   void initState() {
     if (widget.dateTime && widget.hintText == 'HintText') {
-      hintText = '';
+      hintText = DateFormat('dd.MM.yyyy HH:mm').format(DateTime.now());
     } else {
       hintText = widget.hintText;
     }
@@ -68,8 +76,7 @@ class _TextfeldState extends State<Textfeld> {
       SizedBox(height: 7),
       widget.dateTime
           ? _DateTimeTextfeld(
-              value: widget.value ?? Wrapper(),
-              hintText: hintText)
+              value: widget.value ?? Wrapper(), hintText: hintText)
           : _Feld(
               inputFormatters: widget.inputFormatters ?? [],
               multiline: widget.multiline,
@@ -116,7 +123,8 @@ class _Feld extends StatefulWidget {
     this.dateTime = false,
     this.validator,
     this.error = false,
-    this.controller, this.multiline = false});
+    this.controller,
+    this.multiline = false});
 
   // ------------------------------- createState ------------------------------
 
@@ -193,8 +201,7 @@ class _DateTimeTextfeld extends StatefulWidget {
 
   // ------------------------------ Konstruktor -------------------------------
 
-  const _DateTimeTextfeld(
-      {this.hintText = 'HintText', this.value});
+  const _DateTimeTextfeld({this.hintText = 'HintText', this.value});
 
   // ------------------------------- createState ------------------------------
 
@@ -401,8 +408,7 @@ class DateTimeInputFormatter extends TextInputFormatter { // @formatter:off
       case 14: return RegExp(r'(?:0[1-9]|[12]\d|3[01])\.(?:0[1-9]|1[012])\.(?:199\d|20(?:[012]\d|30))\s(?:[01]\d|2[0-3])(?:\:|[0-5])') .hasMatch(text) ? newValue : oldValue;
       case 15: return RegExp(r'(?:0[1-9]|[12]\d|3[01])\.(?:0[1-9]|1[012])\.(?:199\d|20(?:[012]\d|30))\s(?:[01]\d|2[0-3])\:[0-5]')      .hasMatch(text) ? newValue : oldValue;
       case 16: return RegExp(r'(?:0[1-9]|[12]\d|3[01])\.(?:0[1-9]|1[012])\.(?:199\d|20(?:[012]\d|30))\s(?:[01]\d|2[0-3])\:[0-5]\d')    .hasMatch(text) ? newValue : oldValue;
-      default:
-        return newValue;
+      default: return newValue;
     }
   }
 } // @formatter:on
