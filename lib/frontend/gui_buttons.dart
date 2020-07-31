@@ -1,36 +1,52 @@
 // -------------------------------- Imports ---------------------------------
 
 import 'package:dipl_app/frontend/gui_text.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'gui_konstanten.dart';
 
+/// Standard-Button
 class Button extends StatefulWidget {
-  final double width;
-  final VoidCallback onPressed;
-  final Buttonfarbe farbe;
-  final bool gefuellt;
-  final String text;
-  final String svg;
+  // ------------------------------- Variablen --------------------------------
 
+  // @formatter:off
+  final double       width;     // Breite des Buttond
+  final VoidCallback onPressed; // Eventhandler
+  final Buttonfarbe  farbe;     // Farbe des Buttons
+  final bool         gefuellt;  // Ist der Button gefüllt, oder ist nur der Rand farbig?
+  final String       text;      // Buttontext
+  final String       svg;       // Optionales SVG-Icon, welches links neben dem Buttontext angezeigt werden kann
+  // @formatter:on
+
+  // ------------------------------ Konstruktor -------------------------------
+
+  // @formatter:off
   Button(
-      {this.width = double.infinity,
-      @required this.onPressed,
-      this.farbe = Buttonfarbe.blaugrau,
+      {@required this.onPressed,
+      this.width    = double.infinity,
+      this.farbe    = Buttonfarbe.blaugrau,
       this.gefuellt = true,
-      this.text = 'Button',
+      this.text     = 'Button',
       this.svg});
+
+  // @formatter:on
+
+  // ------------------------------- createState ------------------------------
 
   @override
   State<StatefulWidget> createState() => _ButtonState();
 }
 
 class _ButtonState extends State<Button> {
+  // --------------------------------- Build ----------------------------------
+
   @override
   Widget build(BuildContext context) {
     Color buttonFarbe;
     Color highlightColor;
+
+    // Definition der Highlight-, und Button-Farbe
 
     switch (widget.farbe) { // @formatter:off
       case Buttonfarbe.rot:			 highlightColor = Farben.rotHighlight; 	    buttonFarbe = Farben.rot;			 break; // rot:      #B70E0C; rotHighlight:      #7A0A09
@@ -41,39 +57,41 @@ class _ButtonState extends State<Button> {
       default:						       highlightColor = Farben.weissHighlight; 		buttonFarbe = Farben.weiss;		 break; // weiss:    #FFFFFF; weissHighlight:    #F2F2F2
     } // @formatter:on
 
-    Color textColor = widget.gefuellt ? Farben.weiss : buttonFarbe;
+    Color textColor = widget.gefuellt ? Farben.weiss : buttonFarbe; // Definition der Textfarbe
 
-    Widget child,
-        textWidget = Text(widget.text,
-            style: Schrift(color: textColor));
+    Widget child, textWidget = Text(widget.text, style: Schrift(color: textColor));
+
+    // Definition des Button-inhalts
 
     if (widget.svg != null) {
-      child = Row(children: [Expanded(child: Container()),
-        SvgPicture.asset(widget.svg, height: 23,
-            color: textColor),
+      child = Row(children: [
+        Expanded(child: Container()),
+        SvgPicture.asset(widget.svg, height: 23, color: textColor),
         SizedBox(width: 12),
-        Text(widget.text,
-            style: Schrift(color: textColor)),
+        Text(widget.text, style: Schrift(color: textColor)),
         Expanded(child: Container())
       ]);
     } else {
       child = textWidget;
     }
+
+    // Build
+
     return SizedBox(
         width: widget.width,
         child: RaisedButton(
           padding: EdgeInsets.only(top: 8, bottom: 8),
           color: widget.gefuellt ? buttonFarbe : Farben.weiss,
-          highlightColor: widget.gefuellt ? highlightColor : Farben
-              .weissHighlight,
-          shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0),
-              side: widget.gefuellt ? BorderSide.none : BorderSide(
-                  color: buttonFarbe, width: 1.6)),
+          highlightColor:
+              widget.gefuellt ? highlightColor : Farben.weissHighlight,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5.0),
+              side: widget.gefuellt
+                  ? BorderSide.none
+                  : BorderSide(color: buttonFarbe, width: 1.6)),
           onPressed: widget.onPressed,
           child: child,
-        )
-    );
+        ));
   }
 }
 
