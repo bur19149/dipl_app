@@ -3,6 +3,7 @@ import 'package:dipl_app/backend/requests/user.dart';
 import 'package:dipl_app/frontend/gui_konstanten.dart';
 import 'package:dipl_app/frontend/gui_rahmen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 import '../gui_buttons.dart';
@@ -44,6 +45,8 @@ class _TerminUebersichtPageState extends State<TerminUebersichtPage> {
                               name: termin.name,
                               anmeldungEnde: termin.anmeldungEnde,
                               ort: termin.ort,
+                              timeVon: termin.timeVon,
+                              timeBis: termin.timeBis,
                               plaetze: termin.plaetze,
                               beschreibung: termin.beschreibung),
                           SizedBox(height: 35)
@@ -59,14 +62,16 @@ class _TerminUebersichtPageState extends State<TerminUebersichtPage> {
 class _TerminRahmen extends StatefulWidget {
   final String name, ort, beschreibung;
   final int plaetze;
-  final DateTime anmeldungEnde;
+  final DateTime anmeldungEnde, timeVon, timeBis;
 
   const _TerminRahmen(
       {this.name = 'Name',
       this.anmeldungEnde,
       this.ort = 'Ort',
       this.plaetze = 0,
-      this.beschreibung = 'Beschreibung'});
+      this.beschreibung = 'Beschreibung',
+      this.timeVon,
+      this.timeBis});
 
   @override
   State<StatefulWidget> createState() => _TerminRahmenState();
@@ -74,39 +79,51 @@ class _TerminRahmen extends StatefulWidget {
 
 class _TerminRahmenState extends State<_TerminRahmen> {
   DateTime anmeldungEnde;
+  bool _sameDate;
 
   @override
   void initState() {
+    _sameDate = _checkSameDate(start: widget.timeVon, end: widget.timeBis);
     anmeldungEnde = widget.anmeldungEnde ?? DateTime(0);
     super.initState();
   }
+
+  bool _checkSameDate({@required DateTime start,@required DateTime end}) { // @formatter:off
+    bool day   = start.day   == end.day,
+         month = start.month == end.month,
+         year  = start.year  == end.year;
+    return day && month && year;
+  } // @formatter:on
 
   @override
   Widget build(BuildContext context) {
     return ExpandableRahmen(
       header: widget.name,
       bottomHeader:
-          'Anmeldung offen bis ${DateFormat('dd.MM.yyyy kk:mm').format(anmeldungEnde)}',
+      'Anmeldung offen bis ${DateFormat('dd.MM.yyyy kk:mm').format(
+          anmeldungEnde)}',
       childrenTop: [
         Row(children: [
-          Placeholder(fallbackHeight: 20, fallbackWidth: 20),
+          SvgPicture.asset(SVGicons.uhr, width: 20, color: Farben.dunkelgrau),
           SizedBox(width: 10),
-          Wrap(children: [
-            Text('01.11.2019 - 20:20 Uhr bis 23:20 Uhr',
-                style: Schrift())
+          Wrap(children: [ // @formatter:off
+            Text('${DateFormat('dd.MM.yyyy - kk:mm').format(widget.timeVon)} Uhr bis${_sameDate ? ' ' : '\n'}'
+                 '${DateFormat('${!_sameDate ? 'dd.MM.yyyy - ' : ''}kk:mm').format(widget.timeBis)} Uhr',
+                style: Schrift()) // @formatter:on
           ])
         ]),
         SizedBox(height: 5),
         Row(children: [
-          Placeholder(fallbackHeight: 20, fallbackWidth: 20),
+          SizedBox(width: 20,
+              child: SvgPicture.asset(
+                  SVGicons.standort, height: 25, color: Farben.dunkelgrau)),
           SizedBox(width: 10),
-          Wrap(children: [
-            Text(widget.ort, style: Schrift())
-          ])
+          Wrap(children: [Text(widget.ort, style: Schrift())])
         ]),
         SizedBox(height: 5),
         Row(children: [
-          Placeholder(fallbackHeight: 20, fallbackWidth: 20),
+          SvgPicture.asset(
+              SVGicons.mehrereBenutzer, width: 20, color: Farben.dunkelgrau),
           SizedBox(width: 10),
           RichText(
               text: TextSpan(
@@ -116,25 +133,23 @@ class _TerminRahmenState extends State<_TerminRahmen> {
                       fontFamily: appFont,
                       fontWeight: FontWeight.w300),
                   children: [
-                TextSpan(text: 'Es gibt noch '),
-                TextSpan(
-                    text: '${widget.plaetze}',
-                    style: TextStyle(fontWeight: FontWeight.w500)),
-                TextSpan(text: ' freie Plätze.')
-              ])),
+                    TextSpan(text: 'Es gibt noch '),
+                    TextSpan(
+                        text: '${widget.plaetze}',
+                        style: TextStyle(fontWeight: FontWeight.w500)),
+                    TextSpan(text: ' freie Plätze.')
+                  ])),
         ]),
       ],
       childrenBottom: [
         SizedBox(height: 20),
         Align(
             alignment: Alignment.centerLeft,
-            child: Text(widget.beschreibung,
-                style: Schrift())),
+            child: Text(widget.beschreibung, style: Schrift())),
         SizedBox(height: 20),
         Align(
             alignment: Alignment.centerLeft,
-            child: Text('Zum Termin anmelden',
-                style: Schrift())),
+            child: Text('Zum Termin anmelden', style: Schrift())),
         SizedBox(height: 10),
         Button(
             text: true ? 'Keine Antwort' : '',

@@ -32,7 +32,8 @@ class _TopleisteState extends State<Topleiste> {
   }
 
   void _settingsButtonPressed() {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => EinstellungenPage()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => EinstellungenPage()));
   }
 
   // --------------------------------- Build ----------------------------------
@@ -93,14 +94,14 @@ class _TopleisteState extends State<Topleiste> {
             fieldExpanded: fieldExpanded,
             left: true,
             duration: duration,
-            svg: svgIcons['einstellungen']),
+            svg: SVGicons.einstellungen),
         Expanded(child: Container()),
         _LeistenButton(
             onPressed: _searchButtonPressed,
             fieldExpanded: fieldExpanded,
             left: false,
             duration: duration,
-            svg: svgIcons['lupe'])
+            svg: SVGicons.lupe)
       ])
     ]);
   }
@@ -147,11 +148,14 @@ class _LeistenButton extends StatefulWidget {
 
   // ------------------------------ Konstruktor -------------------------------
 
-  _LeistenButton({this.onPressed,
+  // @formatter:off
+  _LeistenButton({
+    this.onPressed,
     this.fieldExpanded = false,
-    this.left = true,
+    this.left          = true,
     this.duration,
     @required this.svg});
+  // @formatter:on
 
   // ------------------------------- createState ------------------------------
 

@@ -360,7 +360,7 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
                           child: Stack(children: [
                             Align(
                                 alignment: Alignment.center,
-                                child: SvgPicture.asset(svgIcons['kalender'],
+                                child: SvgPicture.asset(SVGicons.kalender,
                                     height: 22,
                                     color: _error ? Farben.rot        : (
                                            _focus ? Farben.dunkelgrau : Farben.blaugrau)))

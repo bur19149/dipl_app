@@ -1,11 +1,10 @@
 import 'package:dipl_app/frontend/gui_eingabefelder.dart';
 import 'package:dipl_app/frontend/gui_text.dart';
 import 'package:flutter/material.dart';
-
-import '../gui_buttons.dart';
 import '../gui_konstanten.dart';
-import '../gui_pages.dart';
+import '../gui_buttons.dart';
 import '../gui_rahmen.dart';
+import '../gui_pages.dart';
 
 class TerminBearbeitenPage extends StatefulWidget {
   @override

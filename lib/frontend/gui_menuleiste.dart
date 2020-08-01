@@ -143,7 +143,7 @@ class _MenuleisteState extends State<Menuleiste> {
                       child: _LeistenButton(
                     text: 'Home',
                     onPressed: handleHome,
-                    svg: svgIcons['haus'],
+                    svg: SVGicons.haus,
                     admin: widget.admin,
                     active: home,
                   )),
@@ -152,7 +152,7 @@ class _MenuleisteState extends State<Menuleiste> {
                       child: _LeistenButton(
                     text: 'Meine Termine',
                     onPressed: handleMeineTermine,
-                    svg: svgIcons['kalender'],
+                    svg: SVGicons.kalender,
                     admin: widget.admin,
                     active: meineTermine,
                   )),
@@ -162,7 +162,7 @@ class _MenuleisteState extends State<Menuleiste> {
                           child: _LeistenButton(
                           text: 'Admin Bereich',
                           onPressed: showAdminMenu,
-                          svg: svgIcons['administrator'],
+                          svg: SVGicons.administrator,
                           admin: widget.admin,
                           active: adminMenu,
                         ))
