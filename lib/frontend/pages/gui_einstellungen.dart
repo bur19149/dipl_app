@@ -9,10 +9,11 @@ import '../gui_text.dart';
 class EinstellungenPage extends StatelessWidget {
   final User user;
 
-  const EinstellungenPage({this.user}); // TODO
+  const EinstellungenPage({this.user});
 
   @override
   Widget build(BuildContext context) {
+    print(user);
     return ColumnScaffold(
         top: MediaQuery.of(context).size.height / 6,
         children: [
@@ -30,25 +31,25 @@ class EinstellungenPage extends StatelessWidget {
                         height: 25,
                         child:
                             Text('Vorname(n):', style: Schrift.ueberschrift())),
-                    Text('Demo', style: Schrift())
+                    Text('${user?.vorname}', style: Schrift())
                   ]),
                   TableRow(children: [
                     Container(
                         height: 25,
                         child:
                             Text('Nachname:', style: Schrift.ueberschrift())),
-                    Text('Spengergasse', style: Schrift())
+                    Text('${user?.nachname}', style: Schrift())
                   ]),
                   TableRow(children: [
                     Container(
                         height: 25,
                         child: Text('E-Mail:', style: Schrift.ueberschrift())),
-                    Text('demo@jugend-event.at',
+                    Text('${user?.email}',
                         style: Schrift(color: Farben.rot))
                   ])
                 ])
               ]),
-          SizedBox(height: 30),
+          Teiler(rahmenTrenner: true),
           Rahmen(
               header: TopHeader(
                   text: 'Zugeordnete Kinder-Accounts',

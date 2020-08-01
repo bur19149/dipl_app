@@ -104,7 +104,12 @@ class _TerminRahmenState extends State<_TerminRahmen> {
           anmeldungEnde)}',
       childrenTop: [
         Row(children: [
-          SvgPicture.asset(SVGicons.uhr, width: 20, color: Farben.dunkelgrau),
+          Container(height: _sameDate ? 20 : 45,
+              child: Align(
+                  alignment: _sameDate ? Alignment.centerLeft : Alignment
+                      .topLeft,
+                  child: SvgPicture.asset(
+                      SVGicons.uhr, width: 20, color: Farben.dunkelgrau))),
           SizedBox(width: 10),
           Wrap(children: [ // @formatter:off
             Text('${DateFormat('dd.MM.yyyy - kk:mm').format(widget.timeVon)} Uhr bis${_sameDate ? ' ' : '\n'}'

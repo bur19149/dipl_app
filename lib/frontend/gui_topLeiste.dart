@@ -1,5 +1,6 @@
 // -------------------------------- Imports ---------------------------------
 
+import 'package:dipl_app/backend/requests/login.dart';
 import 'package:dipl_app/frontend/pages/gui_einstellungen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
@@ -32,8 +33,7 @@ class _TopleisteState extends State<Topleiste> {
   }
 
   void _settingsButtonPressed() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => EinstellungenPage()));
+    requestUser().then((user) => Navigator.push(context, MaterialPageRoute(builder: (context) => EinstellungenPage(user: user))));
   }
 
   // --------------------------------- Build ----------------------------------

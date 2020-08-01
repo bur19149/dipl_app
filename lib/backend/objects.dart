@@ -18,7 +18,7 @@ class User {
   String     jugendgruppe;
   String     _nachname;
   String     _vorname;
-  String     _email;
+  String     email;
   String     _plz;
   String     _ort;
   int        parent;        // (optional) zugeordneter Elternaccount wenn Kind
@@ -78,13 +78,6 @@ class User {
     }
   }
 
-  set email(String value) {
-    if (RegExp('[0-9A-Za-z!#\$%&+\\/=?^_`{|}~-]+(?:\.[0-9A-Za-z!#\$%&+\\/=?^_`{|}~-]+)'
-        '{0,1}@[0-9A-Za-z][0-9A-Za-z-]{0,253}[0-9A-Za-z][0-9A-Za-z-]{0,253}\.[0-9A-Za-z]{2,}')
-        .hasMatch(pruefungen.stringPrufung(value))) throw 'Ungültige Email-Adresse';
-      _email = value;
-  }
-
   // --------------------------------- Getter ---------------------------------
 
   // @formatter:off
@@ -93,7 +86,6 @@ class User {
   String     get nachname => _nachname;
   String     get plz      => _plz;
   String     get ort      => _ort;
-  String     get email    => _email;
   UserTyp    get typ      => _typ;
   // @formatter:on
 
@@ -103,7 +95,7 @@ class User {
   String toString() {
     String str =
         'Name:         $_vorname $_nachname ($_userID)\nWohnort:      $_ort ($_plz)\nE-Mail:       '
-                '$_email\n' +
+                '$email\n' +
             (jugendgruppe != null ? 'Jugendgruppe: $jugendgruppe\n' : '') +
             'Registriert:  $registered\n${_typ.toString()}';
     if (parent != null) {

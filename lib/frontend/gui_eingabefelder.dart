@@ -384,6 +384,7 @@ class Wrapper {
   Wrapper({this.value});
 }
 
+// TODO eventuell eine elegantere Lösung implementieren
 /// Formatter für DateTime-Textfelder
 class DateTimeInputFormatter extends TextInputFormatter { // @formatter:off
   @override
