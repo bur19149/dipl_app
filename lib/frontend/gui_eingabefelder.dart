@@ -26,16 +26,17 @@ class Textfeld extends StatefulWidget {
 
   // ------------------------------ Konstruktor -------------------------------
 
-  const Textfeld(
-      {this.text = 'Header',
-        this.hintText = 'HintText',
-        this.maxLength = 64,
+  const Textfeld({ // @formatter:off
+        this.text        = 'Header',
+        this.hintText    = 'HintText',
+        this.maxLength   = 64,
         this.headerStyle = const Schrift(),
-        this.dateTime = false,
+        this.dateTime    = false,
+        this.multiline   = false,
         this.value,
         this.inputFormatters,
-        this.bottomHintText,
-        this.multiline = false});
+        this.bottomHintText});
+  // @formatter:on
 
   // ------------------------------- createState ------------------------------
 
@@ -113,16 +114,18 @@ class _Feld extends StatefulWidget {
 
   // ------------------------------ Konstruktor -------------------------------
 
-  const _Feld({this.hintText,
-    this.maxLength = 64,
-    this.contentPaddingLeft = 10,
+  const _Feld({ // @formatter:off
+    this.maxLength           = 64,
+    this.contentPaddingLeft  = 10,
     this.contentPaddingRight = 10,
+    this.dateTime            = false,
+    this.error               = false,
+    this.multiline           = false,
+    this.hintText,
     this.inputFormatters,
-    this.dateTime = false,
     this.validator,
-    this.error = false,
-    this.controller,
-    this.multiline = false});
+    this.controller});
+  // @formatter:on
 
   // ------------------------------- createState ------------------------------
 
@@ -131,19 +134,6 @@ class _Feld extends StatefulWidget {
 }
 
 class _FeldState extends State<_Feld> {
-  // ------------------------------- Variablen --------------------------------
-
-  List<
-      TextInputFormatter> _inputFormatters; // definiert den zulässigen Textinhalt und ermöglicht es Textmasken zuzuweisen
-
-  // -------------------------------- initState -------------------------------
-
-  @override
-  void initState() { // @formatter:off
-    _inputFormatters = widget.inputFormatters != null ? widget.inputFormatters : [];
-    super.initState();
-  } // @formatter:on
-
   // --------------------------------- Build ----------------------------------
 
   @override
@@ -166,7 +156,7 @@ class _FeldState extends State<_Feld> {
                     : TextInputType.text,
                 style: Schrift(color: Farben.schwarz),
                 maxLength: widget.maxLength,
-                inputFormatters: _inputFormatters,
+                inputFormatters: widget.inputFormatters ?? [],
                 strutStyle: StrutStyle(height: 1.3),
                 decoration: InputDecoration(
                     errorStyle: Schrift(fontSize: 12, color: Farben.rot),
@@ -229,6 +219,7 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
         helpText:        'Wähle Datum',
         fieldLabelText:  'Gib ein Datum ein',
         errorFormatText: 'Ungültiges Datum!',
+        fieldHintText:   '',
         locale:      const Locale("de", "DE"),
         builder:     (BuildContext context, Widget child) => Theme(
               data: ThemeData.light().copyWith(
@@ -312,7 +303,7 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
   // --------------------------------- Build ----------------------------------
 
   @override
-  Widget build(BuildContext context) { // @formatter:off
+  Widget build(BuildContext context) {
     var _feld = _Feld(controller: controller,
         validator: (value) {
           if (value.isEmpty) return null;
@@ -326,10 +317,13 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
           return 'Ungültiges Datum!';
         },
         error: _error,
-        inputFormatters: [DateTimeInputFormatter(), MaskTextInputFormatter(mask: '##.##.#### ##:##')],
+        inputFormatters: [
+          DateTimeInputFormatter(),
+          MaskTextInputFormatter(mask: '##.##.#### ##:##')
+        ],
         contentPaddingRight: 48,
-        dateTime:  true,
-        hintText:  widget.hintText,
+        dateTime: true,
+        hintText: widget.hintText,
         maxLength: 16);
 
     return Form(
@@ -346,35 +340,53 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
                   _feld,
                   Align(
                       alignment: Alignment.topRight,
-                      child: InkWell(onTap: () async {
-                        var dateTime = await _showDateTimePicker(context);
-                        if (dateTime != null) {
-                          controller.text = DateFormat('dd.MM.yyyy HH:mm').format(dateTime);
-                          widget.value.value = dateTime;
-                        }
-                        setState(() { _error = !_formKey.currentState.validate(); });
-                      },  child: AnimatedContainer(
-                          width:  40,
+                      child: AnimatedContainer(
+                          width: 40,
                           height: 40,
                           duration: Duration(milliseconds: 100),
-                          child: Stack(children: [
-                            Align(
-                                alignment: Alignment.center,
-                                child: SvgPicture.asset(SVGicons.kalender,
-                                    height: 22,
-                                    color: _error ? Farben.rot        : (
-                                           _focus ? Farben.dunkelgrau : Farben.blaugrau)))
-                          ]),
+                          child: Material(color: Colors.transparent,
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(5),
+                                  bottomRight: Radius.circular(5)),
+                              child: InkWell(
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(4),
+                                      bottomRight: Radius.circular(4)),
+                                  onTap: () async {
+                                    var dateTime = await _showDateTimePicker(
+                                        context);
+                                    if (dateTime != null) {
+                                      controller.text = DateFormat(
+                                          'dd.MM.yyyy HH:mm').format(dateTime);
+                                      widget.value.value = dateTime;
+                                    }
+                                    setState(() {
+                                      _error =
+                                      !_formKey.currentState.validate();
+                                    });
+                                  }, child: Stack(children: [
+                                Align(
+                                    alignment: Alignment.center,
+                                    child: SvgPicture.asset(SVGicons.kalender,
+                                        height: 22,
+                                        color: _error ? Farben.rot : (
+                                            _focus ? Farben.dunkelgrau : Farben
+                                                .blaugrau)))
+                              ]))),
                           decoration: BoxDecoration(
                               color: Farben.weiss,
-                              border: _focus ? Border.all(width:   2, color: _error ? Farben.rot : Farben.dunkelgrau)
-                                             : Border.all(width: 1.2, color: _error ? Farben.rot : Color.fromRGBO(155, 155, 155, 1)),
+                              border: _focus ? Border.all(width: 2,
+                                  color: _error ? Farben.rot : Farben
+                                      .dunkelgrau)
+                                  : Border.all(width: 1.2,
+                                  color: _error ? Farben.rot : Color.fromRGBO(
+                                      155, 155, 155, 1)),
                               borderRadius: BorderRadius.only(
-                                  topRight:    Radius.circular(5),
+                                  topRight: Radius.circular(5),
                                   bottomRight: Radius.circular(5)))
-                      )))
+                      ))
                 ]))));
-  } // @formatter:on
+  }
 }
 
 /// Wrapper um Variablen an Parent-Widgets weiterzugeben zu können
@@ -391,7 +403,7 @@ class DateTimeInputFormatter extends TextInputFormatter { // @formatter:off
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     var text = newValue.text, length = text.length;
     switch (length) {
-      case  1: return RegExp(r'[0-9]')                                                                                                 .hasMatch(text) ? newValue : oldValue;
+      case  1: return RegExp(r'[0-3]')                                                                                                 .hasMatch(text) ? newValue : oldValue;
       case  2: return RegExp(r'(?:0[1-9]|[12]\d|3[01])')                                                                               .hasMatch(text) ? newValue : oldValue;
       case  3: return RegExp(r'(?:0[1-9]|[12]\d|3[01])(?:\.|[01])')                                                                    .hasMatch(text) ? newValue : oldValue;
       case  4: return RegExp(r'(?:0[1-9]|[12]\d|3[01])(?:\.|[01])')                                                                    .hasMatch(text) ? newValue : oldValue;

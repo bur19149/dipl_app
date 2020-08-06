@@ -87,18 +87,18 @@ enum Buttonfarbe {
 } // @formatter:on
 
 abstract class SVGicons { // @formatter:off
-  static const String mehrereBenutzer      = 'assets/images/svg/benutzer_mehrere.svg',
-                      administrator        = 'assets/images/svg/administrator.svg',
-                      einstellungen        = 'assets/images/svg/einstellungen.svg',
-                      berechtigung         = 'assets/images/svg/berechtigung.svg',
-                      schluessel           = 'assets/images/svg/schluessel.svg',
-                      verknuepft           = 'assets/images/svg/verknuepft.svg',
-                      standort             = 'assets/images/svg/standort.svg',
-                      kalender             = 'assets/images/svg/kalender.svg',
-                      benutzer             = 'assets/images/svg/benutzer.svg',
-                      haus                 = 'assets/images/svg/haus.svg',
-                      lupe                 = 'assets/images/svg/lupe.svg',
-                      uhr                  = 'assets/images/svg/uhr.svg';
+  static const String mehrereBenutzer = 'assets/images/svg/benutzer_mehrere.svg',
+                      administrator   = 'assets/images/svg/administrator.svg',
+                      einstellungen   = 'assets/images/svg/einstellungen.svg',
+                      berechtigung    = 'assets/images/svg/berechtigung.svg',
+                      schluessel      = 'assets/images/svg/schluessel.svg',
+                      verknuepft      = 'assets/images/svg/verknuepft.svg',
+                      standort        = 'assets/images/svg/standort.svg',
+                      kalender        = 'assets/images/svg/kalender.svg',
+                      benutzer        = 'assets/images/svg/benutzer.svg',
+                      haus            = 'assets/images/svg/haus.svg',
+                      lupe            = 'assets/images/svg/lupe.svg',
+                      uhr             = 'assets/images/svg/uhr.svg';
 } // @formatter:on
 
 const String appFont = 'Roboto';

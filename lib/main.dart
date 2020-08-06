@@ -1,12 +1,11 @@
-import 'package:dipl_app/frontend/gui_pages.dart';
-import 'package:dipl_app/frontend/pages/gui_login.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:dipl_app/tests/checkliste_fertige_elemente.dart';
 import 'package:dipl_app/tests/christians_spielwiese.dart';
 import 'package:dipl_app/tests/dominiks_testgelaende.dart';
+import 'package:dipl_app/frontend/pages/gui_login.dart';
 import 'package:dipl_app/tests/saschas_labor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,20 +16,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp]); // sperrt Bildschirmrotation
-    return MaterialApp(
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate
-      ],
-      supportedLocales: [
-        const Locale("de","DE")
-      ],
-      title: 'orgApp',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(),
-    );
+    return GestureDetector(
+        onTap: () => WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
+        child: MaterialApp(
+          localizationsDelegates: [GlobalMaterialLocalizations.delegate],
+          supportedLocales: [const Locale("de", "DE")],
+          title: 'orgApp',
+          theme: ThemeData(
+            primarySwatch: Colors.red,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
+          home: MyHomePage(),
+        ));
   }
 }
 
@@ -57,8 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               onPressed: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          LoginPage()))),
+                                      builder: (context) => LoginPage()))),
                           TempButton(
                               text: 'Testgelände',
                               onPressed: () => Navigator.push(
@@ -91,11 +87,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                                           ChristiansSpielwiese())),
                                             )
                                           ])))),
-                          TempButton(text: 'Checkliste', onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      Checkliste())))
+                          TempButton(
+                              text: 'Checkliste',
+                              onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Checkliste())))
                         ])))));
   }
 }

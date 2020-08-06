@@ -186,6 +186,8 @@ class _ExpandableRahmenState extends State<ExpandableRahmen>
       ClipRect(child: Align(heightFactor: _heightFactor.value, child: child))
     ]);
     return InkWell(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
         onTap: () => _handleTap(),
         child: Rahmen(
             header: BottomHeader(header: widget.bottomHeader),

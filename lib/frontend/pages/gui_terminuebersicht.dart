@@ -1,14 +1,13 @@
-import 'package:dipl_app/backend/objects.dart';
-import 'package:dipl_app/backend/requests/user.dart';
 import 'package:dipl_app/frontend/gui_konstanten.dart';
+import 'package:dipl_app/backend/requests/user.dart';
 import 'package:dipl_app/frontend/gui_rahmen.dart';
-import 'package:flutter/material.dart';
+import 'package:dipl_app/backend/objects.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
+import '../gui_topLeiste.dart';
 import '../gui_buttons.dart';
 import '../gui_text.dart';
-import '../gui_topLeiste.dart';
 
 class TerminUebersichtPage extends StatefulWidget {
   @override

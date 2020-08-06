@@ -1,9 +1,8 @@
-import 'package:dipl_app/backend/objects.dart';
 import 'package:dipl_app/frontend/gui_konstanten.dart';
+import 'package:dipl_app/backend/objects.dart';
 import 'package:flutter/material.dart';
-
-import '../gui_pages.dart';
 import '../gui_rahmen.dart';
+import '../gui_pages.dart';
 import '../gui_text.dart';
 
 class EinstellungenPage extends StatelessWidget {
@@ -50,7 +49,7 @@ class EinstellungenPage extends StatelessWidget {
                 ])
               ]),
           Teiler(rahmenTrenner: true),
-          Rahmen(
+          Rahmen( // TODO Kinderaccounts-Abfrage ebenfalls mit Backend vernüpfen
               header: TopHeader(
                   text: 'Zugeordnete Kinder-Accounts',
                   farbe: Farben.hellgrau,
