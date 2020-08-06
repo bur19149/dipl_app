@@ -22,6 +22,7 @@ class Textfeld extends StatefulWidget {
   final Wrapper   value;                          // Inhalt des Textfeldes
   final List<TextInputFormatter> inputFormatters; // definiert den zulässigen Textinhalt und ermöglicht es Textmasken zuzuweisen
   final bool multiline;                           // Hat das Textfeld mehrere Zeilen?
+  final Function(String)         validator;       // Prüfung ob der Inhalt des Textfeldes valide ist
   // @formatter:off
 
   // ------------------------------ Konstruktor -------------------------------
@@ -29,13 +30,14 @@ class Textfeld extends StatefulWidget {
   const Textfeld({ // @formatter:off
         this.text        = 'Header',
         this.hintText    = 'HintText',
-        this.maxLength   = 64,
+        this.maxLength   = 64, //TODO in der APPI-Doku nachschauen
         this.headerStyle = const Schrift(),
         this.dateTime    = false,
         this.multiline   = false,
         this.value,
         this.inputFormatters,
-        this.bottomHintText});
+        this.bottomHintText,
+        this.validator});
   // @formatter:on
 
   // ------------------------------- createState ------------------------------
@@ -76,7 +78,7 @@ class _TextfeldState extends State<Textfeld> {
       widget.dateTime
           ? _DateTimeTextfeld(
               value: widget.value ?? Wrapper(), hintText: hintText)
-          : _Feld(
+          : _Feld(validator: widget.validator,
               inputFormatters: widget.inputFormatters ?? [],
               multiline: widget.multiline,
               hintText: hintText,

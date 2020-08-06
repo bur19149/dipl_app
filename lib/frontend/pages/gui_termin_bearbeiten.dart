@@ -12,6 +12,9 @@ class TerminBearbeitenPage extends StatefulWidget {
 }
 
 class _TerminBearbeitenPageState extends State<TerminBearbeitenPage> {
+  Wrapper beschreibung = Wrapper();
+
+
   @override
   Widget build(BuildContext context) {
     return ListViewScaffold(children: [
@@ -25,7 +28,12 @@ class _TerminBearbeitenPageState extends State<TerminBearbeitenPage> {
         Textfeld(
             text: 'Beschreibung',
             hintText: 'Terminbeschreibung',
-            multiline: true),
+            multiline: true, value: beschreibung, validator: (text) {
+              if(text.isNotEmpty) {
+                beschreibung.value = text;
+                return null;
+              }
+              return 'ungültig';}),
         Teiler(),
         Textfeld(text: 'Ort', hintText: 'Wohnort'),
         Teiler(),
@@ -65,7 +73,7 @@ class _TerminBearbeitenPageState extends State<TerminBearbeitenPage> {
         Align(
             alignment: Alignment.centerLeft,
             child: Text('Angemeldete Gruppenleiter',
-                style: Schrift.ueberschrift())), Teiler(), Rahmen(header: TopHeader())
+                style: Schrift.ueberschrift())), Teiler(), Rahmen(header: TopHeader()) // TODO Rahmen durch Column mit Gruppenleitern ersetzen
       ]),
       Teiler(rahmenTrenner: true),
       Rahmen(children: [
