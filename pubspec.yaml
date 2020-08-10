@@ -63,12 +63,13 @@ flutter:
     - assets/images/svg/administrator.svg
     - assets/images/svg/einstellungen.svg
     - assets/images/svg/berechtigung.svg
+    - assets/images/svg/bearbeiten.svg
     - assets/images/svg/schluessel.svg
     - assets/images/svg/verknuepft.svg
-    - assets/images/svg/bearbeiten.svg
     - assets/images/svg/kalender.svg
-    - assets/images/svg/standort.svg
     - assets/images/svg/benutzer.svg
+    - assets/images/svg/standort.svg
+    - assets/images/svg/hackchen.svg
     - assets/images/svg/loschen.svg
     - assets/images/svg/email.svg
     - assets/images/svg/lupe.svg

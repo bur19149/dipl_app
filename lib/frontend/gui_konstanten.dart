@@ -79,11 +79,11 @@ abstract class Farben {
 // @formatter:off
 /// Enthält alle in der App vorkommenden Buttonfarben.
 enum Buttonfarbe {
+  blaugrau,	// #6C757D
 	gruen,		// #28A745
-	rot,			// #B70E0C
 	gelb,			// #FFC107
-	blaugrau,	// #6C757D
-	blau			// #17A2B8
+	blau,			// #17A2B8
+  rot			// #B70E0C
 } // @formatter:on
 
 abstract class SVGicons { // @formatter:off
@@ -97,6 +97,7 @@ abstract class SVGicons { // @formatter:off
                       standort        = 'assets/images/svg/standort.svg',
                       kalender        = 'assets/images/svg/kalender.svg',
                       benutzer        = 'assets/images/svg/benutzer.svg',
+                      hackchen        = 'assets/images/svg/hackchen.svg',
                       loschen         = 'assets/images/svg/loschen.svg',
                       email           = 'assets/images/svg/email.svg',
                       haus            = 'assets/images/svg/haus.svg',
