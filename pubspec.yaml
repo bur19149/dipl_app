@@ -21,15 +21,17 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  configurable_expansion_tile: ^1.0.0
+  mask_text_input_formatter: ^1.0.7
   path_provider: ^1.6.11
   device_info: ^0.4.2+4
+  flutter_svg: ^0.17.4
   intl: ^0.16.1
   http: ^0.12.2
-  flutter_svg: ^0.17.4
-  mask_text_input_formatter: ^1.0.7
-  configurable_expansion_tile: ^1.0.0
+
   flutter:
     sdk: flutter
+
   flutter_localizations:
     sdk: flutter
 
@@ -57,18 +59,23 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
-    - assets/images/svg/administrator.svg
-    - assets/images/svg/kalender.svg
-    - assets/images/svg/haus.svg
-    - assets/images/svg/einstellungen.svg
-    - assets/images/svg/lupe.svg
-    - assets/images/svg/uhr.svg
-    - assets/images/svg/standort.svg
-    - assets/images/svg/benutzer.svg
     - assets/images/svg/benutzer_mehrere.svg
+    - assets/images/svg/administrator.svg
+    - assets/images/svg/einstellungen.svg
     - assets/images/svg/berechtigung.svg
     - assets/images/svg/schluessel.svg
     - assets/images/svg/verknuepft.svg
+    - assets/images/svg/bearbeiten.svg
+    - assets/images/svg/kalender.svg
+    - assets/images/svg/standort.svg
+    - assets/images/svg/benutzer.svg
+    - assets/images/svg/loschen.svg
+    - assets/images/svg/email.svg
+    - assets/images/svg/lupe.svg
+    - assets/images/svg/haus.svg
+    - assets/images/svg/uhr.svg
+
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
