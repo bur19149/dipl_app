@@ -1,11 +1,6 @@
-// -------------------------------- Imports ---------------------------------
-
-// @formatter:off
 import 'dart:collection';
 import 'package:intl/intl.dart' as intl;
 import 'objects.dart'           as objects;
-// @formatter:on
-
 // --------------------------- DateTime zu String ---------------------------
 
 // @formatter:off
