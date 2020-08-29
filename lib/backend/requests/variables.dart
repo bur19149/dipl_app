@@ -1,4 +1,3 @@
-// -------------------------------- Imports ---------------------------------
 import 'package:path_provider/path_provider.dart';
 import '../objects.dart' as objects;
 import 'dart:io';
@@ -37,16 +36,6 @@ var permissions = const <objects.Permission>[objects.Permission(null, null, 'Erl
                                              objects.Permission(null, null, 'Erlaubt das Abschliessen, festlegen von Ergebnissen etc.',                           'bewerb.schliessen'           ),
                                              objects.Permission(null, null, 'Darf eine Liste aller Bewerbe einsehen',                                             'bewerb.alle_zeigen'          )];
 // @formatter:on
-
-// -------------------------------- Methoden --------------------------------
-
-//String getModel() {
-//  String androidDeviceInfo;
-//  DeviceInfoPlugin().androidInfo.then((value) => androidDeviceInfo =
-//      '${value.manufacturer}, ${value.brand}, ${value.model}, ${value.id}, ${value.androidId}');
-//  Future.delayed(Duration(seconds: 2));
-//  return '[$androidDeviceInfo]';
-//}
 
 // ---------------------------- Datei-Management ----------------------------
 

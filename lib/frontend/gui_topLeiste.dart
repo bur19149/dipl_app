@@ -1,5 +1,3 @@
-// -------------------------------- Imports ---------------------------------
-
 import 'package:dipl_app/frontend/pages/gui_einstellungen.dart';
 import 'package:dipl_app/backend/requests/login.dart';
 import 'package:flutter_svg/flutter_svg.dart';

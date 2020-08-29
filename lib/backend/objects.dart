@@ -1,12 +1,11 @@
-// -------------------------------- Imports ---------------------------------
 
 // @formatter:off
 //import 'package:path_provider/path_provider.dart';
 import 'converter.dart'          as converter;
-import 'requests/variables.dart' as variables;
-import 'package:http/http.dart'  as http;
+//import 'requests/variables.dart' as variables;
+//import 'package:http/http.dart'  as http;
 import 'pruefungen.dart'         as pruefungen;
-import 'dart:io';
+//import 'dart:io';
 // @formatter:on
 
 /// Einfacher Benutzer
@@ -315,8 +314,7 @@ class AdminTermin extends UserTermin {
 
   // @formatter:off
   /// Konstruktor
-  AdminTermin(int platze, String ort, String name,
-      String beschreibung, DateTime timeVon, DateTime timeBis, Zyklus zyklus, [List<AntwortTermin> teilnehmer, bool freigeschaltet,
+  AdminTermin(int platze, String ort, String name, String beschreibung, DateTime timeVon, DateTime timeBis, Zyklus zyklus, [List<AntwortTermin> teilnehmer, bool freigeschaltet,
       DateTime anmeldungStart, DateTime anmeldungEnde, DateTime zyklusEnde, int terminid, int veranstaltungsid])
       : super(platze, ort, name, beschreibung, timeVon, timeBis, zyklus, teilnehmer, anmeldungStart, anmeldungEnde, zyklusEnde, terminid, veranstaltungsid) {
     this.freigeschaltet = freigeschaltet;

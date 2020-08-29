@@ -1,5 +1,3 @@
-// -------------------------------- Imports ---------------------------------
-
 import 'package:flutter/material.dart';
 import 'gui_konstanten.dart';
 

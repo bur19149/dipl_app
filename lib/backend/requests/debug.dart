@@ -1,9 +1,5 @@
-// -------------------------------- Imports ---------------------------------
-
-// @formatter:off
 import 'package:http/http.dart' as http;
-import '../objects.dart'        as objects;
-// @formatter:on
+//import '../objects.dart' as objects;
 
 /// Nur zu Debuggingzwecken
 /// Wird verwendet um die Reaktion des Servers in der Konsole zu dokumentieren.

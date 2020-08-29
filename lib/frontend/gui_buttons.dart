@@ -1,5 +1,3 @@
-// -------------------------------- Imports ---------------------------------
-
 import 'package:dipl_app/frontend/gui_text.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';

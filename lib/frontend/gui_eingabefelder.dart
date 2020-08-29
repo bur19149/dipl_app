@@ -1,5 +1,3 @@
-// -------------------------------- Imports ---------------------------------
-
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:dipl_app/frontend/gui_text.dart';
 import 'package:flutter_svg/flutter_svg.dart';

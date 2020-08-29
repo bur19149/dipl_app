@@ -1,13 +1,9 @@
-// -------------------------------- Imports ---------------------------------
-
-// @formatter:off
 import 'package:http/http.dart' as http;
-import 'variables.dart'         as variables;
-import '../objects.dart'        as objects;
-import '../converter.dart'      as converter;
-import 'dart:convert'           as convert;
+import '../converter.dart' as converter;
+import 'variables.dart' as variables;
+import '../objects.dart' as objects;
+import 'dart:convert' as convert;
 import '../exceptions.dart';
-// @formatter:on
 
 // ------------------------------ GET-Requests ------------------------------
 
