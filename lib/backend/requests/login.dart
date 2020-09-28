@@ -1,15 +1,12 @@
-// -------------------------------- Imports ---------------------------------
-// @formatter:off
 import 'package:device_info/device_info.dart';
-import '../pruefungen.dart'     as pruefungen;
+import '../pruefungen.dart' as pruefungen;
 import 'package:http/http.dart' as http;
-import '../converter.dart'      as converter;
-import 'variables.dart'         as variables;
-import '../objects.dart'        as objects;
-import 'dart:convert'           as convert;
+import '../converter.dart' as converter;
+import 'variables.dart' as variables;
+import '../objects.dart' as objects;
+import 'dart:convert' as convert;
 import '../exceptions.dart';
 import 'dart:io';
-// @formatter:on
 
 // ------------------------------ GET-Requests ------------------------------
 
