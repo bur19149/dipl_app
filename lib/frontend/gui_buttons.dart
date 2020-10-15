@@ -1,4 +1,5 @@
 import 'package:dipl_app/frontend/gui_text.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'gui_konstanten.dart';
@@ -19,8 +20,7 @@ class Button extends StatefulWidget {
   // ------------------------------ Konstruktor -------------------------------
 
   // @formatter:off
-  Button(
-      {@required this.onPressed,
+  Button( {@required this.onPressed,
       this.width    = double.infinity,
       this.farbe    = Buttonfarbe.blaugrau,
       this.gefuellt = true,
@@ -54,13 +54,15 @@ class _ButtonState extends State<Button> {
       default:						       highlightColor = Farben.weissHighlight; 		buttonFarbe = Farben.weiss;		 break; // weiss:    #FFFFFF; weissHighlight:    #F2F2F2
     } // @formatter:on
 
-    Color textColor = widget.gefuellt ? Farben.weiss : buttonFarbe; // Definition der Textfarbe
+    Color textColor = widget.gefuellt ? Farben.weiss: buttonFarbe; // Definition der Textfarbe
 
-    Widget child, textWidget = Text(widget.text, style: Schrift(color: textColor));
+    Widget child,
+        textWidget = Text(widget.text, style: Schrift(color: textColor));
 
     // Definition des Button-inhalts
 
-    if (widget.svg != null) {
+    if(widget.svg != null)
+    {
       child = Row(children: [
         Expanded(child: Container()),
         SvgPicture.asset(widget.svg, height: 23, color: textColor),
@@ -68,7 +70,8 @@ class _ButtonState extends State<Button> {
         Text(widget.text, style: Schrift(color: textColor)),
         Expanded(child: Container())
       ]);
-    } else {
+    }else
+    {
       child = textWidget;
     }
 
@@ -78,9 +81,9 @@ class _ButtonState extends State<Button> {
         width: widget.width,
         child: RaisedButton(
           padding: EdgeInsets.only(top: 8, bottom: 8),
-          color: widget.gefuellt ? buttonFarbe : Farben.weiss,
+          color: widget.gefuellt ? buttonFarbe: Farben.weiss,
           highlightColor:
-              widget.gefuellt ? highlightColor : Farben.weissHighlight,
+          widget.gefuellt ? highlightColor: Farben.weissHighlight,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5.0),
               side: widget.gefuellt
@@ -92,7 +95,8 @@ class _ButtonState extends State<Button> {
   }
 }
 
-class CustomToggleButton extends StatefulWidget {
+class CustomToggleButton extends StatefulWidget
+{
   // ------------------------------- Variablen --------------------------------
   // @formatter:off
   final bool               value; // Standardwert
@@ -102,17 +106,18 @@ class CustomToggleButton extends StatefulWidget {
 
   // ------------------------------ Konstruktor -------------------------------
 
-  CustomToggleButton(
-      {this.size = 70, this.value = true, @required this.onTap, Key key})
+  CustomToggleButton({this.size = 70, this.value = true, @required this.onTap, Key key})
       : super(key: key);
 
   // ------------------------------- createState ------------------------------
 
   @override
-  State<StatefulWidget> createState() => _CustomToggleButtonState();
+  State<StatefulWidget> createState()
+  => _CustomToggleButtonState();
 }
 
-class _CustomToggleButtonState extends State<CustomToggleButton> {
+class _CustomToggleButtonState extends State<CustomToggleButton>
+{
   // ------------------------------- Variablen --------------------------------
 
   bool _value = true; // aktueller Wert
@@ -120,15 +125,18 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
   // -------------------------------- initState -------------------------------
 
   @override
-  void initState() {
+  void initState()
+  {
     _value = widget.value;
     super.initState();
   }
 
   // ------------------------------ Eventhandler ------------------------------
 
-  void _changeValue() {
-    setState(() {
+  void _changeValue()
+  {
+    setState(()
+    {
       _value = !_value;
       widget.onTap.call();
     });
@@ -137,7 +145,8 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
   // --------------------------------- Build ----------------------------------
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
     return Container(
         width: widget.size,
         height: widget.size / 2,
@@ -165,7 +174,7 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
                                     color: Farben.hellgrau, width: 3)),
                           )),
                       AnimatedPositioned(
-                          left: _value ? 70 : 0,
+                          left: _value ? 70: 0,
                           duration: Duration(milliseconds: 200),
                           child: AnimatedContainer(
                             // Button-Knopf
@@ -174,7 +183,7 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
                               width: 70,
                               height: 70,
                               decoration: BoxDecoration(
-                                  color: _value ? Farben.gruen : Farben.rot,
+                                  color: _value ? Farben.gruen: Farben.rot,
                                   borderRadius:
                                   BorderRadius.all(Radius.circular(12)),
                                   border: Border.all(
@@ -189,3 +198,15 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
                     ])))));
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
