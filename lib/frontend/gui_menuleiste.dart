@@ -111,9 +111,9 @@ class _MenuleisteState extends State<Menuleiste> {
           child: Container(
             height: 90,
             decoration: BoxDecoration(
-                gradient: LinearGradient(colors: List<Color>[
+                gradient: LinearGradient(colors: [
               Color.fromRGBO(255, 255, 255, 100),
-              Color.fromRGBO(255, 255, 255, 0)
+              Color.fromRGBO(255, 255, 255, 0),
             ], begin: Alignment.bottomCenter, end: Alignment.topCenter)),
           )),
       // TODO Farbe ändern
