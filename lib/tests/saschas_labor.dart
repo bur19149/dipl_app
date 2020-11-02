@@ -20,13 +20,12 @@ class CustomDropDownButton extends StatefulWidget {
 }
 
 class _CustomDropDownButtonState extends State<CustomDropDownButton> {
+  bool _istAusgeklappt = false;
+  BoxBorder _border = Border.all(color: Farben.rahmenFarbe, width: 1);
+
   @override
-  bool istAusgeklappt = false;
-
-  //TODO width border: Border.all(color: Farben.rahmenFarbe, width: 1) durch Variable ersetzen!
-
   Widget build(BuildContext context) {
-    double radius = istAusgeklappt ? 0 : 10;
+    double radius = _istAusgeklappt ? 0 : 10;
     return Container(
         width: double.infinity,
         height: 40,
@@ -37,8 +36,7 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
               width: double.infinity,
               decoration: BoxDecoration(
                   color: Colors.amber, //TODO white
-                  border: Border.all(color: Farben.rahmenFarbe,
-                      width: 1),
+                  border: _border,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10),
@@ -52,7 +50,7 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
                 width: 40,
                 decoration: BoxDecoration(
                     color: Colors.red, //TODO white
-                    border: Border.all(color: Farben.rahmenFarbe, width: 1),
+                    border: _border,
                     borderRadius: BorderRadius.only(
                         topRight: Radius.circular(10),
                         bottomRight: Radius.circular(radius))),
@@ -91,7 +89,7 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
 
   handleDropDown() {
     setState(() {
-      istAusgeklappt = !istAusgeklappt;
+      _istAusgeklappt = !_istAusgeklappt;
     });
   }
 }

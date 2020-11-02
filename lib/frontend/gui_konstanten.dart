@@ -83,7 +83,7 @@ enum Buttonfarbe {
 	gruen,		// #28A745
 	gelb,			// #FFC107
 	blau,			// #17A2B8
-  rot			// #B70E0C
+  rot			  // #B70E0C
 } // @formatter:on
 
 abstract class SVGicons { // @formatter:off

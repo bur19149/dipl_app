@@ -422,4 +422,10 @@ class DateTimeInputFormatter extends TextInputFormatter { // @formatter:off
       default: return newValue;
     }
   }
+
+  /// Ergänzt Trennzeichen
+  String add(String str, String symbol) => str.substring(0, str.length - 1) + symbol + str.substring(str.length - 1); // TODO implementieren in formatEditUpdate
+
+  /// löscht Trennzeichen
+  String remove(String str) => str.substring(0, str.length - 1); // TODO implementieren in formatEditUpdate
 } // @formatter:on
