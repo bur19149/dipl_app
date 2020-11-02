@@ -22,6 +22,7 @@ class CustomDropDownButton extends StatefulWidget {
 class _CustomDropDownButtonState extends State<CustomDropDownButton> {
   bool _istAusgeklappt = false;
   BoxBorder _border = Border.all(color: Farben.rahmenFarbe, width: 1);
+  Duration _animationDuration = Duration(milliseconds: 200);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
         height: 40,
         child: Stack(children: [
           AnimatedContainer(
-              duration: Duration(seconds: 1),
+              duration: _animationDuration,
               height: 40,
               width: double.infinity,
               decoration: BoxDecoration(
@@ -45,7 +46,7 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
           Align(
               alignment: Alignment.centerRight,
               child: AnimatedContainer(
-                duration: Duration(seconds: 1),
+                duration: _animationDuration,
                 height: 40,
                 width: 40,
                 decoration: BoxDecoration(
@@ -67,7 +68,7 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
                 ),
               )),
           AnimatedContainer(
-              duration: Duration(seconds: 1),
+              duration: _animationDuration,
               height: 40,
               width: double.infinity,
               decoration: BoxDecoration(
