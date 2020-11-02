@@ -198,15 +198,3 @@ class _CustomToggleButtonState extends State<CustomToggleButton>
                     ])))));
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-

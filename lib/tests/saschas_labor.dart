@@ -37,7 +37,8 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
               width: double.infinity,
               decoration: BoxDecoration(
                   color: Colors.amber, //TODO white
-                  border: Border.all(color: Farben.rahmenFarbe, width: 1),
+                  border: Border.all(color: Farben.rahmenFarbe,
+                      width: 1),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10),
@@ -53,7 +54,8 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
                     color: Colors.red, //TODO white
                     border: Border.all(color: Farben.rahmenFarbe, width: 1),
                     borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(10), bottomRight: Radius.circular(radius))),
+                        topRight: Radius.circular(10),
+                        bottomRight: Radius.circular(radius))),
                 child: Stack(
                   children: [
                     Align(
