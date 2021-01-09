@@ -94,6 +94,7 @@ abstract class SVGicons { // @formatter:off
                       bearbeiten      = 'assets/images/svg/bearbeiten.svg',
                       schluessel      = 'assets/images/svg/schluessel.svg',
                       verknuepft      = 'assets/images/svg/verknuepft.svg',
+                      dropbutton      = 'assets/images/svg/dropbutton.svg',
                       standort        = 'assets/images/svg/standort.svg',
                       kalender        = 'assets/images/svg/kalender.svg',
                       benutzer        = 'assets/images/svg/benutzer.svg',

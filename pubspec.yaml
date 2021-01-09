@@ -66,6 +66,7 @@ flutter:
     - assets/images/svg/bearbeiten.svg
     - assets/images/svg/schluessel.svg
     - assets/images/svg/verknuepft.svg
+    - assets/images/svg/dropbutton.svg
     - assets/images/svg/kalender.svg
     - assets/images/svg/benutzer.svg
     - assets/images/svg/standort.svg
@@ -75,7 +76,6 @@ flutter:
     - assets/images/svg/lupe.svg
     - assets/images/svg/haus.svg
     - assets/images/svg/uhr.svg
-
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

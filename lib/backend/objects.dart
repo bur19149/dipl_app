@@ -1,12 +1,5 @@
-
-// @formatter:off
-//import 'package:path_provider/path_provider.dart';
 import 'converter.dart'          as converter;
-//import 'requests/variables.dart' as variables;
-//import 'package:http/http.dart'  as http;
 import 'pruefungen.dart'         as pruefungen;
-//import 'dart:io';
-// @formatter:on
 
 /// Einfacher Benutzer
 class User {
