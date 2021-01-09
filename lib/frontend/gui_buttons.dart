@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dipl_app/frontend/gui_text.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,7 +11,7 @@ class Button extends StatefulWidget {
   // ------------------------------- Variablen --------------------------------
 
   // @formatter:off
-  final double       width;     // Breite des Buttond
+  final double       width;     // Breite des Buttons
   final VoidCallback onPressed; // Eventhandler
   final Buttonfarbe  farbe;     // Farbe des Buttons
   final bool         gefuellt;  // Ist der Button gefüllt, oder ist nur der Rand farbig?
@@ -196,5 +198,51 @@ class _CustomToggleButtonState extends State<CustomToggleButton>
                                         offset: Offset(5, 5))
                                   ])))
                     ])))));
+  }
+}
+
+
+class Flippable extends StatelessWidget {
+  final bool isFlipped;
+  final Widget front;
+  final Widget back;
+
+  const Flippable({this.isFlipped = false, this.front, this.back});
+
+  @override
+  Widget build(BuildContext context) {
+    return TweenAnimationBuilder(
+      duration: Duration(milliseconds: 700),
+      curve: Curves.easeOut,
+      tween: Tween(begin: 0.0, end: isFlipped ? 180.0 : 0.0),
+      builder: (context, value, child) {
+        var content = value >= 90 ? back : front;
+        return RotationX(
+          rotationX: value,
+          child: content,
+        );
+      },
+    );
+  }
+}
+
+class RotationX extends StatelessWidget
+{
+  //Degrees to rads constant
+  static const double degrees2Radians = pi / 180;
+
+  final Widget child;
+  final double rotationX;
+
+  const RotationX({Key key, @required this.child, this.rotationX = 0}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform(
+        alignment: FractionalOffset.center,
+        transform: Matrix4.identity()
+          ..setEntry(3, 2, 0.001) // These are magic numbers, just use them :)
+          ..rotateX(rotationX * degrees2Radians),
+        child: child);
   }
 }
