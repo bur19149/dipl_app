@@ -1,6 +1,7 @@
 import 'package:configurable_expansion_tile/configurable_expansion_tile.dart';
 import 'package:dipl_app/frontend/pages/gui_termin_bearbeiten.dart';
 import 'package:dipl_app/frontend/pages/gui_terminuebersicht.dart';
+import 'package:dipl_app/frontend/pages/gui_user_erstellen.dart';
 import 'package:dipl_app/frontend/pages/gui_einstellungen.dart';
 import 'package:dipl_app/frontend/gui_eingabefelder.dart';
 import 'package:dipl_app/frontend/gui_menuleiste.dart';
@@ -12,7 +13,6 @@ import 'package:dipl_app/frontend/gui_buttons.dart';
 import 'package:dipl_app/frontend/gui_rahmen.dart';
 import 'package:dipl_app/frontend/gui_pages.dart';
 import 'package:dipl_app/frontend/gui_text.dart';
-import 'package:dipl_app/frontend/pages/gui_user_erstellen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
