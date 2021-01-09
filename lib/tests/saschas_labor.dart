@@ -93,17 +93,10 @@ class _ButtonState extends State<Button> {
           Expanded(child: Container()),
           Container(
             height: 38 /* TODO höhe im button */,
-            width: 2,
-            color: Colors.white,
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Container(
-            width: 10,
-            height: 10,
-            color: Colors.amber,
-          ),
+            width: .8,
+            color: Colors.white,),
+          SizedBox(width: 10,),
+          SvgPicture.asset(SVGicons.dropbutton, height: 10, color: textColor),
           SizedBox(
             width: 10,
           )
@@ -137,8 +130,7 @@ class _ButtonState extends State<Button> {
                   ? BorderSide.none
                   : BorderSide(color: buttonFarbe, width: 1.6)),
           onPressed: widget.onPressed,
-          child: child,
-        ));
+          child: child,));
   }
 }
 
