@@ -271,8 +271,7 @@ class _AdminMenuState extends State<_AdminMenu> {
     return Material(color: Colors.transparent, child: Column(children: [
       _MenuBox(children: [
         _AdminMenuText('Vollständige Termin Liste'),
-        _AdminMenuText('Neuen Termin anlegen')
-      ]),
+        _AdminMenuText('Neuen Termin anlegen')]),
       SizedBox(height: 10),
       _MenuBox(children: [
         _AdminMenuText('User Einstellungen'),

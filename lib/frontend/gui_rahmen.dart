@@ -215,14 +215,15 @@ class Rahmen extends StatefulWidget {
   // ------------------------------- Variablen --------------------------------
 
   // @formatter:off
-  final List<Widget> children; // Inhalt des Rahmens
-  final Widget       header;   // optionaler Header des Rahmens
-  final bool         shadow;   // Hat der Rahmen einen Schatten?
+  final List<Widget>       children; // Inhalt des Rahmens
+  final Widget             header;   // optionaler Header des Rahmens
+  final bool               shadow;   // Hat der Rahmen einen Schatten?
+  final EdgeInsetsGeometry padding;  //TODO comment
   // @formatter:on
 
   // ------------------------------ Konstruktor -------------------------------
 
-  const Rahmen({this.children = const [], this.header, this.shadow = true});
+  const Rahmen({this.children = const [], this.header, this.shadow = true, this.padding = const EdgeInsets.only(bottom: 25, top: 20, left: 11, right: 11)});
 
   // ------------------------------- createState ------------------------------
 
@@ -250,7 +251,7 @@ class _RahmenState extends State<Rahmen> {
     children.addAll([
       topWidget,
       Padding(
-          padding: EdgeInsets.only(bottom: 25, top: 20, left: 11, right: 11),
+          padding: widget.padding,
           child: Column(children: widget.children)),
       bottomWidget
     ]);
@@ -318,7 +319,8 @@ class _TerminRahmenState extends State<TerminRahmen> {
           Positioned(right: 15, top: 15,
               child: Kreuz(
                 offen: _offen,
-                groesse: 0.6))]));
+                groesse: 0.6,
+              ))]));
   } // @formatter:on
 }
 
