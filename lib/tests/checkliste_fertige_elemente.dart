@@ -9,9 +9,8 @@ class Checkliste extends StatefulWidget {
     // @formatter:off
     ListenText('ToggleButton',    widget: CustomToggleButton(onTap: () {})),
     ListenText('Kreuz',           widget: Kreuz()),
-    ListenText('Standard-Button', widget: Button(onPressed: () {},width: 100,))
+    ListenText('Standard-Button', widget: Button(onPressed: () {},width: 100,))];
     // @formatter:on
-  ];
 
   final List<Widget> unfertig = [
     // @formatter:off

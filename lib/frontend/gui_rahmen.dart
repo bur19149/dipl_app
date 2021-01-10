@@ -81,25 +81,22 @@ class _ExpandableInnerRahmenState extends State<ExpandableInnerRahmen>
           opacity: _isExpanded ? 1 : 0,
           child: ClipRect(
               child: Align(heightFactor: _heightFactor.value, child: child))),
-      Teiler(height: _isExpanded ? 20 : 0)
-    ]);
+      Teiler(height: _isExpanded ? 20 : 0)]);
   }
-
+// @formatter:off
   @override
   Widget build(BuildContext context) {
     final bool closed = !_isExpanded && _controller.isDismissed;
     return AnimatedBuilder(
         animation: _controller.view,
         builder: _buildChildren,
-        child: closed
-            ? null
-            : Container(
-                width: double.infinity,
-                child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Rahmen(
-                        children: widget.children ?? [], shadow: false))));
-  }
+        child: closed ? null : Container(
+            width: double.infinity,
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Rahmen(
+                    children: widget.children ?? [], shadow: false))));
+  } // @formatter:on
 }
 
 /// ausklappbarer Rahmen
@@ -169,7 +166,7 @@ class _ExpandableRahmenState extends State<ExpandableRahmen>
   } // @formatter:on
 
   // --------------------------------- Build ----------------------------------
-
+// @formatter:off
   Widget _buildChildren(BuildContext context, Widget child) {
     _childrenTop = [];
     _childrenTop.addAll([
@@ -177,12 +174,10 @@ class _ExpandableRahmenState extends State<ExpandableRahmen>
         Text(widget.header, style: Schrift.ueberschrift()),
         Expanded(child: Container()),
         Kreuz(groesse: 0.5, offen: _isExpanded),
-        SizedBox(width: 5)
-      ]),
+        SizedBox(width: 5)]),
       SizedBox(height: 10),
       ...widget.childrenTop,
-      ClipRect(child: Align(heightFactor: _heightFactor.value, child: child))
-    ]);
+      ClipRect(child: Align(heightFactor: _heightFactor.value, child: child))]);
     return InkWell(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
@@ -190,23 +185,21 @@ class _ExpandableRahmenState extends State<ExpandableRahmen>
         child: Rahmen(
             header: BottomHeader(header: widget.bottomHeader),
             children: _childrenTop));
-  }
+  } // @formatter:on
 
   @override
   Widget build(BuildContext context) {
     final bool closed = !_isExpanded && _controller.isDismissed;
-
+// @formatter:off
     return AnimatedBuilder(
         animation: _controller.view,
         builder: _buildChildren,
-        child: closed
-            ? null
-            : Container(
+        child: closed ? null : Container(
             width: double.infinity,
             child: Align(
                 alignment: Alignment.centerLeft,
                 child: Column(children: widget.childrenBottom))));
-  }
+  } // @formatter:on
 
   // -------------------------------- Dispose ---------------------------------
 
@@ -263,7 +256,7 @@ class _RahmenState extends State<Rahmen> {
     ]);
 
     // Build
-
+// @formatter:off
     return Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -273,13 +266,12 @@ class _RahmenState extends State<Rahmen> {
                   spreadRadius: 0.03,
                   color: Color.fromRGBO(0, 0, 0, 0.18),
                   offset: Offset(3, 3)) : BoxShadow(
-                  color: Color.fromRGBO(0, 0, 0, 0))
-            ],
+                  color: Color.fromRGBO(0, 0, 0, 0))],
             color: Farben.weiss,
             borderRadius: BorderRadius.all(Radius.circular(10)),
             border: Border.all(color: Farben.rahmenFarbe, width: 1)),
         child: Column(children: children));
-  }
+  }// @formatter:on
 }
 
 /// Rahmen zur Darstellung von Terminen
@@ -313,7 +305,7 @@ class _TerminRahmenState extends State<TerminRahmen> {
   }
 
   // --------------------------------- Build ----------------------------------
-
+// @formatter:off
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -323,15 +315,12 @@ class _TerminRahmenState extends State<TerminRahmen> {
         onTap: _oeffnen,
         child: Stack(children: [
           Rahmen(children: widget.children, header: BottomHeader()),
-          Positioned(
-              right: 15,
-              top: 15,
+          Positioned(right: 15, top: 15,
               child: Kreuz(
                 offen: _offen,
                 groesse: 0.6,
-              ))
-        ]));
-  }
+              ))]));
+  } // @formatter:on
 }
 
 /// Rahmen der Loginseite
@@ -358,7 +347,7 @@ class LoginRahmen extends StatelessWidget {
 /// Header der Loginseite
 class LoginHeader extends StatelessWidget {
   // --------------------------------- Build ----------------------------------
-
+// @formatter:off
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -372,7 +361,7 @@ class LoginHeader extends StatelessWidget {
         child: Align(
             alignment: Alignment.centerLeft,
             child: Text('Anmelden', style: Schrift.titel())));
-  }
+  } // @formatter:on
 }
 
 /// Fußleiste
@@ -390,7 +379,7 @@ class BottomHeader extends StatelessWidget {
   const BottomHeader({this.header = 'Header', this.color = Farben.gruen});
 
   // --------------------------------- Build ----------------------------------
-
+// @formatter:off
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -405,7 +394,7 @@ class BottomHeader extends StatelessWidget {
             borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(9.5),
                 bottomRight: Radius.circular(9.5))));
-  }
+  }// @formatter:on
 }
 
 /// einfacher Header für Standard-Rahmen
@@ -430,7 +419,7 @@ class TopHeader extends StatelessWidget {
   // @formatter:on
 
   // --------------------------------- Build ----------------------------------
-
+// @formatter:off
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -450,11 +439,8 @@ class TopHeader extends StatelessWidget {
           width: double.infinity,
           decoration: BoxDecoration(
               border: Border(
-                  top: rahmen == null
-                      ? BorderSide.none
-                      : BorderSide(color: rahmen))))
-    ]);
-  }
+                  top: rahmen == null ? BorderSide.none : BorderSide(color: rahmen))))]);
+  } // @formatter:on
 }
 
 /// Kreuz welches rechts oben beim ExpandableRahmen angezeigt wird.
@@ -508,7 +494,7 @@ class _KreuzState extends State<Kreuz> with TickerProviderStateMixin {
   }
 
   // --------------------------------- Build ----------------------------------
-
+// @formatter:off
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -526,16 +512,12 @@ class _KreuzState extends State<Kreuz> with TickerProviderStateMixin {
                           color: Farben.rot,
                           height: widget.offen ? 0 : 50 * widget.groesse,
                           width: 11.5 * widget.groesse,
-                          duration: duration,
-                        )),
+                          duration: duration)),
                     Align(
                         alignment: Alignment.center,
                         child: Container(
                           color: Farben.rot,
                           height: 11.5 * widget.groesse,
-                          width: 50 * widget.groesse,
-                        ))
-                  ]))
-            ])));
-  }
+                          width: 50 * widget.groesse,))]))])));
+  } // @formatter:on
 }

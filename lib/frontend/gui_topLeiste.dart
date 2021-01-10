@@ -35,7 +35,7 @@ class _TopleisteState extends State<Topleiste> {
   }
 
   // --------------------------------- Build ----------------------------------
-
+// @formatter:off
   @override
   Widget build(BuildContext context) {
     duration = Duration(milliseconds: 80); // Animationsdauer
@@ -49,11 +49,9 @@ class _TopleisteState extends State<Topleiste> {
                   blurRadius: 7,
                   spreadRadius: 0.03,
                   color: Color.fromRGBO(0, 0, 0, fieldExpanded ? 0.18 : 0),
-                  offset: Offset(3, 3))
-            ])));
+                  offset: Offset(3, 3))])));
     return Stack(children: [
-      Row(children: [
-        schatten,
+      Row(children: [schatten,
         Expanded(
             child: SizedBox(
                 height: 40,
@@ -69,23 +67,15 @@ class _TopleisteState extends State<Topleiste> {
                                     blurRadius: 7,
                                     spreadRadius: 0.03,
                                     color: Color.fromRGBO(0, 0, 0, 0.18),
-                                    offset: Offset(3, 3))
-                              ],
-                              border: Border(
-                                top: BorderSide(width: 1, color: Farben.grau),
-                                bottom:
-                                    BorderSide(width: 1, color: Farben.grau),
-                              )),
-                          width: fieldExpanded
-                              ? MediaQuery.of(context).size.width
-                              : 0,
-                          duration: !fieldExpanded
-                              ? Duration(milliseconds: 50) // Animationsdauer
-                              : duration,
-                          child: _LeistenTextfield()))
-                ]))),
-        schatten
-      ]),
+                                    offset: Offset(3, 3))],
+                                    border: Border(
+                                      top: BorderSide(width: 1, color: Farben.grau),
+                                      bottom: BorderSide(width: 1, color: Farben.grau))),
+                          width: fieldExpanded ?
+                          MediaQuery.of(context).size.width : 0, duration: !fieldExpanded
+                              ? Duration(milliseconds: 50) : duration,
+                          child: _LeistenTextfield()))]))),
+        schatten]),
       Row(children: [
         _LeistenButton(
             onPressed: _settingsButtonPressed,
@@ -99,10 +89,8 @@ class _TopleisteState extends State<Topleiste> {
             fieldExpanded: fieldExpanded,
             left: false,
             duration: duration,
-            svg: SVGicons.lupe)
-      ])
-    ]);
-  }
+            svg: SVGicons.lupe)])]);
+  } // @formatter:on
 }
 
 /// Textfeld der Suchleiste
@@ -115,21 +103,20 @@ class _LeistenTextfield extends StatefulWidget {
 
 class _LeistenTextfieldState extends State<_LeistenTextfield> {
   // --------------------------------- Build ----------------------------------
-
+// @formatter:off
   @override
   Widget build(BuildContext context) {
     return TextField(
-      style: Schrift(
-          fontWeight: FontWeight.w400, fontSize: 20, color: Farben.schwarz),
-      strutStyle: StrutStyle(height: 1.6),
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(left: 5, right: 5),
-          hintText: 'Suchen',
-          hintStyle: Schrift(
-              fontWeight: FontWeight.w400, color: Farben.grau, fontSize: 20),
-          border: OutlineInputBorder(borderSide: BorderSide.none)),
-    );
-  }
+        style: Schrift(
+            fontWeight: FontWeight.w400, fontSize: 20, color: Farben.schwarz),
+        strutStyle: StrutStyle(height: 1.6),
+        decoration: InputDecoration(
+            contentPadding: EdgeInsets.only(left: 5, right: 5),
+            hintText: 'Suchen',
+            hintStyle: Schrift(
+                fontWeight: FontWeight.w400, color: Farben.grau, fontSize: 20),
+            border: OutlineInputBorder(borderSide: BorderSide.none)));
+  } // @formatter:on
 }
 
 /// Buttons der Topleiste (Einstellungen und Suchfunktion)
@@ -177,7 +164,7 @@ class _LeistenButtonState extends State<_LeistenButton> {
         bottomRight: Radius.circular( widget.left && widget.fieldExpanded ? 0 : 10),
         topRight:    Radius.circular( widget.left && widget.fieldExpanded ? 0 : 10));
     // @formatter:on
-
+// @formatter:off
     return AnimatedContainer(
         child: Material(
             color: Colors.transparent,
@@ -189,8 +176,7 @@ class _LeistenButtonState extends State<_LeistenButton> {
                   Align(
                       alignment: Alignment.center,
                       child: SvgPicture.asset(widget.svg,
-                          color: Farben.blaugrau, height: 23))
-                ]))),
+                          color: Farben.blaugrau, height: 23))]))),
         duration: widget.duration,
         curve: Curves.easeOutExpo,
         height: 40,
@@ -204,9 +190,6 @@ class _LeistenButtonState extends State<_LeistenButton> {
                   blurRadius: 7,
                   spreadRadius: 0.03,
                   color: Color.fromRGBO(0, 0, 0, 0.18),
-                  offset: Offset(3, 3))
-            ]
-        )
-    );
-  }
+                  offset: Offset(3, 3))]));
+  } // @formatter:off
 }

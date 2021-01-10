@@ -1,10 +1,9 @@
-import 'dart:math';
-
 import 'package:dipl_app/frontend/gui_text.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 import 'gui_konstanten.dart';
+import 'dart:math';
 
 /// Standard-Button
 class Button extends StatefulWidget {
@@ -71,7 +70,7 @@ class _ButtonState extends State<Button> {
 
     // Definition des Button-inhalts
 
-    if (widget.sortieren) {
+    if (widget.sortieren){
       child = Row(
           children: [
             Expanded(child: Container()),
@@ -81,8 +80,7 @@ class _ButtonState extends State<Button> {
                 height: 38,
                 width: .8,
                 color: Colors.white),
-            SizedBox(width: 10),
-            //SvgPicture.asset(SVGicons.dropbutton, height: 10, color: textColor),
+            SizedBox(width: 10), //SvgPicture.asset(SVGicons.dropbutton, height: 10, color: textColor),
             Flippable(
                 back:  SvgPicture.asset(SVGicons.dropbutton, height: 10, color: textColor),
                 front: SvgPicture.asset(SVGicons.dropbutton, height: 10, color: textColor),
@@ -119,8 +117,7 @@ class _ButtonState extends State<Button> {
   }
 }
 
-class CustomToggleButton extends StatefulWidget
-{
+class CustomToggleButton extends StatefulWidget {
   // ------------------------------- Variablen --------------------------------
   // @formatter:off
   final bool               value; // Standardwert
@@ -140,8 +137,7 @@ class CustomToggleButton extends StatefulWidget
   => _CustomToggleButtonState();
 }
 
-class _CustomToggleButtonState extends State<CustomToggleButton>
-{
+class _CustomToggleButtonState extends State<CustomToggleButton> {
   // ------------------------------- Variablen --------------------------------
 
   bool _value = true; // aktueller Wert
@@ -149,18 +145,15 @@ class _CustomToggleButtonState extends State<CustomToggleButton>
   // -------------------------------- initState -------------------------------
 
   @override
-  void initState()
-  {
+  void initState() {
     _value = widget.value;
     super.initState();
   }
 
   // ------------------------------ Eventhandler ------------------------------
 
-  void _changeValue()
-  {
-    setState(()
-    {
+  void _changeValue(){
+    setState((){
       _value = !_value;
       widget.onTap.call();
     });
@@ -169,8 +162,7 @@ class _CustomToggleButtonState extends State<CustomToggleButton>
   // --------------------------------- Build ----------------------------------
 
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context){
     return Container(
         width: widget.size,
         height: widget.size / 2,
@@ -195,13 +187,11 @@ class _CustomToggleButtonState extends State<CustomToggleButton>
                               borderRadius:
                               BorderRadius.all(Radius.circular(11)),
                               border: Border.all(
-                                  color: Farben.hellgrau, width: 3)),
-                        )),
+                                  color: Farben.hellgrau, width: 3)))),
                     AnimatedPositioned(
                         left: _value ? 70: 0,
                         duration: Duration(milliseconds: 200),
                         child: AnimatedContainer(
-                          // Button-Knopf
                             curve: Curves.linearToEaseOut,
                             duration: Duration(milliseconds: 200),
                             width: 70,
@@ -212,16 +202,16 @@ class _CustomToggleButtonState extends State<CustomToggleButton>
                                 BorderRadius.all(Radius.circular(12)),
                                 border: Border.all(
                                 color: Farben.hellgrau, width: 2),
-                                  boxShadow: [
+                                boxShadow: [
                                   BoxShadow(
-                                    color: Color.fromRGBO(0, 0, 0, 0.2),
-                                    spreadRadius: 0.1,
-                                    blurRadius: 8,
-                                    offset: Offset(5, 5))])))])))));
+                                      color: Color.fromRGBO(0, 0, 0, 0.2),
+                                      spreadRadius: 0.1,
+                                      blurRadius: 8,
+                                      offset: Offset(5, 5))])))])))));
   }
 }
 
-class Flippable extends StatelessWidget {
+class Flippable extends StatelessWidget{
   final bool isFlipped;
   final Widget front;
   final Widget back;
@@ -229,7 +219,7 @@ class Flippable extends StatelessWidget {
   const Flippable({this.isFlipped = false, this.front, this.back});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return TweenAnimationBuilder(
       duration: Duration(milliseconds: 700),
       curve: Curves.easeOut,
@@ -240,23 +230,18 @@ class Flippable extends StatelessWidget {
           rotationX: value,
           child: content,
         );
-      },
-    );
-  }
-}
+      });
+  }}
 
-class RotationX extends StatelessWidget
-{
+class RotationX extends StatelessWidget {
   //Degrees to rads constant
   static const double degrees2Radians = pi / 180;
-
   final Widget child;
   final double rotationX;
-
   const RotationX({Key key, @required this.child, this.rotationX = 0}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return Transform(
         alignment: FractionalOffset.center,
         transform: Matrix4.identity()

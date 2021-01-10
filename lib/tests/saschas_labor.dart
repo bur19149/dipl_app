@@ -1,9 +1,9 @@
 import 'package:dipl_app/frontend/gui_konstanten.dart';
+import 'package:dipl_app/frontend/gui_buttons.dart';
 import 'package:dipl_app/frontend/gui_text.dart';
 import 'package:flutter/material.dart';
-import 'package:dipl_app/main.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:dipl_app/frontend/gui_buttons.dart';
+import 'package:dipl_app/main.dart';
 
 class SaschasLabor extends StatefulWidget {
   @override
@@ -59,11 +59,9 @@ class _SortierMenuState extends State<SortierMenu> {
                 sortieren: !_jahr,
                 farbe: Buttonfarbe.rot,
                 gefuellt: !_jahr,
-                active: _aufsteigend)),
-      ]),
+                active: _aufsteigend))]),
       SizedBox(height: 10),
-      Button(
-          onPressed: () => setState(() {
+      Button( onPressed: () => setState(() {
                 if (_archiv) _archiv = !_archiv;
               }),
           text: 'Alle anstehenden Termine',
@@ -75,7 +73,6 @@ class _SortierMenuState extends State<SortierMenu> {
               }),
           text: 'Archiv',
           farbe: Buttonfarbe.rot,
-          gefuellt: _archiv),
-    ]);
+          gefuellt: _archiv)]);
   }
 }

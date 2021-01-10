@@ -34,21 +34,20 @@ class ListViewScaffold extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _ListViewScaffoldState();
 }
-
+// @formatter:off
 class _ListViewScaffoldState extends State<ListViewScaffold> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
             child: ListView(
-      children: widget.children,
-      padding: EdgeInsets.only(
-          left: 15,
-          right: 15,
-          top: MediaQuery.of(context).size.height / 4.5,
-          bottom: MediaQuery.of(context).size.height / 4.5),
-    )));
-  }
+              children: widget.children,
+              padding: EdgeInsets.only(
+                  left: 15,
+                  right: 15,
+                  top: MediaQuery.of(context).size.height / 4.5,
+                  bottom: MediaQuery.of(context).size.height / 4.5))));
+  } // @formatter:on
 }
 
 class CustomPageView extends StatefulWidget {
@@ -66,9 +65,9 @@ class _CustomPageViewState extends State<CustomPageView> {
     return null;
   }
 }
-
+// @formatter:off
 /// Teilelement
 class Teiler extends SizedBox {
   const Teiler({double height = 20, double width = 10, bool buttonTrenner = false, bool rahmenTrenner = false})
       : super(height: buttonTrenner ? 5 : (rahmenTrenner ? 30 : height), width: width);
-}
+}// @formatter:on

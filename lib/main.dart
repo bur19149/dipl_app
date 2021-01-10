@@ -26,8 +26,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.red,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          home: MyHomePage(),
-        ));
+          home: MyHomePage()));
   }
 }
 
@@ -68,32 +67,27 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          SaschasLabor())),
-                                            ),
+                                                          SaschasLabor()))),
                                             TempButton(
                                               text: 'Dominiks Testgelände',
                                               onPressed: () => Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          DominiksTestgelaende())),
-                                            ),
+                                                          DominiksTestgelaende()))),
                                             TempButton(
                                               text: 'Christians Spielwiese',
                                               onPressed: () => Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          ChristiansSpielwiese())),
-                                            )
-                                          ])))),
+                                                          ChristiansSpielwiese())))])))),
                           TempButton(
                               text: 'Checkliste',
                               onPressed: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Checkliste())))
-                        ])))));
+                                      builder: (context) => Checkliste())))])))));
   }
 }
 
@@ -111,8 +105,7 @@ class TempButton extends StatelessWidget {
         width: double.infinity,
         child: RaisedButton(
           onPressed: onPressed,
-          child: Text(text),
-        ));
+          child: Text(text)));
   }
 }
 
@@ -131,11 +124,10 @@ class _TempSeiteState extends State<TempSeite> {
     return Scaffold(
         body: SafeArea(
             child: Center(
-      child: Padding(
-          padding: EdgeInsets.all(15),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: widget.children)),
-    )));
+              child: Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: widget.children)))));
   }
 }

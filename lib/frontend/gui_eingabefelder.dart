@@ -64,35 +64,27 @@ class _TextfeldState extends State<Textfeld> {
   }
 
   // --------------------------------- Build ----------------------------------
-
+//@foramtter:off
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       Container(
-          child: Align(
-              alignment: Alignment.centerLeft,
+          child: Align(alignment: Alignment.centerLeft,
               child: Text(widget.text, style: widget.headerStyle))),
       SizedBox(height: 7),
-      widget.dateTime
-          ? _DateTimeTextfeld(
-              value: widget.value ?? Wrapper(), hintText: hintText)
-          : _Feld(validator: widget.validator,
-              inputFormatters: widget.inputFormatters ?? [],
-              multiline: widget.multiline,
-              hintText: hintText,
-              maxLength: widget.maxLength,
-            ),
-      widget.bottomHintText == null
-          ? Container()
-          : Container(
-              height: 25,
-              padding: EdgeInsets.only(left: 9),
-              child: Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Text(widget.bottomHintText,
-                      style: Schrift(color: Farben.grau, fontSize: 15))))
-    ]);
-  }
+      widget.dateTime ? _DateTimeTextfeld(value: widget.value ?? Wrapper(), hintText: hintText) : _Feld(validator: widget.validator,
+        inputFormatters: widget.inputFormatters ?? [],
+        multiline: widget.multiline,
+        hintText: hintText,
+        maxLength: widget.maxLength),
+      widget.bottomHintText == null ? Container() : Container(
+          height: 25,
+          padding: EdgeInsets.only(left: 9),
+          child: Align(
+              alignment: Alignment.bottomLeft,
+              child: Text(widget.bottomHintText,
+                  style: Schrift(color: Farben.grau, fontSize: 15))))]);
+  } //@foramtter:on
 }
 
 /// Standard-Textfeld
@@ -135,25 +127,19 @@ class _Feld extends StatefulWidget {
 
 class _FeldState extends State<_Feld> {
   // --------------------------------- Build ----------------------------------
-
+//@foramtter:off
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: widget.error ? (widget.multiline ? 93 : 63) : (widget.multiline
-            ? 70
-            : 40),
+        height: widget.error ? (widget.multiline ? 93 : 63) : (widget.multiline ? 70 : 40),
         child: Theme(
             data: ThemeData(
                 primaryColor: Farben.blaugrau, errorColor: Farben.rot),
             child: TextFormField(minLines: widget.multiline ? 2 : null,
                 maxLines: widget.multiline ? null : 1,
                 controller: widget.controller,
-                validator: widget.validator == null
-                    ? (text) => null
-                    : widget.validator,
-                keyboardType: widget.dateTime
-                    ? TextInputType.datetime
-                    : TextInputType.text,
+                validator: widget.validator == null ? (text) => null : widget.validator,
+                keyboardType: widget.dateTime ? TextInputType.datetime : TextInputType.text,
                 style: Schrift(color: Farben.schwarz),
                 maxLength: widget.maxLength,
                 inputFormatters: widget.inputFormatters ?? [],
@@ -173,9 +159,8 @@ class _FeldState extends State<_Feld> {
                     hintText: widget.hintText,
                     hintStyle: Schrift(color: Farben.grau),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                    )))));
-  }
+                      borderRadius: BorderRadius.all(Radius.circular(5)))))));
+  }//@foramtter:on
 }
 
 /// Textfeld zur Eingabe von Zeitangaben
@@ -228,12 +213,9 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
                   primary:   Farben.rot,
                   onPrimary: Farben.weiss,
                   surface:   Farben.rot,
-                  onSurface: Farben.schwarz,
-                ),
-                dialogBackgroundColor: Farben.weiss,
-              ),
-              child: child,
-            ));
+                  onSurface: Farben.schwarz),
+                dialogBackgroundColor: Farben.weiss),
+              child: child));
   } // @formatter:on
 
   /// definiert das Aussehen des TimePickers
@@ -247,10 +229,8 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
                 primaryColor: Farben.rot,
                 accentColor:  Farben.rot,
                 colorScheme:  ColorScheme.light(primary: Farben.rot),
-                dialogBackgroundColor: Farben.weiss,
-              ),
-              child: child,
-            ));
+                dialogBackgroundColor: Farben.weiss),
+              child: child));
   } // @formatter:on
 
   /// Verknüft Date- & TimePicker und blendet diese ein. Liefert ein Future<DateTime> zurück
@@ -301,7 +281,7 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
   }
 
   // --------------------------------- Build ----------------------------------
-
+//@foramtter:off
   @override
   Widget build(BuildContext context) {
     var _feld = _Feld(controller: controller,
@@ -319,8 +299,7 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
         error: _error,
         inputFormatters: [
           DateTimeInputFormatter(),
-          MaskTextInputFormatter(mask: '##.##.#### ##:##')
-        ],
+          MaskTextInputFormatter(mask: '##.##.#### ##:##')],
         contentPaddingRight: 48,
         dateTime: true,
         hintText: widget.hintText,
@@ -356,37 +335,29 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
                                     var dateTime = await _showDateTimePicker(
                                         context);
                                     if (dateTime != null) {
-                                      controller.text = DateFormat(
-                                          'dd.MM.yyyy HH:mm').format(dateTime);
+                                      controller.text = DateFormat('dd.MM.yyyy HH:mm').format(dateTime);
                                       widget.value.value = dateTime;
                                     }
                                     setState(() {
-                                      _error =
-                                      !_formKey.currentState.validate();
+                                      _error = !_formKey.currentState.validate();
                                     });
-                                  }, child: Stack(children: [
-                                Align(
-                                    alignment: Alignment.center,
-                                    child: SvgPicture.asset(SVGicons.kalender,
-                                        height: 22,
-                                        color: _error ? Farben.rot : (
-                                            _focus ? Farben.dunkelgrau : Farben
-                                                .blaugrau)))
-                              ]))),
-                          decoration: BoxDecoration(
-                              color: Farben.weiss,
-                              border: _focus ? Border.all(width: 2,
-                                  color: _error ? Farben.rot : Farben
-                                      .dunkelgrau)
-                                  : Border.all(width: 1.2,
-                                  color: _error ? Farben.rot : Color.fromRGBO(
-                                      155, 155, 155, 1)),
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(5),
-                                  bottomRight: Radius.circular(5)))
-                      ))
-                ]))));
-  }
+                                    },
+   child: Stack(children: [
+     Align(
+         alignment: Alignment.center,
+         child: SvgPicture.asset(SVGicons.kalender,
+             height: 22,
+             color: _error ? Farben.rot : (_focus ? Farben.dunkelgrau : Farben.blaugrau)))]))),
+                  decoration: BoxDecoration(
+                      color: Farben.weiss,
+                      border: _focus ?
+                      Border.all(width: 2, color: _error ? Farben.rot : Farben.dunkelgrau) :
+                      Border.all(width: 1.2, color: _error ? Farben.rot :
+                      Color.fromRGBO(155, 155, 155, 1)),
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(5),
+                          bottomRight: Radius.circular(5)))))]))));
+  } //@foramtter:on
 }
 
 /// Wrapper um Variablen an Parent-Widgets weiterzugeben zu können

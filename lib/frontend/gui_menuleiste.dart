@@ -42,19 +42,18 @@ class _MenuleisteState extends State<Menuleiste> {
   }
 
   // ------------------------------ Eventhandler ------------------------------
-
+// @formatter:off
   void handleHome() {
     setState(() {
       if (!home) {
         home = true;
         meineTermine = false;
-        pageController.animateToPage(0,
-            duration: Duration(milliseconds: 200), curve: Curves.linear);
+        pageController.animateToPage(0, duration: Duration(milliseconds: 200), curve: Curves.linear);
       }
       adminMenu = false;
     });
   }
-
+// @formatter:on
   void handleMeineTermine() {
     setState(() {
       if (!meineTermine) {
@@ -88,37 +87,34 @@ class _MenuleisteState extends State<Menuleiste> {
   }
 
   // --------------------------------- Build ----------------------------------
-
+// @formatter:off
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Stack(children: [
-      PageView(
-        controller: pageController,
-        onPageChanged: (page) => swipeHandler(page),
-        children: [
-          widget.scaffold,
-          Scaffold(
-            body: Center(child: Text('Seite 2')),
-          ),
+          PageView(
+            controller: pageController,
+            onPageChanged: (page) => swipeHandler(page),
+            children: [
+              widget.scaffold,
+              Scaffold(
+                body: Center(child: Text('Seite 2'))),
           /*Scaffold(
             body: Center(child: Text('Seite 3')),
           )*/ //TODO ka
-        ],
-      ),
-      Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            height: 90,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(colors: [
-              Color.fromRGBO(255, 255, 255, 100),
-              Color.fromRGBO(255, 255, 255, 0),
-            ], begin: Alignment.bottomCenter, end: Alignment.topCenter)),
-          )),
-      // TODO Farbe ändern
-      widget.admin
-          ? AnimatedPositioned(
+        ]),
+          Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: 90,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [
+                          Color.fromRGBO(255, 255, 255, 100),
+                          Color.fromRGBO(255, 255, 255, 0),
+                        ], begin: Alignment.bottomCenter, end: Alignment.topCenter)))),
+          // TODO Farbe ändern
+          widget.admin ? AnimatedPositioned(
               right: adminMenu ? 11 : -220,
               bottom: adminMenu ? 85 : -510,
               curve: Curves.easeOutExpo,
@@ -127,48 +123,39 @@ class _MenuleisteState extends State<Menuleiste> {
                   duration: Duration(milliseconds: 500),
                   curve: Curves.easeOutCirc,
                   opacity: adminMenu ? 1 : 0,
-                  child: _AdminMenu()))
-          : Container(),
-      Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-              height: 90,
-              padding: EdgeInsets.only(left: 11, right: 11),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                      child: _LeistenButton(
-                    text: 'Home',
-                    onPressed: handleHome,
-                    svg: SVGicons.haus,
-                    admin: widget.admin,
-                    active: home,
-                  )),
-                  SizedBox(width: 10),
-                  Expanded(
-                      child: _LeistenButton(
-                    text: 'Meine Termine',
-                    onPressed: handleMeineTermine,
-                    svg: SVGicons.kalender,
-                    admin: widget.admin,
-                    active: meineTermine,
-                  )),
-                  SizedBox(width: 10),
-                  widget.admin
-                      ? Expanded(
+                  child: _AdminMenu())) : Container(),
+          Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                  height: 90,
+                  padding: EdgeInsets.only(left: 11, right: 11),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
                           child: _LeistenButton(
-                          text: 'Admin Bereich',
-                          onPressed: showAdminMenu,
-                          svg: SVGicons.administrator,
-                          admin: widget.admin,
-                          active: adminMenu,
-                        ))
-                      : Container(),
-                ],
-              )))
-    ]));
-  }
+                            text: 'Home',
+                            onPressed: handleHome,
+                            svg: SVGicons.haus,
+                            admin: widget.admin,
+                            active: home)),
+                      SizedBox(width: 10),
+                      Expanded(
+                          child: _LeistenButton(
+                            text: 'Meine Termine',
+                            onPressed: handleMeineTermine,
+                            svg: SVGicons.kalender,
+                            admin: widget.admin,
+                            active: meineTermine)),
+                      SizedBox(width: 10),
+                      widget.admin ? Expanded(
+                          child: _LeistenButton(
+                            text: 'Admin Bereich',
+                            onPressed: showAdminMenu,
+                            svg: SVGicons.administrator,
+                            admin: widget.admin,
+                            active: adminMenu,)) : Container()])))]));
+  } // @formatter:on
 }
 
 /// In der Navigationsleiste enthaltener Button
@@ -199,7 +186,7 @@ class _LeistenButton extends StatefulWidget {
 
 class _LeistenButtonState extends State<_LeistenButton> {
   // --------------------------------- Build ----------------------------------
-
+// @formatter:off
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -210,15 +197,14 @@ class _LeistenButtonState extends State<_LeistenButton> {
               text: widget.text,
               admin: widget.admin,
               svg: widget.svg,
-              active: widget.active,
-            ),
+              active: widget.active),
             color: Farben.weiss,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
                 side: BorderSide(
                     color: widget.active ? Farben.rot : Farben.blaugrau,
                     width: 1))));
-  }
+  } // @formatter:off
 }
 
 /// Buttoninhalt der Navigationsleiste
@@ -246,36 +232,27 @@ class _LeistenButtonChild extends StatefulWidget {
 
 class _LeistenButtonChildState extends State<_LeistenButtonChild> {
   // --------------------------------- Build ----------------------------------
-
+// @formatter:off
   @override
   Widget build(BuildContext context) {
     Color color = widget.active ? Farben.rot : Farben.blaugrau;
-    return widget.admin
-        ? Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      SvgPicture.asset(widget.svg, height: 17,
-          color: color),
+    return widget.admin ? Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      SvgPicture.asset(widget.svg, height: 17, color: color),
       SizedBox(height: 5),
-      Text(
-        widget.text,
+      Text(widget.text,
         style: Schrift(
             fontSize: Groesse.klein,
             fontWeight: FontWeight.w500,
-            color: color),
-      )
-    ])
-        : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-      SvgPicture.asset(widget.svg, height: 17,
-          color: color),
-      SizedBox(width: 7),
-      Text(
-        widget.text,
-        style: Schrift(
-            fontSize: 12,
-            fontWeight: FontWeight.w500,
-            color: color),
-      )
-    ]);
-  }
+            color: color))]) : Row(mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(widget.svg, height: 17, color: color),
+              SizedBox(width: 7),
+              Text(widget.text,
+                style: Schrift(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: color))]);
+  } // @formatter:off
 }
 
 /// Admin-Bereich Untermenü
@@ -288,7 +265,7 @@ class _AdminMenu extends StatefulWidget {
 
 class _AdminMenuState extends State<_AdminMenu> {
   // --------------------------------- Build ----------------------------------
-
+//@foramtter:off
   @override
   Widget build(BuildContext context) {
     return Material(color: Colors.transparent, child: Column(children: [
@@ -296,16 +273,13 @@ class _AdminMenuState extends State<_AdminMenu> {
         _AdminMenuText('Vollständige Termin Liste'),
         _AdminMenuText('Neuen Termin anlegen')
       ]),
-      SizedBox(
-        height: 10,
-      ),
+      SizedBox(height: 10),
       _MenuBox(children: [
         _AdminMenuText('User Einstellungen'),
         _AdminMenuText('Registrierte User'),
         _AdminMenuText('Neuen User anlegen')
-      ])
-    ]));
-  }
+      ])]));
+  } //@foramtter:on
 }
 
 /// Text innerhalb des Admin-Menüs
@@ -372,8 +346,7 @@ class _MenuBoxState extends State<_MenuBox> {
                   blurRadius: 7,
                   spreadRadius: 0.03,
                   color: Color.fromRGBO(0, 0, 0, 0.18),
-                  offset: Offset(3, 3))
-            ],
+                  offset: Offset(3, 3))],
             borderRadius: BorderRadius.all(Radius.circular(10)),
             border: Border.all(color: Farben.blaugrau, width: 1)),
         child: Column(children: widget.children));
