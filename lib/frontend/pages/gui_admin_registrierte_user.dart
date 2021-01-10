@@ -1,44 +1,10 @@
 import 'package:dipl_app/backend/objects.dart';
-import 'package:dipl_app/frontend/gui_konstanten.dart';
-import 'package:dipl_app/frontend/pages/gui_admin_terminuebersicht.dart';
-import 'package:dipl_app/backend/objects.dart' as objects;
-import 'package:dipl_app/frontend/gui_buttons.dart';
-import 'package:dipl_app/frontend/gui_rahmen.dart';
-import 'package:dipl_app/frontend/gui_pages.dart';
-import 'package:dipl_app/frontend/gui_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:dipl_app/main.dart';
 import 'package:flutter_svg/svg.dart';
-
-class SaschasLabor extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _SaschasLaborState();
-}
-
-class _SaschasLaborState extends State<SaschasLabor> {
-  @override
-  Widget build(BuildContext context) {
-    return TempSeite(children: [
-      TempButton(onPressed: () =>
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => testeRegistrierteUser())),
-          text: 'testeRegistrierteUser'),
-      TempButton(onPressed: () =>
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => testeSortierMenu())),
-          text: 'testeSortierButton'),
-    ]);
-  }
-
-  Widget testeSortierMenu() {
-    return TempSeite(children: [SortierMenu()]);
-  }
-
-  Widget testeRegistrierteUser() {
-    return TempSeite(children: [UserRahmen(objects.User(01,'Jon','Doe','JonDoe@gmail.com','1210','New York',
-        UserTyp(1259,'User', null),'Die Coolen Spritzen', null, null, true))]);
-  }
-}
+import '../gui_konstanten.dart';
+import '../gui_rahmen.dart';
+import '../gui_text.dart';
 
 class UserRahmen extends StatefulWidget {
   // ------------------------------- Variablen --------------------------------
@@ -128,21 +94,23 @@ class _UserRahmenState extends State<UserRahmen>
                 child: Column(children: [
                   SizedBox(height: 5),
                   Row(children: [
-                    Container(width: 20, child: Center(child: SvgPicture.asset(SVGicons.email, height: 20,width: 20, color: Farben.blaugrau))),
+                    Container(width: 20, child:
+                        Center(child: SvgPicture.asset(SVGicons.email, height: 20,width: 20, color: Farben.blaugrau))),
                     Container(width: 10),
                     Text('${widget.user.email}', style: Schrift())]),
                   SizedBox(height: 5),
                   Row(children: [
-                    Container(width: 20, child: Center(child: SvgPicture.asset(SVGicons.berechtigung, height: 25, width: 25, color: Farben.blaugrau))),
+                    Container(width: 20, child: Center(child:
+                        SvgPicture.asset(SVGicons.berechtigung, height: 25, width: 25, color: Farben.blaugrau))),
                     Container(width: 10),
                     Text('${widget.user.typ.name}', style: Schrift())]),
                   SizedBox(height: 5),
                   Row(children: [
-                    Container(width: 20, child: Center(child: SvgPicture.asset(SVGicons.verknuepft, height: 18, width: 18, color: Farben.blaugrau))),
+                    Container(width: 20, child:
+                        Center(child: SvgPicture.asset(SVGicons.verknuepft, height: 18, width: 18, color: Farben.blaugrau))),
                     Container(width: 10),
                     Text('${widget.user.vorname} ${widget.user.nachname}', style: Schrift())]),
                   SizedBox(height: 15)]))));
-
   } // @formatter:on
 
   // -------------------------------- Dispose ---------------------------------
@@ -150,24 +118,6 @@ class _UserRahmenState extends State<UserRahmen>
   @override
   void dispose() {
     _controller.dispose();
-        super.dispose();
-    }
+    super.dispose();
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
