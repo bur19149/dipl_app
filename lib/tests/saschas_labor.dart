@@ -1,3 +1,7 @@
+import 'package:dipl_app/backend/objects.dart' as objects;
+import 'package:dipl_app/backend/requests/admin.dart';
+import 'package:dipl_app/frontend/gui_rahmen.dart';
+import 'package:dipl_app/frontend/pages/gui_admin_terminuebersicht.dart';
 import 'package:dipl_app/frontend/gui_konstanten.dart';
 import 'package:dipl_app/frontend/gui_buttons.dart';
 import 'package:dipl_app/frontend/gui_text.dart';
@@ -13,66 +17,36 @@ class SaschasLabor extends StatefulWidget {
 class _SaschasLaborState extends State<SaschasLabor> {
   @override
   Widget build(BuildContext context) {
+    return TempSeite(children: [
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => testeSortierMenu())), text: 'testeSortierButton'),
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => testeRegistrierteUser())), text: 'testeRegistrierteUser')]);
+  }
+
+  Widget testeSortierMenu() {
     return TempSeite(children: [SortierMenu()]);
   }
-}
 
-class SortierMenu extends StatefulWidget {
-  @override
-  _SortierMenuState createState() => _SortierMenuState();
-}
-
-class _SortierMenuState extends State<SortierMenu> {
-  bool _archiv = false;
-  bool _aufsteigend = false;
-  bool _jahr = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(children: [
-      Row(children: [
-        Text('Sortieren nach:', style: Schrift()),
-        SizedBox(width: 10),
-        Expanded(
-            child: Button(
-                text: 'Jahr',
-                onPressed: () => setState(() {
-                      if (_jahr)
-                        _aufsteigend = !_aufsteigend;
-                      else
-                        _jahr = !_jahr;
-                    }),
-                sortieren: _jahr,
-                farbe: Buttonfarbe.rot,
-                gefuellt: _jahr,
-                active: _aufsteigend)),
-        SizedBox(width: 7),
-        Expanded(
-            child: Button(
-                text: 'Monat',
-                onPressed: () => setState(() {
-                      if (!_jahr)
-                        _aufsteigend = !_aufsteigend;
-                      else
-                        _jahr = !_jahr;
-                    }),
-                sortieren: !_jahr,
-                farbe: Buttonfarbe.rot,
-                gefuellt: !_jahr,
-                active: _aufsteigend))]),
-      SizedBox(height: 10),
-      Button( onPressed: () => setState(() {
-                if (_archiv) _archiv = !_archiv;
-              }),
-          text: 'Alle anstehenden Termine',
-          farbe: Buttonfarbe.rot,
-          gefuellt: !_archiv),
-      Button(
-          onPressed: () => setState(() {
-                if (!_archiv) _archiv = !_archiv;
-              }),
-          text: 'Archiv',
-          farbe: Buttonfarbe.rot,
-          gefuellt: _archiv)]);
+  Widget testeRegistrierteUser() {
+    return Container();
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
