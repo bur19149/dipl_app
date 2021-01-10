@@ -76,6 +76,7 @@ class _SortierMenuState extends State<SortierMenu> {
           text: 'Archiv',
           farbe: Buttonfarbe.rot,
           gefuellt: _archiv),
+      Text('$_archiv, $_aufsteigend, $_jahr')
     ]);
   }
 }
