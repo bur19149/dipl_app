@@ -318,8 +318,7 @@ class _TerminRahmenState extends State<TerminRahmen> {
           Positioned(right: 15, top: 15,
               child: Kreuz(
                 offen: _offen,
-                groesse: 0.6,
-              ))]));
+                groesse: 0.6))]));
   } // @formatter:on
 }
 
