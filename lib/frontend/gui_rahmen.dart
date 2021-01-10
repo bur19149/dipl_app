@@ -500,7 +500,7 @@ class _KreuzState extends State<Kreuz> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Container(
         height: 60 * widget.groesse,
-        width: 60 * widget.groesse,
+        width:  60 * widget.groesse,
         child: Align(
             alignment: Alignment.center,
             child: Stack(children: [

@@ -89,7 +89,7 @@ class _ButtonState extends State<Button> {
     } else if (widget.svg != null) {
       child = Row(children: [
         Expanded(child: Container()),
-        SvgPicture.asset(widget.svg, height: 23, color: textColor),
+        SvgPicture.asset(widget.svg, height: 18, color: textColor),
         SizedBox(width: 12),
         Text(widget.text, style: Schrift(color: textColor)),
         Expanded(child: Container())
