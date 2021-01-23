@@ -1,52 +1,77 @@
-import 'package:dipl_app/backend/objects.dart';
-import 'package:dipl_app/frontend/gui_konstanten.dart';
 import 'package:dipl_app/frontend/pages/gui_admin_terminuebersicht.dart';
 import 'package:dipl_app/backend/objects.dart' as objects;
+import 'package:dipl_app/frontend/gui_konstanten.dart';
 import 'package:dipl_app/frontend/gui_buttons.dart';
 import 'package:dipl_app/frontend/gui_rahmen.dart';
 import 'package:dipl_app/frontend/gui_text.dart';
 import 'package:flutter/material.dart';
-import 'package:dipl_app/main.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:dipl_app/main.dart';
 
 class KinderAnmeldungen extends StatelessWidget {
+
+  List<objects.AntwortTermin> antwortTermine = [];
+
+  KinderAnmeldungen(List<objects.AntwortTermin> teilnehmerListe) {
+    for(var teilnehmer in teilnehmerListe)
+      if(teilnehmer.user.parent!=null)
+        antwortTermine.add(teilnehmer);
+    antwortTermine.sort((a, b) => '${a.user.vorname} ${a.user.nachname}'.compareTo('${b.user.vorname} ${b.user.nachname}'));
+    // TODO eventuell a & b tauschen
+  }
+
+// @formatter:off
   @override
   Widget build(BuildContext context) {
-    return Rahmen(
-        children: [
-          Align(child: Text('Kinder Anmeldungen', style: Schrift.ueberschrift()),alignment: Alignment.centerLeft),
-          //TODO Stroke oder Container
-        ]);
+    return Rahmen(children: [
+      Align(child: Text('Kinder Anmeldungen', style: Schrift.ueberschrift()), alignment: Alignment.centerLeft),
+      Container(width: double.infinity,
+          padding: EdgeInsets.only(left: 10, right: 10, top: 15),
+          child: Column(children: [
+            Container(width: double.infinity, height: 1, color: Farben.rahmenFarbe),
+            Container(padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: Row(children: [
+                  Expanded(child: Text('Name', style: Schrift())),
+                  Expanded(child: Text('Antwort', style: Schrift()))])),
+            Container(width: double.infinity, height: 1, color: Farben.rahmenFarbe),
+            ..._fuelleTabelle() ]))]);
+  } //@formatter:off
+
+  List<Widget> _fuelleTabelle() {
+    List<Widget> zeile = [];
+    for (var antwortTermin in antwortTermine)
+      if (antwortTermin.antwortUser != null)
+        zeile.add(_fuelleZeile(antwortTermin));
+    return zeile;
+  }
+// @formatter:off
+  Widget _fuelleZeile(objects.AntwortTermin antwortTermin) {
+    return Container(padding: EdgeInsets.only(top: 10),child: Row(
+      children: [
+        Expanded(child: Text('${antwortTermin.user.vorname} ${antwortTermin.user.nachname}', style: Schrift())),
+        Expanded(child: Text('${antwortTermin.antwortUser.name}', style: Schrift()))]));
   }
 }
-
-
+// @formatter:on
 class SaschasLabor extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _SaschasLaborState();
 }
-
+// @formatter:off
 class _SaschasLaborState extends State<SaschasLabor> {
   @override
   Widget build(BuildContext context) {
     return TempSeite(children: [
-      TempButton(
-          onPressed: () => Navigator.push(context,
-              MaterialPageRoute(builder: (context) => testeKinderAnmeldungen())),
-          text: 'testeKinderAnmeldungen'),
-      TempButton(
-          onPressed: () => Navigator.push(context,
-              MaterialPageRoute(builder: (context) => testeRegistrierteUser())),
-          text: 'testeRegistrierteUser'),
-      TempButton(
-          onPressed: () => Navigator.push(context,
-              MaterialPageRoute(builder: (context) => testeSortierMenu())),
-          text: 'testeSortierButton'),
-    ]);
+      TempButton(onPressed: () => Navigator.push(context,
+          MaterialPageRoute(builder: (context) => testeKinderAnmeldungen())), text: 'testeKinderAnmeldungen'),
+      TempButton(onPressed: () => Navigator.push(context,
+          MaterialPageRoute(builder: (context) => testeRegistrierteUser())), text: 'testeRegistrierteUser'),
+      TempButton(onPressed: () => Navigator.push(context,
+          MaterialPageRoute(builder: (context) => testeSortierMenu())), text: 'testeSortierButton')]);
   }
-
-  Widget testeKinderAnmeldungen(){
-    return TempSeite(children: [KinderAnmeldungen()]);
+// @formatter:on
+  Widget testeKinderAnmeldungen() {
+    return TempSeite(children: [KinderAnmeldungen(null)]);
   }
 
   Widget testeSortierMenu() {
@@ -62,19 +87,18 @@ class _SaschasLaborState extends State<SaschasLabor> {
           'JonDoe@gmail.com',
           '1210',
           'New York',
-          UserTyp(1259, 'User', null),
+          objects.UserTyp(1259, 'User', null),
           'Die Coolen Spritzen',
           null,
           null,
-          true))
-    ]);
+          true))]);
   }
 }
 
 class UserRahmen extends StatefulWidget {
   // ------------------------------- Variablen --------------------------------
 
-  final User user;
+  final objects.User user;
 
   // ------------------------------ Konstruktor -------------------------------
 
@@ -151,11 +175,11 @@ class _UserRahmenState extends State<UserRahmen>
         splashColor:    Colors.transparent,
         highlightColor: Colors.transparent,
         onTap: () => _handleTap(),
-    child: Stack(children: [
-      AnimatedBuilder(
-        animation: _controller.view,
-        builder: _buildChildren,
-        child: closed ? null : Container(
+      child: Stack(children: [
+        AnimatedBuilder(
+          animation: _controller.view,
+          builder: _buildChildren,
+          child: closed ? null : Container(
             width: double.infinity,
             child: Align(
                 alignment: Alignment.centerLeft,
@@ -201,7 +225,7 @@ class _UserRahmenState extends State<UserRahmen>
                   topLeft:     Radius.circular(9.4),
                   bottomLeft:  Radius.circular(_isExpanded ? 0  : 9.5),
                   bottomRight: Radius.circular(_isExpanded ? 10 : 0))))]));
- } // @formatter:on
+  } // @formatter:on
 
   // -------------------------------- Dispose ---------------------------------
 
