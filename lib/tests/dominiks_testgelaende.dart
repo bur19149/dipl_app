@@ -239,6 +239,7 @@ class _GruppenleiterState extends State<Gruppenleiter>
 	AnimationController _controller;     // Controller des Widgets / der Animation, definiert die Animationszeit
 	Animation<double>   _heightFactor;   // definiert die Animation (Kurve usw.)
 	List<Widget>        _childrenTop;    // immer sichtbarer Teil des Rahmens
+	Duration 						_duration;
 	// @ormatter:on
 
 	// ------------------------------ Eventhandler ------------------------------
@@ -262,7 +263,8 @@ class _GruppenleiterState extends State<Gruppenleiter>
 
 	@override
 	void initState() { // @formatter:off
-		_controller   = AnimationController(duration: Duration(milliseconds: 200), vsync: this);
+		_duration = Duration(milliseconds: 200);
+		_controller   = AnimationController(duration: _duration, vsync: this);
 		_heightFactor = _controller.drive(CurveTween(curve: Curves.easeIn));
 		_isExpanded   = PageStorage.of(context)?.readState(context) ?? false;
 		if (_isExpanded) _controller.value = 1.0;
@@ -272,13 +274,16 @@ class _GruppenleiterState extends State<Gruppenleiter>
 	// --------------------------------- Build ----------------------------------
 // @formatter:off
 	Widget _buildChildren(BuildContext context, Widget child) {
-		_childrenTop = [Container(decoration: BoxDecoration(color: Colors.blue,
+		_childrenTop = [AnimatedContainer(duration: _duration,
+				decoration: BoxDecoration(color: Farben.gruen,
 				borderRadius: BorderRadius.only(
-						topLeft: 		 Radius.circular(10),
-						topRight: 	 Radius.circular(10),
-						bottomRight: Radius.circular(10),
-						bottomLeft:  Radius.circular(10))),
-				width: double.infinity, height: 50)];
+						topLeft: 		 Radius.circular(9.4),
+						topRight: 	 Radius.circular(9.4),
+						bottomRight: Radius.circular(_isExpanded ? 0 : 9.4),
+						bottomLeft:  Radius.circular(_isExpanded ? 0 : 9.4))),
+				padding: EdgeInsets.only(left: 11),
+				child: Align(alignment: Alignment.centerLeft, child: Text('Demo', style: Schrift.titelFooter())),
+				width: double.infinity, height: 45)];
 		_childrenTop.addAll([
 			ClipRect(child: Align(heightFactor: _heightFactor.value, child: child))]);
 		return InkWell(
@@ -300,7 +305,9 @@ class _GruppenleiterState extends State<Gruppenleiter>
 						width: double.infinity,
 						child: Align(
 								alignment: Alignment.centerLeft,
-								child: Column(children: [Text('Bottom')]))));
+								child: Container(width: double.infinity,
+										padding: EdgeInsets.only(bottom: 25, top: 20, left: 11, right: 11),
+										child: Align(alignment: Alignment.topLeft, child: Column(children: [Text(text, textAlign: TextAlign.justify, style: Schrift())]))))));
 	} // @formatter:on
 
 	// -------------------------------- Dispose ---------------------------------
@@ -310,4 +317,7 @@ class _GruppenleiterState extends State<Gruppenleiter>
 		_controller.dispose();
 		super.dispose();
 	}
+
+
+	String text = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.';
 }
