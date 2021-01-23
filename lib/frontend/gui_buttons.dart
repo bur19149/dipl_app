@@ -1,10 +1,10 @@
-import 'dart:math';
-
 import 'package:dipl_app/frontend/gui_text.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
+import 'gui_eingabefelder.dart';
 import 'gui_konstanten.dart';
+import 'dart:math';
 
 /// Standard-Button
 class Button extends StatefulWidget {
@@ -19,7 +19,6 @@ class Button extends StatefulWidget {
   final bool         active;    // Ist der Sortierbutton aktiv?
   final String       text;      // Buttontext
   final String       svg;       // Optionales SVG-Icon, welches links neben dem Buttontext angezeigt werden kann
-
   // @formatter:on
 
 	// ------------------------------ Konstruktor -------------------------------
@@ -33,7 +32,6 @@ class Button extends StatefulWidget {
     this.sortieren = false,
     this.active    = false,
     this.svg});
-
   // @formatter:on
 
 	// ------------------------------- createState ------------------------------
@@ -135,7 +133,9 @@ class CustomToggleButton extends StatefulWidget {
 
 	// ------------------------------ Konstruktor -------------------------------
 
-	CustomToggleButton({this.size = 70, this.value = true, @required this.onTap, Key key}) : super(key: key);
+	CustomToggleButton(
+			{this.size = 70, this.value = true, @required this.onTap, Key key})
+			: super(key: key);
 
 	// ------------------------------- createState ------------------------------
 
@@ -197,8 +197,7 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
 											AnimatedPositioned(
 													left: _value ? 70 : 0,
 													duration: Duration(milliseconds: 200),
-													child: AnimatedContainer(
-														// Button-Knopf
+													child: AnimatedContainer( // Button-Knopf
 															curve: Curves.linearToEaseOut,
 															duration: Duration(milliseconds: 200),
 															width: 70,
@@ -220,17 +219,203 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
 	}
 }
 
+class CustomDropDownButton extends StatelessWidget {
+
+	// ------------------------------- Variablen --------------------------------
+
+	// @formatter:off
+	final String 			 header;
+	final TextStyle 	 headerstyle;
+	final List<String> contains;
+	final Wrapper 		 selected;
+	// @formatter:on
+	CustomDropDownButton(
+			{this.header = 'Header', this.headerstyle = const Schrift(), @required this.selected, this.contains = const [
+			]});
+
+	@override
+	Widget build(BuildContext context) {
+		return Column(children: [
+			Container(child: Align(alignment: Alignment.centerLeft,
+					child: Text(header, style: headerstyle))), SizedBox(height: 7),
+			_CustomDropDown(selected: selected, contains: contains)
+		]);
+	}
+
+}
+
+class _CustomDropDown extends StatefulWidget {
+
+	final List<String> contains;
+	final Wrapper selected;
+
+	_CustomDropDown({this.contains = const [], @required this.selected});
+
+	@override
+	_CustomDropDownState createState() => _CustomDropDownState();
+}
+
+class _CustomDropDownState extends State<_CustomDropDown> {
+	bool _istAusgeklappt = false;
+	BoxBorder _border = Border.all(color: Farben.blaugrau, width: 1);
+	Duration _animationDuration = Duration(milliseconds: 50);
+	OverlayEntry _overlayEntry;
+	LayerLink _layerLink = LayerLink();
+	List<Widget> _selectable = [];
+
+	@override
+	void initState() {
+		for (var s in widget.contains)
+			_selectable.addAll([InkWell(child: Container(width: double.infinity,
+					height: 40,
+					child: Text('$s', style: Schrift())),
+					onTap: () {
+						// TODO Lösche aktuell ausgewähltes aus Liste und füge zuletzt ausgefwähltes Element wieder hinzu
+						widget.selected.value = s;
+						_closeMenu();
+					})
+			]);
+		super.initState();
+	}
+
+
+	@override
+	Widget build(BuildContext context) {
+		double radius = _istAusgeklappt ? 0 : 10;
+		return CompositedTransformTarget(
+				link: this._layerLink,
+				child: Container(
+						width: double.infinity,
+						height: 40,
+						child: Stack(children: [
+							AnimatedContainer(
+									child: Align(alignment: Alignment.centerLeft,
+											child: Text(
+													'${widget.selected.value}', style: Schrift())),
+									padding: EdgeInsets.only(left: 11),
+									duration: _animationDuration,
+									height: 40,
+									width: double.infinity,
+									decoration: BoxDecoration(
+											color: Farben.weiss,
+											border: _border,
+											borderRadius: BorderRadius.only(
+													topLeft: Radius.circular(10),
+													topRight: Radius.circular(10),
+													bottomLeft: Radius.circular(radius),
+													bottomRight: Radius.circular(radius)))),
+							Align(
+									alignment: Alignment.centerRight,
+									child: AnimatedContainer(
+											duration: _animationDuration,
+											height: 40,
+											width: 40,
+											decoration: BoxDecoration(
+													color: Farben.weiss,
+													border: _border,
+													borderRadius: BorderRadius.only(
+															topRight: Radius.circular(10),
+															bottomRight: Radius.circular(radius))),
+											child: Stack(
+													children: [
+														Align(
+																alignment: Alignment.center,
+																child: Container(
+																		height: 12,
+																		width: 12,
+																		child: Flippable(back: SvgPicture.asset(
+																				SVGicons
+																						.dreieck, color: Farben.blaugrau),
+																				front: SvgPicture.asset(SVGicons
+																						.dreieck,
+																						color: Farben.blaugrau),
+																				isFlipped: !_istAusgeklappt,
+																				duration: Duration(milliseconds: 230)))
+														)
+													]
+											)
+									)),
+							AnimatedContainer(
+									duration: _animationDuration,
+									height: 40,
+									width: double.infinity,
+									decoration: BoxDecoration(
+											borderRadius: BorderRadius.only(
+													topLeft: Radius.circular(10),
+													topRight: Radius.circular(10),
+													bottomLeft: Radius.circular(radius),
+													bottomRight: Radius.circular(radius))),
+									child: InkWell(
+										onTap: () => _handleDropDown(),
+									))
+						])));
+	}
+
+	_handleDropDown() {
+		if (_istAusgeklappt)
+			_closeMenu();
+		else
+			_openMenu();
+	}
+
+	OverlayEntry _overlayEntryBuilder() {
+		RenderBox renderBox = context.findRenderObject();
+		var size = renderBox.size;
+
+		return OverlayEntry(builder: (context) {
+			return Positioned(
+					width: size.width,
+					child: CompositedTransformFollower(
+							link: this._layerLink,
+							showWhenUnlinked: false,
+							offset: Offset(0.0, size.height - 1), child: Material(
+							color: Colors.transparent,
+							child: Container(
+									decoration: BoxDecoration(borderRadius: BorderRadius.only(
+											bottomLeft: Radius.circular(10),
+											bottomRight: Radius.circular(10)),
+											color: Farben.weiss,
+											border: _border),
+									padding: EdgeInsets.only(
+											bottom: 3, top: 16, left: 11, right: 11),
+									child: Align(
+											alignment: Alignment.topLeft,
+											child: Column(children: _selectable))
+							))));
+		});
+	}
+
+	_openMenu() {
+		_overlayEntry = _overlayEntryBuilder();
+		Overlay.of(context).insert(_overlayEntry);
+		setState(() {
+			_istAusgeklappt = !_istAusgeklappt;
+		});
+	}
+
+	_closeMenu() {
+		_overlayEntry.remove();
+		setState(() {
+			_istAusgeklappt = !_istAusgeklappt;
+		});
+	}
+}
+
+
 class Flippable extends StatelessWidget {
 	final bool isFlipped;
 	final Widget front;
 	final Widget back;
+	final Duration duration;
 
-	Flippable({this.isFlipped = false, this.front, this.back});
+	Flippable(
+			{this.isFlipped = false, this.front, this.back, this.duration = const Duration(
+					milliseconds: 700)});
 
 	@override
 	Widget build(BuildContext context) {
 		return TweenAnimationBuilder(
-				duration: Duration(milliseconds: 700),
+				duration: duration,
 				curve: Curves.easeOut,
 				tween: Tween(
 						begin: isFlipped ? 180.0 : 0.0, end: !isFlipped ? 180.0 : 0.0),

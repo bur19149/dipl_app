@@ -100,6 +100,7 @@ abstract class SVGicons { // @formatter:off
                       benutzer        = 'assets/images/svg/benutzer.svg',
                       hackchen        = 'assets/images/svg/hackchen.svg',
                       loschen         = 'assets/images/svg/loschen.svg',
+                      dreieck         = 'assets/images/svg/dreieck.svg',
                       email           = 'assets/images/svg/email.svg',
                       haus            = 'assets/images/svg/haus.svg',
                       lupe            = 'assets/images/svg/lupe.svg',

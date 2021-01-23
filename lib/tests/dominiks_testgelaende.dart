@@ -56,8 +56,17 @@ class _TesteDropDownButtonState extends State<TesteDropDownButton> {
 				items: [DropdownMenuItem(child: Text('Hallo'))],
 				onChanged: (value) {},
 			),
+			Textfeld(),
 			Container(height: 50),
-			CustomDropDownButton(),
+			CustomDropDownButton(selected: Wrapper(value: 'User'),
+				header: 'Berechtigung:',
+				contains: [
+					'User',
+					'Eltern',
+					'Gruppenleiter',
+					'Admin',
+					'Gruppenleiter (Bewerb)'
+				],),
 			Container(
 					height: 1000, color: Colors.white
 			)
@@ -187,134 +196,5 @@ class _TesteSchriftartenState extends State<TesteSchriftarten> {
 														style: Schrift.titelFooter())),
 									])),
 				));
-	}
-}
-
-class CustomDropDownButton extends StatefulWidget {
-	@override
-	_CustomDropDownButtonState createState() => _CustomDropDownButtonState();
-}
-
-class _CustomDropDownButtonState extends State<CustomDropDownButton> {
-	bool _istAusgeklappt = false;
-	BoxBorder _border = Border.all(color: Farben.blaugrau, width: 1);
-	Duration _animationDuration = Duration(milliseconds: 50);
-	OverlayEntry _overlayEntry;
-	LayerLink _layerLink = LayerLink();
-
-	@override
-	Widget build(BuildContext context) {
-		double radius = _istAusgeklappt ? 0 : 10;
-		return CompositedTransformTarget(
-				link: this._layerLink,
-				child: Container(
-						width: double.infinity,
-						height: 40,
-						child: Stack(children: [
-							AnimatedContainer(
-									duration: _animationDuration,
-									height: 40,
-									width: double.infinity,
-									decoration: BoxDecoration(
-											color: Farben.weiss,
-											border: _border,
-											borderRadius: BorderRadius.only(
-													topLeft: Radius.circular(10),
-													topRight: Radius.circular(10),
-													bottomLeft: Radius.circular(radius),
-													bottomRight: Radius.circular(radius)))),
-							Align(
-									alignment: Alignment.centerRight,
-									child: AnimatedContainer(
-										duration: _animationDuration,
-										height: 40,
-										width: 40,
-										decoration: BoxDecoration(
-												color: Farben.weiss,
-												border: _border,
-												borderRadius: BorderRadius.only(
-														topRight: Radius.circular(10),
-														bottomRight: Radius.circular(radius))),
-										child: Stack(
-											children: [
-												Align(
-														alignment: Alignment.center,
-														child: Container(
-																height: 15,
-																width: 15,
-																color: Colors
-																		.green) //TODO Platzhalter für die Animation
-												)
-											],
-										),
-									)),
-							AnimatedContainer(
-									duration: _animationDuration,
-									height: 40,
-									width: double.infinity,
-									decoration: BoxDecoration(
-											borderRadius: BorderRadius.only(
-													topLeft: Radius.circular(10),
-													topRight: Radius.circular(10),
-													bottomLeft: Radius.circular(radius),
-													bottomRight: Radius.circular(radius))),
-									child: InkWell(
-										onTap: () => _handleDropDown(),
-									))
-						])));
-	}
-
-	_handleDropDown() {
-		if (_istAusgeklappt)
-			_closeMenu();
-		else
-			_openMenu();
-	}
-
-	OverlayEntry _overlayEntryBuilder() {
-		RenderBox renderBox = context.findRenderObject();
-		var size = renderBox.size;
-
-		return OverlayEntry(builder: (context) {
-			return Positioned(
-					width: size.width,
-					child: CompositedTransformFollower(
-							link: this._layerLink,
-							showWhenUnlinked: false,
-							offset: Offset(0.0, size.height - 1), child: Material(
-							color: Colors.transparent,
-							child: Container(
-									decoration: BoxDecoration(borderRadius: BorderRadius.only(
-											bottomLeft: Radius.circular(10),
-											bottomRight: Radius.circular(10)),
-											color: Farben.weiss,
-											border: _border),
-									padding: EdgeInsets.only(
-											bottom: 3, top: 16, left: 11, right: 11),
-									child: Align(alignment: Alignment.topLeft, child: Column(children: [
-										InkWell(child: Container(width: double.infinity, height: 40, child: Text('Hallo', style: Schrift())), onTap: () => _closeMenu()),
-										InkWell(child: Container(width: double.infinity, height: 40, child: Text('Hallo', style: Schrift())), onTap: () => _closeMenu())
-									]))
-//							Align(
-//									child: RaisedButton(
-//											child: Text('Hallo'), onPressed: () => _closeMenu()),
-//									alignment: Alignment.center)
-							))));
-		});
-	}
-
-	_openMenu() {
-		_overlayEntry = _overlayEntryBuilder();
-		Overlay.of(context).insert(_overlayEntry);
-		setState(() {
-			_istAusgeklappt = !_istAusgeklappt;
-		});
-	}
-
-	_closeMenu() {
-		_overlayEntry.remove();
-		setState(() {
-			_istAusgeklappt = !_istAusgeklappt;
-		});
 	}
 }
