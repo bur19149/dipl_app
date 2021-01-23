@@ -36,7 +36,8 @@ class _DominiksTestgelaendeState extends State<DominiksTestgelaende> {
       TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteDropDownButton())),  text: 'Dropdown-Button-Test'),
       TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EinstellungenPage())),    text: 'Teste Einstelungen-Seite'),
       TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TerminBearbeitenPage())), text: 'Teste Termin-bearbeiten-Seite'),
-      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => UserErstellenPage())),    text: 'Teste User-erstellen-Seite')
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => UserErstellenPage())),    text: 'Teste User-erstellen-Seite'),
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteGruppenleiter())),    text: 'Teste Gruppenleiter')
       // @formatter:on
 		]);
 	}
@@ -196,5 +197,117 @@ class _TesteSchriftartenState extends State<TesteSchriftarten> {
 														style: Schrift.titelFooter())),
 									])),
 				));
+	}
+}
+
+class TesteGruppenleiter extends StatefulWidget {
+	@override
+	_TesteGruppenleiterState createState() => _TesteGruppenleiterState();
+}
+
+class _TesteGruppenleiterState extends State<TesteGruppenleiter> {
+	@override
+	Widget build(BuildContext context) {
+		return TempSeite(children: [
+			Rahmen(children: [
+				Align(
+						alignment: Alignment.centerLeft,
+						child: Text('Angemeldete Gruppenleiter',
+								style: Schrift.ueberschrift())),
+				Teiler(),
+				Gruppenleiter()
+				// TODO Rahmen durch Column mit Gruppenleitern ersetzen
+			])
+		]);
+	}
+}
+
+/// ausklappbarer Rahmen
+/// wird bei der Terminübersicht verwendet (Terminkarten)
+class Gruppenleiter extends StatefulWidget {
+	// ------------------------------- createState ------------------------------
+	@override
+	State<StatefulWidget> createState() => _GruppenleiterState();
+}
+
+class _GruppenleiterState extends State<Gruppenleiter>
+		with SingleTickerProviderStateMixin {
+	// ------------------------------- Variablen --------------------------------
+
+	// @formatter:off
+	bool                _isExpanded;     // Ist der Rahmen sichtbar/ausgefahren?
+	AnimationController _controller;     // Controller des Widgets / der Animation, definiert die Animationszeit
+	Animation<double>   _heightFactor;   // definiert die Animation (Kurve usw.)
+	List<Widget>        _childrenTop;    // immer sichtbarer Teil des Rahmens
+	// @ormatter:on
+
+	// ------------------------------ Eventhandler ------------------------------
+
+	void _handleTap() {
+		setState(() {
+			_isExpanded = !_isExpanded;
+			if (_isExpanded) {
+				_controller.forward();
+			} else {
+				_controller.reverse().then<void>((void value) {
+					if (!mounted) return;
+					setState(() {});
+				});
+			}
+			PageStorage.of(context)?.writeState(context, _isExpanded);
+		});
+	}
+
+	// -------------------------------- initState -------------------------------
+
+	@override
+	void initState() { // @formatter:off
+		_controller   = AnimationController(duration: Duration(milliseconds: 200), vsync: this);
+		_heightFactor = _controller.drive(CurveTween(curve: Curves.easeIn));
+		_isExpanded   = PageStorage.of(context)?.readState(context) ?? false;
+		if (_isExpanded) _controller.value = 1.0;
+		super.initState();
+	} // @formatter:on
+
+	// --------------------------------- Build ----------------------------------
+// @formatter:off
+	Widget _buildChildren(BuildContext context, Widget child) {
+		_childrenTop = [Container(decoration: BoxDecoration(color: Colors.blue,
+				borderRadius: BorderRadius.only(
+						topLeft: 		 Radius.circular(10),
+						topRight: 	 Radius.circular(10),
+						bottomRight: Radius.circular(10),
+						bottomLeft:  Radius.circular(10))),
+				width: double.infinity, height: 50)];
+		_childrenTop.addAll([
+			ClipRect(child: Align(heightFactor: _heightFactor.value, child: child))]);
+		return InkWell(
+				splashColor: Colors.transparent,
+				highlightColor: Colors.transparent,
+				onTap: () => _handleTap(),
+				child: Rahmen(padding: EdgeInsets.all(0),
+						children: _childrenTop));
+	} // @formatter:on
+
+	@override
+	Widget build(BuildContext context) {
+		final bool closed = !_isExpanded && _controller.isDismissed;
+// @formatter:off
+		return AnimatedBuilder(
+				animation: _controller.view,
+				builder: _buildChildren,
+				child: closed ? null : Container(
+						width: double.infinity,
+						child: Align(
+								alignment: Alignment.centerLeft,
+								child: Column(children: [Text('Bottom')]))));
+	} // @formatter:on
+
+	// -------------------------------- Dispose ---------------------------------
+
+	@override
+	void dispose() {
+		_controller.dispose();
+		super.dispose();
 	}
 }

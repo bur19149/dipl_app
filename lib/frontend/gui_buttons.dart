@@ -19,7 +19,6 @@ class Button extends StatefulWidget {
   final bool         active;    // Ist der Sortierbutton aktiv?
   final String       text;      // Buttontext
   final String       svg;       // Optionales SVG-Icon, welches links neben dem Buttontext angezeigt werden kann
-
   // @formatter:on
 
 	// ------------------------------ Konstruktor -------------------------------
