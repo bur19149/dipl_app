@@ -270,8 +270,7 @@ class _CustomDropDownState extends State<_CustomDropDown> {
 						// TODO Lösche aktuell ausgewähltes aus Liste und füge zuletzt ausgefwähltes Element wieder hinzu
 						widget.selected.value = s;
 						_closeMenu();
-					})
-			]);
+					})]);
 		super.initState();
 	}
 
@@ -287,8 +286,7 @@ class _CustomDropDownState extends State<_CustomDropDown> {
 						child: Stack(children: [
 							AnimatedContainer(
 									child: Align(alignment: Alignment.centerLeft,
-											child: Text(
-													'${widget.selected.value}', style: Schrift())),
+											child: Text('${widget.selected.value}', style: Schrift())),
 									padding: EdgeInsets.only(left: 11),
 									duration: _animationDuration,
 									height: 40,
@@ -327,11 +325,7 @@ class _CustomDropDownState extends State<_CustomDropDown> {
 																						.dreieck,
 																						color: Farben.blaugrau),
 																				isFlipped: !_istAusgeklappt,
-																				duration: Duration(milliseconds: 230)))
-														)
-													]
-											)
-									)),
+																				duration: Duration(milliseconds: 230))))]))),
 							AnimatedContainer(
 									duration: _animationDuration,
 									height: 40,
@@ -344,8 +338,7 @@ class _CustomDropDownState extends State<_CustomDropDown> {
 													bottomRight: Radius.circular(radius))),
 									child: InkWell(
 										onTap: () => _handleDropDown(),
-									))
-						])));
+									))])));
 	}
 
 	_handleDropDown() {
@@ -377,8 +370,7 @@ class _CustomDropDownState extends State<_CustomDropDown> {
 											bottom: 3, top: 16, left: 11, right: 11),
 									child: Align(
 											alignment: Alignment.topLeft,
-											child: Column(children: _selectable))
-							))));
+											child: Column(children: _selectable))))));
 		});
 	}
 
@@ -420,8 +412,7 @@ class Flippable extends StatelessWidget {
 					var content = value >= 90 ? back : front;
 					return RotationX(
 							rotationX: value,
-							child: content
-					);
+							child: content);
 				});
 	}
 }

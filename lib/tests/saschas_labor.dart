@@ -9,6 +9,18 @@ import 'package:flutter/material.dart';
 import 'package:dipl_app/main.dart';
 import 'package:flutter_svg/svg.dart';
 
+class KinderAnmeldungen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Rahmen(
+        children: [
+          Align(child: Text('Kinder Anmeldungen', style: Schrift.ueberschrift()),alignment: Alignment.centerLeft),
+          //TODO Stroke oder Container
+        ]);
+  }
+}
+
+
 class SaschasLabor extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _SaschasLaborState();
@@ -20,6 +32,10 @@ class _SaschasLaborState extends State<SaschasLabor> {
     return TempSeite(children: [
       TempButton(
           onPressed: () => Navigator.push(context,
+              MaterialPageRoute(builder: (context) => testeKinderAnmeldungen())),
+          text: 'testeKinderAnmeldungen'),
+      TempButton(
+          onPressed: () => Navigator.push(context,
               MaterialPageRoute(builder: (context) => testeRegistrierteUser())),
           text: 'testeRegistrierteUser'),
       TempButton(
@@ -27,6 +43,10 @@ class _SaschasLaborState extends State<SaschasLabor> {
               MaterialPageRoute(builder: (context) => testeSortierMenu())),
           text: 'testeSortierButton'),
     ]);
+  }
+
+  Widget testeKinderAnmeldungen(){
+    return TempSeite(children: [KinderAnmeldungen()]);
   }
 
   Widget testeSortierMenu() {
@@ -75,6 +95,7 @@ class _UserRahmenState extends State<UserRahmen>
   AnimationController _controller;     // Controller des Widgets / der Animation, definiert die Animationszeit
   Animation<double>   _heightFactor;   // definiert die Animation (Kurve usw.)
   List<Widget>        _childrenTop;    // immer sichtbarer Teil des Rahmens
+  Duration            _duration;
   // @ormatter:on
 
   // ------------------------------ Eventhandler ------------------------------
@@ -98,7 +119,8 @@ class _UserRahmenState extends State<UserRahmen>
 
   @override
   void initState() { // @formatter:off
-    _controller   = AnimationController(duration: Duration(milliseconds: 200), vsync: this);
+    _duration     = Duration(milliseconds: 200);
+    _controller   = AnimationController(duration: _duration, vsync: this);
     _heightFactor = _controller.drive(CurveTween(curve: Curves.easeIn));
     _isExpanded   = PageStorage.of(context)?.readState(context) ?? false;
     if (_isExpanded) _controller.value = 1.0;
@@ -110,27 +132,27 @@ class _UserRahmenState extends State<UserRahmen>
   Widget _buildChildren(BuildContext context, Widget child) {
     _childrenTop = [];
     _childrenTop.addAll([
-      Stack(children: [Container(width: double.infinity, padding: EdgeInsets.only(left: 68, right: 10, top: 12, bottom:10), child:
-      Row(children: [
-        Text('${widget.user.vorname} ${widget.user.nachname}', style: Schrift.ueberschrift()),
-        Expanded(child: Container()),
-        Kreuz(groesse: 0.5, offen: _isExpanded),
-        ])),//TODO Animation muss noch gemacht werden.
-      AnimatedContainer(duration: Duration(milliseconds: 500),height: 52, width: 52, color: Colors.red)]),
+        Container(
+            width: double.infinity,
+            padding: EdgeInsets.only(left: 68, right: 10, top: 12, bottom: 10),
+            child: Row(children: [
+              Text('${widget.user.vorname} ${widget.user.nachname}', style: Schrift.ueberschrift()),
+              Expanded(child: Container()),
+              Kreuz(groesse: 0.5, offen: _isExpanded)])),
       ClipRect(child: Align(heightFactor: _heightFactor.value, child: child))]);
-    return InkWell(
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        onTap: () => _handleTap(),
-        child: Rahmen(padding: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
-            children: _childrenTop));
+    return Rahmen(padding: EdgeInsets.all(0), children: _childrenTop);
   } // @formatter:on
 
+  // @formatter:off
   @override
   Widget build(BuildContext context) {
     final bool closed = !_isExpanded && _controller.isDismissed;
-// @formatter:off
-    return AnimatedBuilder(
+    return InkWell(
+        splashColor:    Colors.transparent,
+        highlightColor: Colors.transparent,
+        onTap: () => _handleTap(),
+    child: Stack(children: [
+      AnimatedBuilder(
         animation: _controller.view,
         builder: _buildChildren,
         child: closed ? null : Container(
@@ -139,7 +161,7 @@ class _UserRahmenState extends State<UserRahmen>
                 alignment: Alignment.centerLeft,
                 child: Container(
                     padding: EdgeInsets.only(left: 11, top: 10, right: 10, bottom: 4),
-                    child: Column(children: [
+                    child:   Column(children: [
                   SizedBox(height: 5),
                   Row(children: [
                     Container(width: 20, child: Center(child: SvgPicture.asset(SVGicons.email, height: 20,width: 20, color: Farben.blaugrau))),
@@ -165,9 +187,20 @@ class _UserRahmenState extends State<UserRahmen>
                     Container(width: 10),
                     Text('${widget.user.vorname} ${widget.user.nachname}', style: Schrift())]),
                   SizedBox(height: 15),
-                Button(onPressed: (){}, svg: SVGicons.bearbeiten, text: 'User bearbeiten', farbe: Buttonfarbe.rot, gefuellt: false),
+                Button(onPressed: (){}, svg: SVGicons.bearbeiten, text: 'User bearbeiten',       farbe: Buttonfarbe.rot, gefuellt: false),
                 Button(onPressed: (){}, svg: SVGicons.schluessel, text: 'Passwort zurücksetzen', farbe: Buttonfarbe.rot, gefuellt: false),
-                Button(onPressed: (){}, svg: SVGicons.loschen,    text: 'User löschen', farbe: Buttonfarbe.rot, gefuellt: true)])))));
+                Button(onPressed: (){}, svg: SVGicons.loschen,    text: 'User löschen',          farbe: Buttonfarbe.rot, gefuellt: true)]))))),
+      AnimatedContainer(
+        child: Center(child: Text("012",style: Schrift())),
+          duration: _duration,
+          height: 54.5,
+          width:  53,
+          decoration: BoxDecoration(
+              border: Border.all(color: Farben.rahmenFarbe, width: 1),
+              borderRadius:  BorderRadius.only(
+                  topLeft:     Radius.circular(9.4),
+                  bottomLeft:  Radius.circular(_isExpanded ? 0  : 9.5),
+                  bottomRight: Radius.circular(_isExpanded ? 10 : 0))))]));
  } // @formatter:on
 
   // -------------------------------- Dispose ---------------------------------
