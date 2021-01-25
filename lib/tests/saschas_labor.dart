@@ -8,51 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:dipl_app/main.dart';
 
-class KinderAnmeldungen extends StatelessWidget {
 
-  List<objects.AntwortTermin> antwortTermine = [];
-
-  KinderAnmeldungen(List<objects.AntwortTermin> teilnehmerListe) {
-    for(var teilnehmer in teilnehmerListe)
-      if(teilnehmer.user.parent!=null)
-        antwortTermine.add(teilnehmer);
-    antwortTermine.sort((a, b) => '${a.user.vorname} ${a.user.nachname}'.compareTo('${b.user.vorname} ${b.user.nachname}'));
-    // TODO eventuell a & b tauschen
-  }
-
-// @formatter:off
-  @override
-  Widget build(BuildContext context) {
-    return Rahmen(children: [
-      Align(child: Text('Kinder Anmeldungen', style: Schrift.ueberschrift()), alignment: Alignment.centerLeft),
-      Container(width: double.infinity,
-          padding: EdgeInsets.only(left: 10, right: 10, top: 15),
-          child: Column(children: [
-            Container(width: double.infinity, height: 1, color: Farben.rahmenFarbe),
-            Container(padding: EdgeInsets.only(top: 10, bottom: 10),
-                child: Row(children: [
-                  Expanded(child: Text('Name', style: Schrift())),
-                  Expanded(child: Text('Antwort', style: Schrift()))])),
-            Container(width: double.infinity, height: 1, color: Farben.rahmenFarbe),
-            ..._fuelleTabelle() ]))]);
-  } //@formatter:off
-
-  List<Widget> _fuelleTabelle() {
-    List<Widget> zeile = [];
-    for (var antwortTermin in antwortTermine)
-      if (antwortTermin.antwortUser != null)
-        zeile.add(_fuelleZeile(antwortTermin));
-    return zeile;
-  }
-// @formatter:off
-  Widget _fuelleZeile(objects.AntwortTermin antwortTermin) {
-    return Container(padding: EdgeInsets.only(top: 10),child: Row(
-      children: [
-        Expanded(child: Text('${antwortTermin.user.vorname} ${antwortTermin.user.nachname}', style: Schrift())),
-        Expanded(child: Text('${antwortTermin.antwortUser.name}', style: Schrift()))]));
-  }
-}
-// @formatter:on
 class SaschasLabor extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _SaschasLaborState();
@@ -62,17 +18,17 @@ class _SaschasLaborState extends State<SaschasLabor> {
   @override
   Widget build(BuildContext context) {
     return TempSeite(children: [
-      TempButton(onPressed: () => Navigator.push(context,
-          MaterialPageRoute(builder: (context) => testeKinderAnmeldungen())), text: 'testeKinderAnmeldungen'),
+//      TempButton(onPressed: () => Navigator.push(context,
+//          MaterialPageRoute(builder: (context) => testeKinderAnmeldungen())), text: 'testeKinderAnmeldungen'),
       TempButton(onPressed: () => Navigator.push(context,
           MaterialPageRoute(builder: (context) => testeRegistrierteUser())), text: 'testeRegistrierteUser'),
       TempButton(onPressed: () => Navigator.push(context,
           MaterialPageRoute(builder: (context) => testeSortierMenu())), text: 'testeSortierButton')]);
   }
 // @formatter:on
-  Widget testeKinderAnmeldungen() {
+/*  Widget testeKinderAnmeldungen() {
     return TempSeite(children: [KinderAnmeldungen(null)]);
-  }
+  } */
 
   Widget testeSortierMenu() {
     return TempSeite(children: [SortierMenu()]);
