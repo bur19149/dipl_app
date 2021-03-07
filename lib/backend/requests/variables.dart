@@ -6,7 +6,8 @@ import 'dart:io';
 
 // @formatter:off
 final File orgAppConfig = File('OrgAppConfig.txt');                                           //Name des SaveFiles
-final String url        = 'https://jugendevent.mainlevel.at/api';                             // Verbindungs-URL
+//final String url        = 'https://jugendevent.mainlevel.at/api';                             // Verbindungs-URL
+final String url        = 'https://jugend-event.at/api';                             // Verbindungs-URL
 final String appVersion = 'alpha 0.1';                                                        // aktuelle Version der App
 //    String token      = 'rVMWQRDvHY0NpO-c_8S!nMRhmi=pXZ4gLQ3szHY7wYVVEV-z=RwhvezRxu8lkcB!'; // Token zur Identifizierung beim Server
       String token      = 'LOHbk!6=EtRWZklq=A79hVSKSQElgEm%k_3E\$ayvDhjuCFVw7=FoQp-z6EVm98et'; // Token zur Identifizierung beim Server (Admin)

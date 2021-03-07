@@ -158,7 +158,8 @@ class _UserRahmenState extends State<UserRahmen>
                     Container(width: 10),
                     Text('${widget.user.jugendgruppe}',style: Schrift())]),
                   SizedBox(height: 5),
-                  Row(children: [Container(width: 20, child: Center(child: SvgPicture.asset(SVGicons.standort, height: 19, width: 25, color: Farben.blaugrau))),
+                  Row(children: [
+                    Container(width: 20, child: Center(child: SvgPicture.asset(SVGicons.standort, height: 19, width: 25, color: Farben.blaugrau))),
                     Container(width: 10),
                     Text('${widget.user.plz} ${widget.user.ort}',style: Schrift())]),
                   SizedBox(height: 5),
