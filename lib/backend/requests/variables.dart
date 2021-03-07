@@ -10,8 +10,8 @@ final File orgAppConfig = File('OrgAppConfig.txt');                             
 final String url        = 'https://jugend-event.at/api';                             // Verbindungs-URL
 final String appVersion = 'alpha 0.1';                                                        // aktuelle Version der App
 //    String token      = 'rVMWQRDvHY0NpO-c_8S!nMRhmi=pXZ4gLQ3szHY7wYVVEV-z=RwhvezRxu8lkcB!'; // Token zur Identifizierung beim Server
-      String token      = 'LOHbk!6=EtRWZklq=A79hVSKSQElgEm%k_3E\$ayvDhjuCFVw7=FoQp-z6EVm98et'; // Token zur Identifizierung beim Server (Admin)
-
+//    String token      = 'LOHbk!6=EtRWZklq=A79hVSKSQElgEm%k_3E\$ayvDhjuCFVw7=FoQp-z6EVm98et'; // Token zur Identifizierung beim Server (Admin)
+      String token      = "q3NZfkEvbY183L!JBxI?BZ+cvlsK7!?LXPl!!5mcSSb1BEuYL8wU53%YY0o+j70X";  // Token zur Identifizierung beim Server (Admin Account jugend-event.at)
 /// alle existierenden Permissions
 var permissions = const <objects.Permission>[objects.Permission(null, null, 'Erlaubt das Anmelden zu Terminen',                                                   'termin.antwort.teilnehmer'   ),
                                              objects.Permission(null, null, 'Erlaubt es Kinder Accounts für einen Termin anzumelden',                             'termin.antwort.eltern'       ),
