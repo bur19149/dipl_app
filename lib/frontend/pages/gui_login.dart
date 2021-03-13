@@ -19,7 +19,8 @@ class _LoginPageState extends State<LoginPage> {
       headerStyle: Schrift.ueberschrift(),
       hintText: 'Token eingeben',
       maxLength: 8,
-      validator: (val) => RegExp('[0-9A-Za-z]{8}').hasMatch(val)?null:'ungüliges Passwort');
+      validator: (val) =>
+          RegExp('[0-9A-Za-z]{8}').hasMatch(val) ? null : 'ungüliges Passwort');
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +31,7 @@ class _LoginPageState extends State<LoginPage> {
         Button(text: 'Anmelden', farbe: Buttonfarbe.rot, onPressed: () {
           login(textfeld.value.value);
           if(validate()){
-
-          }
-        })])]);
+        //TODO load next Page
+          }})])]);
   }
 }

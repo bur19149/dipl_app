@@ -68,15 +68,14 @@ login(String value) async { // @formatter:off
 } // @formatter:on
 
 Future<String> getModel() async {
-  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  DeviceInfoPlugin deviceInfo=DeviceInfoPlugin();
   if (Platform.isAndroid) {
-    AndroidDeviceInfo a = await deviceInfo.androidInfo;
+    AndroidDeviceInfo a=await deviceInfo.androidInfo;
     return 'Model: ${a.model}';
   } else if (Platform.isIOS) {
-    IosDeviceInfo i = await deviceInfo.iosInfo;
+    IosDeviceInfo i=await deviceInfo.iosInfo;
     return 'Model: ${i.model}';
-  } else
-    throw 'Platform nicht erkannt.';
+  } else return 'Unbekante Platform';
 }
 
 Future<String> getName() async {
@@ -87,5 +86,5 @@ Future<String> getName() async {
   } else if (Platform.isIOS) {
     IosDeviceInfo i = await deviceInfo.iosInfo;
     return 'SystemName: ${i.systemName}';
-  } else throw 'Platform nicht erkannt.';
+  } else return 'Unbekante Platform';
 }
