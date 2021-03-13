@@ -11,15 +11,15 @@ class Textfeld extends StatefulWidget {
   // ------------------------------- Variablen --------------------------------
 
   // @formatter:off
-  final String    text;                           // Überschrift des Textfeldes
-  final String    hintText;                       // Hinweistext innerhalb des Textfeldes
-  final String    bottomHintText;                 // Hinweistext unterhalb des Textfeldes
-  final TextStyle headerStyle;                    // Formatierung der Überschrift des Textfeldes
-  final int       maxLength;                      // maximale Anzahl Zeichen innerhalb des Textfeldes
-  final bool      dateTime;                       // Ist das Textfeld ein DateTimeTextfeld?
-  final Wrapper   value;                          // Inhalt des Textfeldes
+  final String                   text;            // Überschrift des Textfeldes
+  final String                   hintText;        // Hinweistext innerhalb des Textfeldes
+  final String                   bottomHintText;  // Hinweistext unterhalb des Textfeldes
+  final TextStyle                headerStyle;     // Formatierung der Überschrift des Textfeldes
+  final int                      maxLength;       // maximale Anzahl Zeichen innerhalb des Textfeldes
+  final bool                     dateTime;        // Ist das Textfeld ein DateTimeTextfeld?
+  final Wrapper                  value;           // Inhalt des Textfeldes
   final List<TextInputFormatter> inputFormatters; // definiert den zulässigen Textinhalt und ermöglicht es Textmasken zuzuweisen
-  final bool multiline;                           // Hat das Textfeld mehrere Zeilen?
+  final bool                     multiline;       // Hat das Textfeld mehrere Zeilen?
   final Function(String)         validator;       // Prüfung ob der Inhalt des Textfeldes valide ist
   // @formatter:off
 
@@ -28,7 +28,7 @@ class Textfeld extends StatefulWidget {
   const Textfeld({ // @formatter:off
         this.text        = 'Header',
         this.hintText    = 'HintText',
-        this.maxLength   = 64, //TODO in der API-Doku nachschauen
+        this.maxLength   = 64, // TODO in der API-Doku nachschauen
         this.headerStyle = const Schrift(),
         this.dateTime    = false,
         this.multiline   = false,
@@ -321,7 +321,7 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
                       alignment: Alignment.topRight,
                       child: AnimatedContainer(
                           width: 40,
-                          height: 40,
+                          height: 40.5, // TODO Pfusch lösen 😅
                           duration: Duration(milliseconds: 100),
                           child: Material(color: Colors.transparent,
                               borderRadius: BorderRadius.only(
