@@ -1,3 +1,4 @@
+import 'package:dipl_app/backend/requests/login.dart';
 import 'package:dipl_app/frontend/gui_pages.dart';
 import 'package:flutter/material.dart';
 import '../gui_eingabefelder.dart';
@@ -21,12 +22,11 @@ class _LoginPageState extends State<LoginPage> {
             text: 'Token',
             headerStyle: Schrift.ueberschrift(),
             hintText: 'Token eingeben',
-            maxLength: 8,
-          ),
+            maxLength: 8),
           SizedBox(height: 20),
-          Button(text: 'Anmelden', onPressed: () {}, farbe: Buttonfarbe.rot)
-        ])
-      ],
-    );
+          Button(text: 'Anmelden',
+            farbe: Buttonfarbe.rot,
+            onPressed: () {
+          })])]);
   }
 }

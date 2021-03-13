@@ -59,11 +59,10 @@ class _ButtonState extends State<Button> {
       case Buttonfarbe.blau:		 highlightColor = Farben.blauHighlight; 	  buttonFarbe = Farben.blau;		 break; // blau:     #17A2B8; blauHighlight:     #117585
       case Buttonfarbe.blaugrau: highlightColor = Farben.blaugrauHighlight; buttonFarbe = Farben.blaugrau; break; // blaugrau: #6C757D; blaugrauHighlight: #444A4F
       default:						       highlightColor = Farben.weissHighlight; 		buttonFarbe = Farben.weiss;		 break; // weiss:    #FFFFFF; weissHighlight:    #F2F2F2
-    } // @formatter:on
+    }
 
-		Color textColor = widget.gefuellt
-				? Farben.weiss
-				: buttonFarbe; // Definition der Textfarbe
+		Color textColor = widget.gefuellt ? Farben.weiss : buttonFarbe; // Definition der Textfarbe
+// @formatter:on
 
 		Widget child,
 				textWidget = Text(widget.text, style: Schrift(color: textColor));

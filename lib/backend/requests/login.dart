@@ -25,7 +25,7 @@ Future<objects.User> requestUser() async { // @formatter:off
 
 // ------------------------------ POST-Requests -----------------------------
 
-// TODO Parameter Name und Model implemetieren
+// TODO Parameter Name und Model testen
 /// "4.7.1 Pairing
 /// Dieser Endpunkt dient zum Verbinden eines Accounts mit einer App. Es wird der lesbare User
 /// Schlüssel als Parameter angenommen und ein neu generierter API Token zurückgegeben. Dieser
