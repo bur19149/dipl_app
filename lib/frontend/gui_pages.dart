@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'gui_konstanten.dart';
+import 'gui_text.dart';
+
 class ColumnScaffold extends StatefulWidget {
   final List<Widget> children;
   final double top;
@@ -34,6 +37,7 @@ class ListViewScaffold extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _ListViewScaffoldState();
 }
+
 // @formatter:off
 class _ListViewScaffoldState extends State<ListViewScaffold> {
   @override
@@ -51,23 +55,82 @@ class _ListViewScaffoldState extends State<ListViewScaffold> {
 }
 
 class CustomPageView extends StatefulWidget {
-  final List<Widget> children;
+	final List<Widget> children;
 
-  CustomPageView({this.children = const <Widget>[]});
+	CustomPageView({this.children = const <Widget>[]});
 
-  @override
-  State<StatefulWidget> createState() => _CustomPageViewState();
+	@override
+	State<StatefulWidget> createState() => _CustomPageViewState();
 }
 
 class _CustomPageViewState extends State<CustomPageView> {
-  @override
-  Widget build(BuildContext context) {
-    return null;
-  }
+	@override
+	Widget build(BuildContext context) {
+		return null;
+	}
 }
 // @formatter:off
 /// Teilelement
 class Teiler extends SizedBox {
   const Teiler({double height = 20, double width = 10, bool buttonTrenner = false, bool rahmenTrenner = false})
       : super(height: buttonTrenner ? 5 : (rahmenTrenner ? 30 : height), width: width);
-}// @formatter:on
+} // @formatter:on
+
+class CustomSnackbar extends SnackBar {
+	final String text;
+	final String label;
+	final Color backgroundColor;
+	final Color textColor;
+	final VoidCallback onPressed;
+
+	CustomSnackbar({this.onPressed, this.text, this.backgroundColor = Farben
+			.rot, this.label = 'OK', this.textColor = Farben.weiss}) :
+				super(
+					content: Text(text, style: Schrift(color: Farben.weiss)),
+					backgroundColor: backgroundColor,
+					behavior: SnackBarBehavior.floating,
+					shape: RoundedRectangleBorder(
+							borderRadius: BorderRadius.circular(10)),
+					action: SnackBarAction(
+						onPressed: onPressed ?? () {}, label: label, textColor: textColor,
+					));
+
+	static showSnackbar(BuildContext context,
+			{onPressed, text, backgroundColor = Farben
+					.rot, label = 'OK', textColor = Farben.weiss}) =>
+			ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
+					onPressed: onPressed,
+					text: text,
+					backgroundColor: backgroundColor,
+					label: label,
+					textColor: textColor));
+}
+
+//class CustomSnackbar extends StatefulWidget {
+//
+//  final text;
+//
+//  CustomSnackbar({this.text});
+//
+//  @override
+//  _CustomSnackbarState createState() => _CustomSnackbarState();
+//}
+//
+//class _CustomSnackbarState extends State<CustomSnackbar> {
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return SnackBar(
+//      content: Text(widget.text),
+//      backgroundColor: Farben.rot,
+//      behavior: SnackBarBehavior.floating,
+//      shape: RoundedRectangleBorder(
+//        borderRadius: BorderRadius.circular(10.0),),
+//      action: SnackBarAction(
+//        onPressed: () {
+//          // Some code to undo the change.
+//        }, label: 'OK',textColor: Farben.weiss,
+//      ),
+//    );
+//  }
+//}

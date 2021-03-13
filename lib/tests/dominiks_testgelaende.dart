@@ -34,10 +34,11 @@ class _DominiksTestgelaendeState extends State<DominiksTestgelaende> {
       TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteTopleiste())),       text: 'Topleisten-Tests'),
       TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TerminUebersichtPage())), text: 'Terminübersicht-Test'),
       TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteDropDownButton())),  text: 'Dropdown-Button-Test'),
-      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EinstellungenPage())),    text: 'Teste Einstelungen-Seite'),
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EinstellungenPage())),    text: 'Teste Einstellungen-Seite'),
       TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TerminBearbeitenPage())), text: 'Teste Termin-bearbeiten-Seite'),
       TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => UserErstellenPage())),    text: 'Teste User-erstellen-Seite'),
-      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteGruppenleiter())),    text: 'Teste Gruppenleiter')
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteGruppenleiter())),   text: 'Teste Gruppenleiter'),
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteSnackbar())),    		text: 'Teste Snackbar')
       // @formatter:on
 		]);
 	}
@@ -221,6 +222,29 @@ class _TesteGruppenleiterState extends State<TesteGruppenleiter> {
 		]);
 	}
 }
+
+class TesteSnackbar extends StatefulWidget {
+  @override
+  _TesteSnackbarState createState() => _TesteSnackbarState();
+}
+
+class _TesteSnackbarState extends State<TesteSnackbar> {
+  @override
+  Widget build(BuildContext context) {
+    return ColumnScaffold(children: [Button(onPressed: ()
+		{
+			CustomSnackbar.showSnackbar(context, text: 'Kein Token mitgeschickt oder Token existiert nicht');
+//			final snackBar = CustomSnackbar(text: 'Kein Token mitgeschickt oder Token existiert nicht');
+//
+//			ScaffoldMessenger.of(context).showSnackBar(snackBar);
+		}
+		)]);
+  }
+}
+
+
+
+
 
 /// ausklappbarer Rahmen
 /// wird bei der Terminübersicht verwendet (Terminkarten)
