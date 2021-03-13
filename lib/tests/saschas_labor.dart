@@ -168,9 +168,9 @@ class _UserRahmenState extends State<UserRahmen>
                     Container(width: 10),
                     Text('${widget.user.vorname} ${widget.user.nachname}', style: Schrift())]),
                   SizedBox(height: 15),
-                Button(onPressed: (){}, svg: SVGicons.bearbeiten, text: 'User bearbeiten',       farbe: Buttonfarbe.rot, gefuellt: false),
-                Button(onPressed: (){}, svg: SVGicons.schluessel, text: 'Passwort zurücksetzen', farbe: Buttonfarbe.rot, gefuellt: false),
-                Button(onPressed: (){}, svg: SVGicons.loschen,    text: 'User löschen',          farbe: Buttonfarbe.rot, gefuellt: true)]))))),
+                Button(onPressed:(){}, svg: SVGicons.bearbeiten, text: 'User bearbeiten',       farbe: Buttonfarbe.rot, gefuellt: false),
+                Button(onPressed:(){}, svg: SVGicons.schluessel, text: 'Passwort zurücksetzen', farbe: Buttonfarbe.rot, gefuellt: false),
+                Button(onPressed:(){}, svg: SVGicons.loschen,    text: 'User löschen',          farbe: Buttonfarbe.rot, gefuellt: true)]))))),
       AnimatedContainer(
         child: Center(child: Text("012",style: Schrift())),
           duration: _duration,
