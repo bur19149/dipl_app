@@ -28,12 +28,13 @@ class _TerminBearbeitenPageState extends State<TerminBearbeitenPage> {
         Textfeld(text: 'Beschreibung',
             hintText: 'Terminbeschreibung',
             multiline: true, value: beschreibung,
-            validator: (text) {
-              if(text.isNotEmpty) {
-                beschreibung.value = text;
-                return null;
-              }
-              return 'ungültig';}),
+//            validator: (text) {
+//              if(text.isNotEmpty) {
+//                beschreibung.value = text;
+//                return null;
+//              }
+//              return 'ungültig';}
+              ),
         Teiler(),
         Textfeld(text: 'Ort', hintText: 'Wohnort'),
         Teiler(),

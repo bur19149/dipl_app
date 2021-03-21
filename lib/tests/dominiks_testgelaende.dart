@@ -38,7 +38,8 @@ class _DominiksTestgelaendeState extends State<DominiksTestgelaende> {
       TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TerminBearbeitenPage())), text: 'Teste Termin-bearbeiten-Seite'),
       TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => UserErstellenPage())),    text: 'Teste User-erstellen-Seite'),
       TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteGruppenleiter())),   text: 'Teste Gruppenleiter'),
-      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteSnackbar())),    		text: 'Teste Snackbar')
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteSnackbar())),    		text: 'Teste Snackbar'),
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteTextfeld())),    		text: 'Teste Textfeld')
       // @formatter:on
 		]);
 	}
@@ -60,7 +61,7 @@ class _TesteDropDownButtonState extends State<TesteDropDownButton> {
 			),
 			Textfeld(),
 			Container(height: 50),
-			CustomDropDownButton(selected: Wrapper(value: 'User'),
+			CustomDropDownButton(selected: Wrapper('User'),
 				header: 'Berechtigung:',
 				contains: [
 					'User',
@@ -224,26 +225,62 @@ class _TesteGruppenleiterState extends State<TesteGruppenleiter> {
 }
 
 class TesteSnackbar extends StatefulWidget {
-  @override
-  _TesteSnackbarState createState() => _TesteSnackbarState();
+	@override
+	_TesteSnackbarState createState() => _TesteSnackbarState();
 }
 
 class _TesteSnackbarState extends State<TesteSnackbar> {
-  @override
-  Widget build(BuildContext context) {
-    return ColumnScaffold(children: [Button(onPressed: ()
-		{
-			CustomSnackbar.showSnackbar(context, text: 'Kein Token mitgeschickt oder Token existiert nicht');
+	@override
+	Widget build(BuildContext context) {
+		return ColumnScaffold(children: [Button(onPressed: () {
+//			CustomSnackbar.showSnackbar(context, text: 'Kein Token mitgeschickt oder Token existiert nicht');
+			try {
+				throw 'Kein Token mitgeschickt oder Token existiert nicht';
+			} catch (e) {
+				CustomSnackbar.showSnackbar(context, text: e.toString());
+			}
 //			final snackBar = CustomSnackbar(text: 'Kein Token mitgeschickt oder Token existiert nicht');
 //
 //			ScaffoldMessenger.of(context).showSnackBar(snackBar);
 		}
-		)]);
-  }
+		)
+		]);
+	}
 }
 
+class TesteTextfeld extends StatefulWidget {
+	@override
+	_TesteTextfeldState createState() => _TesteTextfeldState();
+}
 
+class _TesteTextfeldState extends State<TesteTextfeld> {
+	String text;
+	TextEditingController controller;
 
+	@override
+	Widget build(BuildContext context) {
+		controller = TextEditingController();
+		return ColumnScaffold(children: [
+			Form(autovalidateMode: AutovalidateMode.always,
+					child: TextFormField(controller: controller,
+//							validator: (val) => val.length > 4 ? null : 'Ungültiger Text')),
+							validator: (val) {
+								print(val);
+								if (val.length > 4) {
+									text = val;
+									return null;}
+								return 'Ungültiger Text';
+							})),
+			ElevatedButton(onPressed: () {
+				setState(() {
+					text = controller.value.text;
+//				text += '';
+				});
+			}, child: null),
+			Text('[$text]')
+		]);
+	}
+}
 
 
 /// ausklappbarer Rahmen

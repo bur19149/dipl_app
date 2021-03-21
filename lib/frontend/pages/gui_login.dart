@@ -13,25 +13,44 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
-  Textfeld textfeld = Textfeld(
-      text: 'Token',
-      headerStyle: Schrift.ueberschrift(),
-      hintText: 'Token eingeben',
-      maxLength: 8,
-      validator: (val) =>
-          RegExp('[0-9A-Za-z]{8}').hasMatch(val) ? null : 'ungüliges Passwort');
+  Wrapper value;
 
   @override
   Widget build(BuildContext context) {
+    value = Wrapper('xyz');
+
+    Textfeld textfeld = Textfeld(
+        text: 'Token',
+        headerStyle: Schrift.ueberschrift(),
+        hintText: 'Token eingeben',
+        maxLength: 8,
+        pruefung: Pruefung(
+            pruefung: (val) => RegExp('[0-9A-Za-z]{8}').hasMatch(val),
+            errortext: 'ungüliges Passwort'));
+
     return ListViewScaffold(children: [
       LoginRahmen(children: [
         textfeld,
         SizedBox(height: 20),
-        Button(text: 'Anmelden', farbe: Buttonfarbe.rot, onPressed: () {
-          login(textfeld.value.value);
-          if(validate()){
-        //TODO load next Page
-          }})])]);
+        Button(
+            text: 'Anmelden',
+            farbe: Buttonfarbe.rot,
+            onPressed: () {
+              print('[${value.value}]');
+//              try {
+//                login(textfeld.val());
+//                if (validate())
+//                  Navigator.push(
+//                      context,
+//                      MaterialPageRoute(
+//                          builder: (context) =>
+//                              ColumnScaffold(children: [Text('Yay')])));
+//              } catch (e) {
+//                print(e);
+//                CustomSnackbar.showSnackbar(context, text: e.toString());
+//              }
+            })
+      ])
+    ]);
   }
 }

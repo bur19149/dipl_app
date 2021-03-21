@@ -191,10 +191,10 @@ abstract class Termin {
                                 _parameters['ort']          = ort;
                                 _parameters['start_datum']  = '${converter.dateTimeFormat(timeVon)}';
                                 _parameters['end_datum']    = '${converter.dateTimeFormat(timeBis)}';
-                                _parameters['zyklusid']     = '${zyklusID}';
+                                _parameters['zyklusid']     = '$zyklusID';
                                 _parameters['zyklus_ende']  = '${converter.dateFormat(zyklusEnde)}';
-                                _parameters['plaetze']      = '${plaetze}';
-    if (freigeschaltet != null) _parameters['oeffentlich']  = '${freigeschaltet}';
+                                _parameters['plaetze']      = '$plaetze';
+    if (freigeschaltet != null) _parameters['oeffentlich']  = '$freigeschaltet';
     if (anmeldungStart != null) _parameters['sichtbar_ab']  = '${converter.dateTimeFormat(anmeldungStart)}';
     if (anmeldungEnde  != null) _parameters['sichtbar_bis'] = '${converter.dateTimeFormat(anmeldungEnde)}';
 
