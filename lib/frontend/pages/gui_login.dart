@@ -42,8 +42,14 @@ class _LoginPageState extends State<LoginPage> {
               if (RegExp('[0-9A-Za-z]{8}').hasMatch(value.value)) {
                 try {
                   FileHandler.writeFile(await link(value.value));
+                  FileHandler.readFile();
                   await validate();
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Ladeseite()));
+                  print(token);
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => Ladeseite()),
+                        (Route<dynamic> route) => false,
+                  );
                 } catch (e) {
                   CustomSnackbar.showSnackbar(context, text: e.toStringGUI());
                 }
