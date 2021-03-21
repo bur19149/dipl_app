@@ -63,4 +63,8 @@ class _HttpException implements Exception { // @formatter:off
   String toString() {
     return 'Exception ($code): ${message ?? standardMessage}';
   }
+
+  String toStringGUI() {
+    return '${message ?? standardMessage}';
+  }
 } // @formatter:on

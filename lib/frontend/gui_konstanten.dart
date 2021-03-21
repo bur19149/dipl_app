@@ -99,6 +99,7 @@ abstract class SVGicons { // @formatter:off
                       kalender        = 'assets/images/svg/kalender.svg',
                       benutzer        = 'assets/images/svg/benutzer.svg',
                       hackchen        = 'assets/images/svg/hackchen.svg',
+                      appicon         = 'assets/images/svg/appicon.svg',
                       loschen         = 'assets/images/svg/loschen.svg',
                       dreieck         = 'assets/images/svg/dreieck.svg',
                       email           = 'assets/images/svg/email.svg',

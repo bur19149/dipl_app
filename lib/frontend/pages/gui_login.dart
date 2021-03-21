@@ -1,4 +1,5 @@
 import 'package:dipl_app/backend/requests/login.dart';
+import 'package:dipl_app/backend/requests/variables.dart';
 import 'package:dipl_app/frontend/gui_pages.dart';
 import 'package:flutter/material.dart';
 import '../gui_eingabefelder.dart';
@@ -17,13 +18,14 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    value = Wrapper('xyz');
+    value = Wrapper();
 
     Textfeld textfeld = Textfeld(
         text: 'Token',
         headerStyle: Schrift.ueberschrift(),
         hintText: 'Token eingeben',
         maxLength: 8,
+        value: value,
         pruefung: Pruefung(
             pruefung: (val) => RegExp('[0-9A-Za-z]{8}').hasMatch(val),
             errortext: 'ungüliges Passwort'));
@@ -35,20 +37,15 @@ class _LoginPageState extends State<LoginPage> {
         Button(
             text: 'Anmelden',
             farbe: Buttonfarbe.rot,
-            onPressed: () {
-              print('[${value.value}]');
-//              try {
-//                login(textfeld.val());
-//                if (validate())
-//                  Navigator.push(
-//                      context,
-//                      MaterialPageRoute(
-//                          builder: (context) =>
-//                              ColumnScaffold(children: [Text('Yay')])));
-//              } catch (e) {
-//                print(e);
-//                CustomSnackbar.showSnackbar(context, text: e.toString());
-//              }
+            onPressed: () async {
+              if (RegExp('[0-9A-Za-z]{8}').hasMatch(value.value)) {
+                try {
+                  FileHandler.writeFile(await link(value.value));
+await validate();
+                } catch (e) {
+                  CustomSnackbar.showSnackbar(context, text: e.toStringGUI());
+                }
+              }
             })
       ])
     ]);

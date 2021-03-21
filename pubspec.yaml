@@ -71,6 +71,7 @@ flutter:
     - assets/images/svg/benutzer.svg
     - assets/images/svg/standort.svg
     - assets/images/svg/hackchen.svg
+    - assets/images/svg/appicon.svg
     - assets/images/svg/loschen.svg
     - assets/images/svg/dreieck.svg
     - assets/images/svg/email.svg

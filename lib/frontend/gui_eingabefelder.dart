@@ -224,6 +224,7 @@ class _CustomFormState extends State<_CustomForm> {
 								}),
 						child: _Feld(
 								hintText: widget.hintText,
+								multiline: widget.multiline,
 								onChanged: (change) =>
 										setState(() {
 											_error = !_formKey.currentState.validate();
@@ -233,8 +234,8 @@ class _CustomFormState extends State<_CustomForm> {
 								maxLength: widget.maxLength,
 								error: _error,
 								validator: (val) {
+									widget.value.value = val;
 									if (widget.pruefung.pruefung(val)) {
-										widget.value.value = val;
 										_error = false;
 										return null;
 									}

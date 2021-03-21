@@ -1,4 +1,5 @@
 import 'package:configurable_expansion_tile/configurable_expansion_tile.dart';
+import 'package:dipl_app/frontend/pages/gui_ladeseite.dart';
 import 'package:dipl_app/frontend/pages/gui_termin_bearbeiten.dart';
 import 'package:dipl_app/frontend/pages/gui_terminuebersicht.dart';
 import 'package:dipl_app/frontend/pages/gui_user_erstellen.dart';
@@ -39,7 +40,8 @@ class _DominiksTestgelaendeState extends State<DominiksTestgelaende> {
       TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => UserErstellenPage())),    text: 'Teste User-erstellen-Seite'),
       TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteGruppenleiter())),   text: 'Teste Gruppenleiter'),
       TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteSnackbar())),    		text: 'Teste Snackbar'),
-      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteTextfeld())),    		text: 'Teste Textfeld')
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteTextfeld())),    		text: 'Teste Textfeld'),
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Ladeseite())),    		text: 'Teste Ladeseite')
       // @formatter:on
 		]);
 	}

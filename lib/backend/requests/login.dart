@@ -40,7 +40,7 @@ Future<String> link(String userkey) async { // @formatter:off
     'version': variables.appVersion
   });
   if(_response.statusCode != 200) {
-    exceptionHandler(_response.statusCode, c404: 'Ein solcher Schlüssel existiert nicht in der Datenbank',
+    throw exceptionHandler(_response.statusCode, c404: 'Ein solcher Schlüssel existiert nicht in der Datenbank',
                                            c400: 'Der Schlüssel ist abgelaufen oder wurde bereits erfolgreich benutzt.',
                                            c422: 'Es fehlen ein oder mehr Parameter');
   }
