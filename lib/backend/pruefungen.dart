@@ -1,3 +1,5 @@
+import 'package:dipl_app/frontend/gui_eingabefelder.dart';
+
 /// Prüft auf NULL, leeren String und liefert den String ohne
 /// nachfolgende und führende leerzeichen zurück.
 String stringPrufung(String value) {
@@ -35,12 +37,11 @@ int prufeID(int value) {
   }
 }
 
+//TODO beschreibung
+final Pruefung sindZahlen = Pruefung(pruefung: (val) => RegExp(r'^[0-9]+$').hasMatch(val), errortext: 'Die Eingabe muss eine Zahl sein.');
+
+/// Prüft ob mindestens ein Character eingegeben wurde
+final Pruefung nichtLeer = Pruefung(pruefung: (val) => RegExp(r'.+').hasMatch(val), errortext: 'Feld darf nicht leer sein');
+
 /// Prüft ob der Ortsname ein gültiger String ist
-String pruefeOrt(String value) {
-  RegExp a = RegExp(r'^[ A-zöÖäÄüÜ]+$');
-  if (a.hasMatch(value)) {
-    return value;
-  } else {
-    throw ('Ungüliger Ort.');
-  }
-}
+final Pruefung pruefeOrt = Pruefung(pruefung: (val) => RegExp(r'^[ A-zöÖäÄüÜ]+$').hasMatch(val), errortext: 'Ungültiger Ort');

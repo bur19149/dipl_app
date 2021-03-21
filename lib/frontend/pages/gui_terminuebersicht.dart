@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import '../../backend/objects.dart';
 import 'package:intl/intl.dart';
+import '../../backend/objects.dart';
 import '../gui_topLeiste.dart';
 import '../gui_buttons.dart';
 import '../gui_text.dart';
@@ -16,7 +17,6 @@ class TerminUebersichtPage extends StatefulWidget {
 }
 
 class _TerminUebersichtPageState extends State<TerminUebersichtPage> {
-//  List<UserTermin> termine; //TODO Entferen ??
 
   Future _getTermine() async {
     return await requestAlleTermine();
@@ -28,8 +28,7 @@ class _TerminUebersichtPageState extends State<TerminUebersichtPage> {
         child: Scaffold(
             body: FutureBuilder(
                 builder: (context, projectSnap) {
-                  if (projectSnap.connectionState == ConnectionState.none &&
-                      projectSnap.hasData == null) {
+                  if (projectSnap.connectionState == ConnectionState.none && projectSnap.hasData == null) {
                     return Container();
                   }
                   if (projectSnap.data.length > 0) {
@@ -110,8 +109,7 @@ class _TerminRahmenState extends State<_TerminRahmen> {
   Widget build(BuildContext context) {
     return ExpandableRahmen(
         header: widget.name,
-        bottomHeader:
-            'Anmeldung offen bis ${DateFormat('dd.MM.yyyy kk:mm').format(anmeldungEnde)}',
+        bottomHeader: 'Anmeldung offen bis ${DateFormat('dd.MM.yyyy kk:mm').format(anmeldungEnde)}',
         childrenTop: [
           Row(children: [
             Container(

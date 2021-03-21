@@ -12,7 +12,7 @@ class User {
   String     _vorname;
   String     email;
   String     _plz;
-  String     _ort;
+  String     ort;
   int        parent;        // (optional) zugeordneter Elternaccount wenn Kind
   UserTyp    _typ;
   List<int>  children;      // (optional) zugeordnete Kinder wenn Elternaccount
@@ -58,10 +58,6 @@ class User {
     _plz = value;
   }
 
-  set ort(String value) {
-    _ort = pruefungen.pruefeOrt(pruefungen.stringPrufung(value));
-  }
-
   set typ(UserTyp value) {
     if (value == null) {
       throw Exception('Null übergabe.');
@@ -77,7 +73,6 @@ class User {
   String     get vorname  => _vorname;
   String     get nachname => _nachname;
   String     get plz      => _plz;
-  String     get ort      => _ort;
   UserTyp    get typ      => _typ;
   // @formatter:on
 
@@ -86,7 +81,7 @@ class User {
   @override
   String toString() {
     String str =
-        'Name:         $_vorname $_nachname ($_userID)\nWohnort:      $_ort ($_plz)\nE-Mail:       '
+        'Name:         $_vorname $_nachname ($_userID)\nWohnort:      $ort ($_plz)\nE-Mail:       '
                 '$email\n' +
             (jugendgruppe != null ? 'Jugendgruppe: $jugendgruppe\n' : '') +
             'Registriert:  $registered\n${_typ.toString()}';

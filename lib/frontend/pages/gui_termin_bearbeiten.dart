@@ -1,4 +1,5 @@
 import 'package:dipl_app/backend/objects.dart' as objects;
+import 'package:dipl_app/backend/pruefungen.dart';
 import 'package:dipl_app/frontend/gui_eingabefelder.dart';
 import 'package:dipl_app/frontend/gui_text.dart';
 import 'package:flutter/material.dart';
@@ -23,20 +24,16 @@ class _TerminBearbeitenPageState extends State<TerminBearbeitenPage> {
         Align(alignment: Alignment.centerLeft,
             child: Text('Termin bearbeiten', style: Schrift.ueberschrift())),
         Teiler(),
-        Textfeld(text: 'Termin Name', hintText: 'Name des Termins'),
+        Textfeld(text: 'Termin Name', hintText: 'Name des Termins',pruefung: nichtLeer),
         Teiler(),
         Textfeld(text: 'Beschreibung',
             hintText: 'Terminbeschreibung',
-            multiline: true, value: beschreibung,
-//            validator: (text) {
-//              if(text.isNotEmpty) {
-//                beschreibung.value = text;
-//                return null;
-//              }
-//              return 'ungültig';}
+            multiline: true,
+            value: beschreibung,
+            pruefung: nichtLeer,
               ),
         Teiler(),
-        Textfeld(text: 'Ort', hintText: 'Wohnort'),
+        Textfeld(text: 'Ort', hintText: 'Wohnort', pruefung: pruefeOrt,),
         Teiler(),
         Textfeld(text: 'Anzahl freier Plätze',
             hintText: 'Platzanzahl',
