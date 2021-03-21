@@ -40,8 +40,7 @@ class _TerminUebersichtPageState extends State<TerminUebersichtPage> {
                           UserTermin termin = projectSnap.data[index];
                           List<Widget> children = [];
                           if (index == 0)
-                            children
-                                .addAll([Topleiste(), SizedBox(height: 40)]);
+                            children.addAll([Topleiste(), SizedBox(height: 40)]);
                           children.addAll([
                             _TerminRahmen(
                                 name: termin.name,
@@ -51,8 +50,7 @@ class _TerminUebersichtPageState extends State<TerminUebersichtPage> {
                                 timeBis: termin.timeBis,
                                 plaetze: termin.plaetze,
                                 beschreibung: termin.beschreibung),
-                            SizedBox(height: 35)
-                          ]);
+                            SizedBox(height: 35)]);
                           return Column(children: children);
                         });
                   } else {
@@ -128,8 +126,7 @@ class _TerminRahmenState extends State<_TerminRahmen> {
             Text('${DateFormat('dd.MM.yyyy - kk:mm').format(widget.timeVon)} Uhr bis${_sameDate ? ' ' : '\n'}'
                  '${DateFormat('${!_sameDate ? 'dd.MM.yyyy - ' : ''}kk:mm').format(widget.timeBis)} Uhr',
                   style: Schrift()) // @formatter:on
-            ])
-          ]),
+            ])]),
           SizedBox(height: 5),
           Row(children: [
             SizedBox(
@@ -137,8 +134,7 @@ class _TerminRahmenState extends State<_TerminRahmen> {
                 child: SvgPicture.asset(SVGicons.standort,
                     height: 25, color: Farben.dunkelgrau)),
             SizedBox(width: 10),
-            Wrap(children: [Text(widget.ort, style: Schrift())])
-          ]),
+            Wrap(children: [Text(widget.ort, style: Schrift())])]),
           SizedBox(height: 5),
           Row(children: [
             SvgPicture.asset(SVGicons.mehrereBenutzer,
@@ -157,9 +153,7 @@ class _TerminRahmenState extends State<_TerminRahmen> {
                       text: '${widget.plaetze}',
                       style: TextStyle(fontWeight: FontWeight.w500)),
                   TextSpan(text: ' freie Plätze.')
-                ])),
-          ]),
-        ],
+                ]))])],
         childrenBottom: [
           SizedBox(height: 20),
           Align(
@@ -174,8 +168,7 @@ class _TerminRahmenState extends State<_TerminRahmen> {
               text: true ? 'Keine Antwort' : '',
               farbe: Buttonfarbe.blau,
               gefuellt: false,
-              onPressed: () {})
-        ]);
+              onPressed: () {})]);
   }
 }
 
