@@ -158,9 +158,9 @@ class _FeldState extends State<_Feld> {
 								controller: widget.controller,
 								validator: widget.validator == null ? (text) => null : widget
 										.validator,
-								keyboardType: widget.keyboardType ?? widget.dateTime
+								keyboardType: widget.keyboardType ?? (widget.dateTime
 										? TextInputType.datetime
-										: TextInputType.text,
+										: (widget.multiline ? TextInputType.multiline : TextInputType.text)),
 								style: Schrift(color: Farben.schwarz),
 								maxLength: widget.maxLength,
 								inputFormatters: widget.inputFormatters ?? [],
