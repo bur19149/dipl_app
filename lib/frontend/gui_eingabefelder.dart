@@ -21,7 +21,8 @@ class Textfeld extends StatefulWidget {
   final List<TextInputFormatter> inputFormatters; // definiert den zulässigen Textinhalt und ermöglicht es Textmasken zuzuweisen
   final bool                     multiline;       // Hat das Textfeld mehrere Zeilen?
 	final Pruefung 								 pruefung;				// Pruefung der Validität der Eingabe
-  // @formatter:off
+	final TextInputType						 keyboardType;		// definiert Tastaturlayout
+	// @formatter:off
 
   // ------------------------------ Konstruktor -------------------------------
 
@@ -32,6 +33,7 @@ class Textfeld extends StatefulWidget {
         this.headerStyle = const Schrift(),
         this.dateTime    = false,
         this.multiline   = false,
+				this.keyboardType,
         this.value,
         this.inputFormatters,
         this.bottomHintText,
@@ -83,6 +85,7 @@ class _TextfeldState extends State<Textfeld> {
 					multiline: widget.multiline,
 					hintText: hintText,
 					maxLength: widget.maxLength,
+					keyboardType: widget.keyboardType,
 					pruefung: widget.pruefung,
 					value: widget.value ?? Wrapper()),
 			widget.bottomHintText == null ? Container() : Container(
@@ -112,6 +115,7 @@ class _Feld extends StatefulWidget {
   final Function(String)         validator;           // Prüfung ob der Inhalt des Textfeldes valide ist
   final TextEditingController    controller;          // Controller des Textfeldes; wird verwendet um einen Text in das Textfeld zu schreiben
 	final ValueChanged<String>		 onChanged;						// Eventhandler fuer Änderungen des Textfeldinhaltes
+	final TextInputType						 keyboardType;				// definiert Tastaturlayout
 	// @formatter:on
 
 	// ------------------------------ Konstruktor -------------------------------
@@ -127,7 +131,8 @@ class _Feld extends StatefulWidget {
     this.inputFormatters,
     this.validator,
     this.controller,
-		this.onChanged});
+		this.onChanged,
+		this.keyboardType});
   // @formatter:on
 
 	// ------------------------------- createState ------------------------------
@@ -153,7 +158,7 @@ class _FeldState extends State<_Feld> {
 								controller: widget.controller,
 								validator: widget.validator == null ? (text) => null : widget
 										.validator,
-								keyboardType: widget.dateTime
+								keyboardType: widget.keyboardType ?? widget.dateTime
 										? TextInputType.datetime
 										: TextInputType.text,
 								style: Schrift(color: Farben.schwarz),
@@ -189,10 +194,11 @@ class _CustomForm extends StatefulWidget {
   final int                      maxLength;       // maximale Anzahl Zeichen innerhalb des Textfeldes
 	final Wrapper 								 value;     			// Inhalt des Textfeldes
 	final Pruefung								 pruefung;			  // Pruefung der Validität der Eingabe
+	final TextInputType						 keyboardType;	  // definiert Tastaturlayout
 	// @formatter:on
 
 	_CustomForm(
-			{this.hintText, this.multiline, this.controller, this.inputFormatters, this.maxLength, this.value, this.pruefung});
+			{this.hintText, this.multiline, this.controller, this.inputFormatters, this.maxLength, this.value, this.pruefung, this.keyboardType});
 
 	@override
 	_CustomFormState createState() => _CustomFormState();
@@ -225,6 +231,7 @@ class _CustomFormState extends State<_CustomForm> {
 						child: _Feld(
 								hintText: widget.hintText,
 								multiline: widget.multiline,
+								keyboardType: widget.keyboardType,
 								onChanged: (change) =>
 										setState(() {
 											_error = !_formKey.currentState.validate();

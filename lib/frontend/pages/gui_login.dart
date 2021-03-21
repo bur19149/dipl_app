@@ -7,6 +7,7 @@ import '../gui_konstanten.dart';
 import '../gui_buttons.dart';
 import '../gui_rahmen.dart';
 import '../gui_text.dart';
+import 'gui_ladeseite.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -41,7 +42,8 @@ class _LoginPageState extends State<LoginPage> {
               if (RegExp('[0-9A-Za-z]{8}').hasMatch(value.value)) {
                 try {
                   FileHandler.writeFile(await link(value.value));
-await validate();
+                  await validate();
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Ladeseite()));
                 } catch (e) {
                   CustomSnackbar.showSnackbar(context, text: e.toStringGUI());
                 }
