@@ -2,6 +2,7 @@ import 'package:dipl_app/backend/objects.dart' as objects;
 import 'package:dipl_app/backend/pruefungen.dart';
 import 'package:dipl_app/frontend/gui_eingabefelder.dart';
 import 'package:dipl_app/frontend/gui_text.dart';
+import 'package:dipl_app/backend/requests/admin.dart';
 import 'package:flutter/material.dart';
 import '../gui_konstanten.dart';
 import '../gui_buttons.dart';
@@ -50,8 +51,8 @@ class _TerminBearbeitenPageState extends State<TerminBearbeitenPage> {
           Teiler(),
           Textfeld(text: 'Öffentlich bis', dateTime: true)]),
         Button(text: 'Termin löschen', farbe: Buttonfarbe.rot,
-          onPressed: () {
-          //TODO
+          onPressed: () { //TODO
+            // Termin.terminLoeschen();
           }),
         Teiler(buttonTrenner: true),
         Button(text: 'Abbrechen',
