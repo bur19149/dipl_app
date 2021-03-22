@@ -3,6 +3,7 @@ import 'package:dipl_app/backend/pruefungen.dart';
 import 'package:dipl_app/frontend/gui_eingabefelder.dart';
 import 'package:dipl_app/frontend/gui_text.dart';
 import 'package:dipl_app/backend/requests/admin.dart';
+import 'package:dipl_app/tests/dominiks_testgelaende.dart';
 import 'package:flutter/material.dart';
 import '../gui_konstanten.dart';
 import '../gui_buttons.dart';
@@ -25,13 +26,13 @@ class _TerminBearbeitenPageState extends State<TerminBearbeitenPage> {
         Align(alignment: Alignment.centerLeft,
             child: Text('Termin bearbeiten', style: Schrift.ueberschrift())),
         Teiler(),
-        Textfeld(text: 'Termin Name', hintText: 'Name des Termins',pruefung: nichtLeer),
+        Textfeld(text: 'Termin Name', hintText: 'Name des Termins',pruefung: prufeNichtLeer),
         Teiler(),
         Textfeld(text: 'Beschreibung',
             hintText: 'Terminbeschreibung',
             multiline: true,
             value: beschreibung,
-            pruefung: nichtLeer,
+            pruefung: prufeNichtLeer,
               ),
         Teiler(),
         Textfeld(text: 'Ort', hintText: 'Wohnort', pruefung: pruefeOrt,),
@@ -40,7 +41,7 @@ class _TerminBearbeitenPageState extends State<TerminBearbeitenPage> {
           keyboardType: TextInputType.number,
             hintText: 'Platzanzahl',
             bottomHintText: '0 um Beschränkung aufzuheben',
-            pruefung: sindZahlen,),
+            pruefung: prufeSindZahlen,),
         Teiler(),
         Textfeld(text: 'Datum/Uhrzeit von', dateTime: true),
         Teiler(),
@@ -71,7 +72,9 @@ class _TerminBearbeitenPageState extends State<TerminBearbeitenPage> {
             child: Text('Angemeldete Gruppenleiter',
                 style: Schrift.ueberschrift())),
         Teiler(),
-        Rahmen(header: TopHeader())]), // TODO Rahmen durch Column mit Gruppenleitern ersetzen
+        Column(children: [Gruppenleiter()],) // TODO Rahmen durch Column mit Gruppenleitern ersetzen und Umschreiben können mehrere sein
+        //Rahmen(header: TopHeader())
+      ]),
       Teiler(rahmenTrenner: true),
       Rahmen(children: [
         Align(alignment: Alignment.centerLeft,
