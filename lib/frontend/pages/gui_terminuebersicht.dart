@@ -18,9 +18,11 @@ class TerminUebersichtPage extends StatefulWidget {
 
 class _TerminUebersichtPageState extends State<TerminUebersichtPage> {
 
-  Future _getTermine() async {
-    return await requestAlleTermine();
-  }
+  Future<List<UserTermin>> terminliste = requestAlleTermine();
+
+  // Future _getTermine() async { //TODO vielleicht unnöftiger Getter
+  //   return await requestAlleTermine();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +30,10 @@ class _TerminUebersichtPageState extends State<TerminUebersichtPage> {
         child: Scaffold(
             body: FutureBuilder(
                 builder: (context, projectSnap) {
-                  if (projectSnap.connectionState == ConnectionState.none && projectSnap.hasData == null) {
-                    return Container();
-                  }
-                  if (projectSnap.data.length > 0) {
+                  // if (projectSnap.data == null || projectSnap.connectionState == ConnectionState.none || projectSnap.hasData == null) {
+                  //   return Container(); //TODO remove this dead code. War zuvor mit && Verbunden.
+                  // } else
+                  if (projectSnap.data != null && projectSnap.data.length > 0) {
                     return ListView.builder(
                         padding: EdgeInsets.only(left: 15, right: 15, top: 15),
                         itemCount: projectSnap.data.length,
@@ -60,11 +62,11 @@ class _TerminUebersichtPageState extends State<TerminUebersichtPage> {
                           children: [Topleiste()]),
                         Align(
                           alignment: Alignment.center,
-                          child: Text('Keine Termine vorhanden!',
+                          child: Text(projectSnap.data!=null ? 'Keine Termine vorhanden!': 'Keine Internet Verbindung!',
                               style: Schrift()))]);
                   }
                 },
-                future: _getTermine(),
+                future: /*_getTermine()*/ terminliste,
                 initialData: [])));
   }
 }
@@ -169,6 +171,8 @@ class _TerminRahmenState extends State<_TerminRahmen> {
               onPressed: () {})]);
   }
 }
+
+///Trash 2 be deleted when finished (old code without the "Keine Termine vorhanden" fix where the page is Empty
 
 // import 'package:dipl_app/frontend/gui_konstanten.dart';
 // import 'package:dipl_app/backend/requests/user.dart';
