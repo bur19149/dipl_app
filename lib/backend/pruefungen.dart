@@ -37,11 +37,11 @@ int prufeID(int value) {
   }
 }
 
-//TODO beschreibung
-final Pruefung sindZahlen = Pruefung(pruefung: (val) => RegExp(r'^[0-9]+$').hasMatch(val), errortext: 'Die Eingabe muss eine Zahl sein.');
+///Prüft ob mindestens eine Zahl eingegeben wurde
+final Pruefung prufeSindZahlen = Pruefung(pruefung: (val) => RegExp(r'^[0-9]+$').hasMatch(val), errortext: 'Die Eingabe muss eine Zahl sein.');
 
 /// Prüft ob mindestens ein Character eingegeben wurde
-final Pruefung nichtLeer = Pruefung(pruefung: (val) => RegExp(r'.+').hasMatch(val), errortext: 'Feld darf nicht leer sein');
+final Pruefung prufeNichtLeer = Pruefung(pruefung: (val) => RegExp(r'.+').hasMatch(val), errortext: 'Feld darf nicht leer sein');
 
 /// Prüft ob der Ortsname ein gültiger String ist
 final Pruefung pruefeOrt = Pruefung(pruefung: (val) => RegExp(r'^[ A-zöÖäÄüÜ]+$').hasMatch(val), errortext: 'Ungültiger Ort');
