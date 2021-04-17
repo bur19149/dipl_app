@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                         (Route<dynamic> route) => false,
                   );
                 } catch (e) {
-                  CustomSnackbar.showSnackbar(context, text: e.toStringGUI());
+                  CustomSnackbar.showErrSnackbar(context, text: e.toStringGUI());
                 }
               }
             })

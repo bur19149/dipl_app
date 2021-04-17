@@ -1,41 +1,43 @@
+import 'package:dipl_app/backend/exceptions.dart';
 import 'package:flutter/material.dart';
 
 import 'gui_konstanten.dart';
 import 'gui_text.dart';
 
 class ColumnScaffold extends StatefulWidget {
-  final List<Widget> children;
-  final double top;
+	final List<Widget> children;
+	final double top;
 
-  ColumnScaffold({this.children = const <Widget>[], this.top});
+	ColumnScaffold({this.children = const <Widget>[], this.top});
 
-  @override
-  State<StatefulWidget> createState() => _CustomScaffoldState();
+	@override
+	State<StatefulWidget> createState() => _CustomScaffoldState();
 }
 
 class _CustomScaffoldState extends State<ColumnScaffold> {
-  @override
-  Widget build(BuildContext context) {
-    Widget child, column = Column(children: widget.children);
-    if (widget.top != null) {
-      child = Padding(
-          padding: EdgeInsets.only(left: 15, right: 15, top: widget.top),
-          child: column);
-    } else {
-      child =
-          Center(child: Padding(padding: EdgeInsets.all(15), child: column));
-    }
-    return Scaffold(body: SafeArea(child: child));
-  }
+	@override
+	Widget build(BuildContext context) {
+		Widget child,
+				column = Column(children: widget.children);
+		if (widget.top != null) {
+			child = Padding(
+					padding: EdgeInsets.only(left: 15, right: 15, top: widget.top),
+					child: column);
+		} else {
+			child =
+					Center(child: Padding(padding: EdgeInsets.all(15), child: column));
+		}
+		return Scaffold(body: SafeArea(child: child));
+	}
 }
 
 class ListViewScaffold extends StatefulWidget {
-  final List<Widget> children;
+	final List<Widget> children;
 
-  ListViewScaffold({this.children = const <Widget>[]});
+	ListViewScaffold({this.children = const <Widget>[]});
 
-  @override
-  State<StatefulWidget> createState() => _ListViewScaffoldState();
+	@override
+	State<StatefulWidget> createState() => _ListViewScaffoldState();
 }
 
 // @formatter:off
@@ -104,6 +106,15 @@ class CustomSnackbar extends SnackBar {
 					backgroundColor: backgroundColor,
 					label: label,
 					textColor: textColor));
+
+static showErrSnackbar(BuildContext context,
+		{onPressed, text, backgroundColor = Farben
+				.rot, label = 'OK', textColor = Farben.weiss}) =>
+		CustomSnackbar.showSnackbar(
+				context, text: getExceptionString(text),
+				backgroundColor: backgroundColor,
+				label: label,
+				textColor: textColor);
 }
 
 //class CustomSnackbar extends StatefulWidget {

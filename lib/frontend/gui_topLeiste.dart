@@ -44,20 +44,21 @@ class _TopleisteState extends State<Topleiste> {
         child: Container(
             height: 40,
             width: 40,
-            decoration: BoxDecoration(boxShadow: [
+            decoration: BoxDecoration(
+                boxShadow: [
               BoxShadow(
                   blurRadius: 7,
                   spreadRadius: 0.03,
                   color: Color.fromRGBO(0, 0, 0, fieldExpanded ? 0.18 : 0),
                   offset: Offset(3, 3))])));
     return Stack(children: [
-      Row(children: [schatten,
+      Align(alignment: Alignment.center, child:
+    	Row(children: [schatten,
         Expanded(
             child: SizedBox(
-                height: 40,
-                child: Stack(children: [
+                height: 40, child: Stack(children: [
                   Align(
-                      alignment: Alignment.centerRight,
+                      alignment: Alignment.center,
                       child: AnimatedContainer(
                           curve: Curves.easeInQuart,
                           decoration: BoxDecoration(
@@ -75,7 +76,7 @@ class _TopleisteState extends State<Topleiste> {
                           MediaQuery.of(context).size.width : 0, duration: !fieldExpanded
                               ? Duration(milliseconds: 50) : duration,
                           child: _LeistenTextfield()))]))),
-        schatten]),
+        schatten])),
       Row(children: [
         _LeistenButton(
             onPressed: _settingsButtonPressed,

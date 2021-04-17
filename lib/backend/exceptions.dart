@@ -44,6 +44,14 @@ class _Exception501 extends _HttpException { _Exception501([String message]) : s
 class _Exception503 extends _HttpException { _Exception503([String message]) : super(503, 'API ist im Wartungsmodus',                           message); }
 // @formatter:on
 
+// ------------------------------- Sonstiges --------------------------------
+
+/// Pruefung ob Exception eine _HttpException ist
+bool _isHttpException(var e) => e is _HttpException;
+
+/// Extrahiert Exception-String
+String getExceptionString(var e) => _isHttpException(e) ? (e as _HttpException).toStringGUI() : e;
+
 /// Exception, von der alle, bei HTTP-Requests eventuell auftretenden, Exceptions ableiten.
 class _HttpException implements Exception { // @formatter:off
 

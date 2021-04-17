@@ -1,5 +1,6 @@
 import 'package:dipl_app/frontend/gui_konstanten.dart';
 import 'package:dipl_app/frontend/gui_text.dart';
+import 'package:dipl_app/frontend/gui_topLeiste.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 
@@ -8,40 +9,40 @@ class Menuleiste extends StatefulWidget {
   // TODO scaffold ev. gegen anderes Widget austauschen
   // ------------------------------- Variablen --------------------------------
 
-  // @formatter:off
+	// @formatter:off
   final Scaffold scaffold; // Scaffold unter der Menüleiste
   final bool     admin;    // Ist der Nutzer ein Admin oder ein User?
   // @formatter:on
 
-  // ------------------------------ Konstruktor -------------------------------
+	// ------------------------------ Konstruktor -------------------------------
 
-  Menuleiste({this.scaffold = const Scaffold(), this.admin = false});
+	Menuleiste({this.scaffold = const Scaffold(), this.admin = false});
 
-  // ------------------------------- createState ------------------------------
+	// ------------------------------- createState ------------------------------
 
-  @override
-  State<StatefulWidget> createState() => _MenuleisteState();
+	@override
+	State<StatefulWidget> createState() => _MenuleisteState();
 }
 
 class _MenuleisteState extends State<Menuleiste> {
-  // ------------------------------- Variablen --------------------------------
+	// ------------------------------- Variablen --------------------------------
 
-  // @formatter:off
+	// @formatter:off
   bool home         = true;  // Wird das Home-Menü gerade angezeigt?
   bool meineTermine = false; // Wird das Meine-Termine-Menü gerade angezeigt?
   bool adminMenu    = false; // Wird das Admin-Menü gerade angezeigt?
   PageController pageController;
   // @formatter:on
 
-  // -------------------------------- initState -------------------------------
+	// -------------------------------- initState -------------------------------
 
-  @override
-  void initState() {
-    pageController = PageController();
-    super.initState();
-  }
+	@override
+	void initState() {
+		pageController = PageController();
+		super.initState();
+	}
 
-  // ------------------------------ Eventhandler ------------------------------
+	// ------------------------------ Eventhandler ------------------------------
 // @formatter:off
   void handleHome() {
     setState(() {
@@ -54,39 +55,39 @@ class _MenuleisteState extends State<Menuleiste> {
     });
   }
 // @formatter:on
-  void handleMeineTermine() {
-    setState(() {
-      if (!meineTermine) {
-        home = false;
-        meineTermine = true;
-        pageController.animateToPage(1,
-            duration: Duration(milliseconds: 200), curve: Curves.linear);
-      }
-      adminMenu = false;
-    });
-  }
+	void handleMeineTermine() {
+		setState(() {
+			if (!meineTermine) {
+				home = false;
+				meineTermine = true;
+				pageController.animateToPage(1,
+						duration: Duration(milliseconds: 200), curve: Curves.linear);
+			}
+			adminMenu = false;
+		});
+	}
 
-  void showAdminMenu() {
-    setState(() {
-      adminMenu = !adminMenu;
-    });
-  }
+	void showAdminMenu() {
+		setState(() {
+			adminMenu = !adminMenu;
+		});
+	}
 
-  void swipeHandler(int page) {
-    setState(() {
-      if (page == 0) {
-        home = true;
-        meineTermine = false;
-        adminMenu = false;
-      } else if (page == 1) {
-        home = false;
-        meineTermine = true;
-        adminMenu = false;
-      }
-    });
-  }
+	void swipeHandler(int page) {
+		setState(() {
+			if (page == 0) {
+				home = true;
+				meineTermine = false;
+				adminMenu = false;
+			} else if (page == 1) {
+				home = false;
+				meineTermine = true;
+				adminMenu = false;
+			}
+		});
+	}
 
-  // --------------------------------- Build ----------------------------------
+	// --------------------------------- Build ----------------------------------
 // @formatter:off
   @override
   Widget build(BuildContext context) {
@@ -103,6 +104,10 @@ class _MenuleisteState extends State<Menuleiste> {
             body: Center(child: Text('Seite 3')),
           )*/ //TODO ka
         ]),
+          Align(alignment: Alignment.topCenter,
+                child: Container(height: 60,
+                    child: Material(color: Colors.transparent,
+                        child: Topleiste()), margin: EdgeInsets.all(10))),
           Align(
               alignment: Alignment.bottomCenter,
               child: Container(
@@ -160,9 +165,9 @@ class _MenuleisteState extends State<Menuleiste> {
 
 /// In der Navigationsleiste enthaltener Button
 class _LeistenButton extends StatefulWidget {
-  // ------------------------------- Variablen --------------------------------
+	// ------------------------------- Variablen --------------------------------
 
-  // @formatter:off
+	// @formatter:off
   final String       text;      // Textinhalt des Buttons
   final String       svg;       // Icon des Buttons
   final bool         active;    // Befindet sich der Nutzer aktuell in dem Menütab des Buttons?
@@ -170,22 +175,22 @@ class _LeistenButton extends StatefulWidget {
   final VoidCallback onPressed; // Eventhandler
   // @formatter:on
 
-  // ------------------------------ Konstruktor -------------------------------
+	// ------------------------------ Konstruktor -------------------------------
 
-  _LeistenButton({@required this.text,
-    this.onPressed,
-    this.active,
-    @required this.svg,
-    this.admin = false});
+	_LeistenButton({@required this.text,
+		this.onPressed,
+		this.active,
+		@required this.svg,
+		this.admin = false});
 
-  // ------------------------------- createState ------------------------------
+	// ------------------------------- createState ------------------------------
 
-  @override
-  State<StatefulWidget> createState() => _LeistenButtonState();
+	@override
+	State<StatefulWidget> createState() => _LeistenButtonState();
 }
 
 class _LeistenButtonState extends State<_LeistenButton> {
-  // --------------------------------- Build ----------------------------------
+	// --------------------------------- Build ----------------------------------
 // @formatter:off
   @override
   Widget build(BuildContext context) {
@@ -219,19 +224,19 @@ class _LeistenButtonChild extends StatefulWidget {
   final String svg;    // Icon des Buttons
   // @formatter:on
 
-  // ------------------------------ Konstruktor -------------------------------
+	// ------------------------------ Konstruktor -------------------------------
 
-  _LeistenButtonChild(
-      {this.admin = false, @required this.text, @required this.svg, this.active = false});
+	_LeistenButtonChild(
+			{this.admin = false, @required this.text, @required this.svg, this.active = false});
 
-  // ------------------------------- createState ------------------------------
+	// ------------------------------- createState ------------------------------
 
-  @override
-  State<StatefulWidget> createState() => _LeistenButtonChildState();
+	@override
+	State<StatefulWidget> createState() => _LeistenButtonChildState();
 }
 
 class _LeistenButtonChildState extends State<_LeistenButtonChild> {
-  // --------------------------------- Build ----------------------------------
+	// --------------------------------- Build ----------------------------------
 // @formatter:off
   @override
   Widget build(BuildContext context) {
