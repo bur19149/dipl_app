@@ -10,9 +10,9 @@ class Menuleiste extends StatefulWidget {
   // ------------------------------- Variablen --------------------------------
 
 	// @formatter:off
-  final Scaffold scaffold; // Scaffold unter der Menüleiste
-  final bool     admin;    // Ist der Nutzer ein Admin oder ein User?
-	final TextEditingController textEditingController;
+  final Scaffold							scaffold; 						 // Scaffold unter der Menüleiste
+  final bool     							admin;    						 // Ist der Nutzer ein Admin oder ein User?
+	final TextEditingController textEditingController; // Controller für Suchfeld in Topleiste
   // @formatter:on
 
 	// ------------------------------ Konstruktor -------------------------------

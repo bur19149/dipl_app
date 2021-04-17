@@ -9,7 +9,11 @@ import 'gui_text.dart';
 /// Enthält Suchfunktion und Einstellungen
 class Topleiste extends StatefulWidget {
 
-  final TextEditingController controller;
+  // ------------------------------- Variablen --------------------------------
+
+  final TextEditingController controller; // Controller für Suchfeld in Topleiste
+
+  // ------------------------------ Konstruktor -------------------------------
 
   Topleiste({this.controller});
 
@@ -101,8 +105,11 @@ class _TopleisteState extends State<Topleiste> {
 
 /// Textfeld der Suchleiste
 class _LeistenTextfield extends StatefulWidget {
+  // ------------------------------- Variablen --------------------------------
 
-  final TextEditingController controller;
+  final TextEditingController controller; // Controller für Suchfeld in Topleiste
+
+  // ------------------------------ Konstruktor -------------------------------
 
   _LeistenTextfield({this.controller});
 
@@ -207,6 +214,7 @@ class _LeistenButtonState extends State<_LeistenButton> {
   } // @formatter:off
 }
 
+// TODO entfernen
 // --------------------------------- SuchFunktion ----------------------------------
 
 
