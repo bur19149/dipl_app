@@ -6,7 +6,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import '../../backend/objects.dart';
 import 'package:intl/intl.dart';
-import '../../backend/objects.dart';
 import '../gui_topLeiste.dart';
 import '../gui_buttons.dart';
 import '../gui_text.dart';
@@ -43,7 +42,7 @@ class _TerminUebersichtPageState extends State<TerminUebersichtPage> {
                           if (index == 0)
                             children.addAll([Topleiste(), SizedBox(height: 40)]);
                           children.addAll([
-                            _TerminRahmen(
+                            TerminRahmenTerminuebersicht(
                                 name: termin.name,
                                 anmeldungEnde: termin.anmeldungEnde,
                                 ort: termin.ort,
@@ -71,12 +70,12 @@ class _TerminUebersichtPageState extends State<TerminUebersichtPage> {
   }
 }
 
-class _TerminRahmen extends StatefulWidget {
+class TerminRahmenTerminuebersicht extends StatefulWidget {
   final String name, ort, beschreibung;
   final int plaetze;
   final DateTime anmeldungEnde, timeVon, timeBis;
 
-  const _TerminRahmen(
+  const TerminRahmenTerminuebersicht(
       {this.name = 'Name',
       this.anmeldungEnde,
       this.ort = 'Ort',
@@ -86,10 +85,10 @@ class _TerminRahmen extends StatefulWidget {
       this.timeBis});
 
   @override
-  State<StatefulWidget> createState() => _TerminRahmenState();
+  State<StatefulWidget> createState() => _TerminRahmenTerminuebersichtState();
 }
 
-class _TerminRahmenState extends State<_TerminRahmen> {
+class _TerminRahmenTerminuebersichtState extends State<TerminRahmenTerminuebersicht> {
   DateTime anmeldungEnde;
   bool _sameDate;
 
