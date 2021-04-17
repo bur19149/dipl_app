@@ -8,6 +8,11 @@ import 'gui_text.dart';
 /// Topleiste
 /// Enthält Suchfunktion und Einstellungen
 class Topleiste extends StatefulWidget {
+
+  final TextEditingController controller;
+
+  Topleiste({this.controller});
+
   // ------------------------------- createState ------------------------------
 
   @override
@@ -75,7 +80,7 @@ class _TopleisteState extends State<Topleiste> {
                           width: fieldExpanded ?
                           MediaQuery.of(context).size.width : 0, duration: !fieldExpanded
                               ? Duration(milliseconds: 50) : duration,
-                          child: _LeistenTextfield()))]))),
+                          child: _LeistenTextfield(controller: widget.controller)))]))),
         schatten])),
       Row(children: [
         _LeistenButton(
@@ -96,6 +101,11 @@ class _TopleisteState extends State<Topleiste> {
 
 /// Textfeld der Suchleiste
 class _LeistenTextfield extends StatefulWidget {
+
+  final TextEditingController controller;
+
+  _LeistenTextfield({this.controller});
+
   // ------------------------------- createState ------------------------------
 
   @override
@@ -103,11 +113,13 @@ class _LeistenTextfield extends StatefulWidget {
 }
 
 class _LeistenTextfieldState extends State<_LeistenTextfield> {
+
+  @override
   // --------------------------------- Build ----------------------------------
 // @formatter:off
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextField(controller: widget.controller ?? TextEditingController(),
         style: Schrift(
             fontWeight: FontWeight.w400, fontSize: 20, color: Farben.schwarz),
         strutStyle: StrutStyle(height: 1.6),

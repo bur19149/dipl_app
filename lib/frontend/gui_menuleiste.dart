@@ -12,11 +12,12 @@ class Menuleiste extends StatefulWidget {
 	// @formatter:off
   final Scaffold scaffold; // Scaffold unter der Menüleiste
   final bool     admin;    // Ist der Nutzer ein Admin oder ein User?
+	final TextEditingController textEditingController;
   // @formatter:on
 
 	// ------------------------------ Konstruktor -------------------------------
 
-	Menuleiste({this.scaffold = const Scaffold(), this.admin = false});
+	Menuleiste({this.scaffold = const Scaffold(), this.admin = false, this.textEditingController});
 
 	// ------------------------------- createState ------------------------------
 
@@ -107,7 +108,7 @@ class _MenuleisteState extends State<Menuleiste> {
           Align(alignment: Alignment.topCenter,
                 child: Container(height: 60,
                     child: Material(color: Colors.transparent,
-                        child: Topleiste()), margin: EdgeInsets.all(10))),
+                        child: Topleiste(controller: widget.textEditingController)), margin: EdgeInsets.all(10))),
           Align(
               alignment: Alignment.bottomCenter,
               child: Container(

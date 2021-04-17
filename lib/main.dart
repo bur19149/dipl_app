@@ -1,3 +1,4 @@
+import 'package:dipl_app/frontend/pages/gui_ladeseite.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:dipl_app/tests/checkliste_fertige_elemente.dart';
 import 'package:dipl_app/tests/christians_spielwiese.dart';
@@ -53,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               onPressed: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => LoginPage()))),
+                                      builder: (context) => Ladeseite()))),
                           TempButton(
                               text: 'Testgelände',
                               onPressed: () => Navigator.push(

@@ -18,6 +18,10 @@ class _LadeseiteState extends State<Ladeseite> {
   @override
   void initState() {
     super.initState();
+    Future.microtask(() => navigate());
+  }
+
+  navigate() {
     try {
       validate();
     } catch (e) {
@@ -36,35 +40,6 @@ class _LadeseiteState extends State<Ladeseite> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Align(
-            alignment: Alignment.center,
-            child: SvgPicture.asset(SVGicons.appicon,
-                color: Farben.dunkelgrau, height: 180)));
+    return Scaffold();
   }
 }
-
-//import 'package:dipl_app/backend/requests/login.dart';
-//import 'package:flutter/cupertino.dart';
-//import 'package:flutter/material.dart';
-//import 'package:flutter_svg/svg.dart';
-//
-//import '../gui_konstanten.dart';
-//import '../gui_pages.dart';
-//
-//class Ladeseite extends StatelessWidget {
-//
-//  @override
-//  Widget build(BuildContext context) {
-////    try {
-////      throw 'Test';
-////    } catch (e) {
-////      CustomSnackbar.showErrSnackbar(context, text: e);
-////    }
-//    return Scaffold(
-//        body: Align(
-//            alignment: Alignment.center,
-//            child: SvgPicture.asset(SVGicons.appicon,
-//                color: Farben.dunkelgrau, height: 180)));
-//  }
-//}
