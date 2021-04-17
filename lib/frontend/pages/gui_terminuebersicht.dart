@@ -127,6 +127,7 @@ class _TerminRahmenTerminuebersichtState extends State<TerminRahmenTerminuebersi
                   style: Schrift()) // @formatter:on
             ])]),
           SizedBox(height: 5),
+          widget.ort == null || widget.ort.isEmpty ? Container() :
           Row(children: [
             SizedBox(
                 width: 20,
@@ -154,10 +155,10 @@ class _TerminRahmenTerminuebersichtState extends State<TerminRahmenTerminuebersi
                   TextSpan(text: ' freie Plätze.')
                 ]))])],
         childrenBottom: [
-          SizedBox(height: 20),
-          Align(
+          widget.beschreibung != null && widget.beschreibung.isNotEmpty ? SizedBox(height: 20) : Container(),
+          widget.beschreibung != null && widget.beschreibung.isNotEmpty ? Align(
               alignment: Alignment.centerLeft,
-              child: Text(widget.beschreibung, style: Schrift())),
+              child: Text(widget.beschreibung, style: Schrift(), textAlign: TextAlign.justify)) : Container(),
           SizedBox(height: 20),
           Align(
               alignment: Alignment.centerLeft,
@@ -171,6 +172,7 @@ class _TerminRahmenTerminuebersichtState extends State<TerminRahmenTerminuebersi
   }
 }
 
+// TODO entfernen
 ///Trash 2 be deleted when finished (old code without the "Keine Termine vorhanden" fix where the page is Empty
 
 // import 'package:dipl_app/frontend/gui_konstanten.dart';
