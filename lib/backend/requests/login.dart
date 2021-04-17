@@ -41,8 +41,8 @@ Future<String> link(String userkey) async { // @formatter:off
   });
   if(_response.statusCode != 200) {
     throw exceptionHandler(_response.statusCode, c404: 'Ein solcher Schlüssel existiert nicht in der Datenbank',
-                                           c400: 'Der Schlüssel ist abgelaufen oder wurde bereits erfolgreich benutzt.',
-                                           c422: 'Es fehlen ein oder mehr Parameter');
+                                                 c400: 'Der Schlüssel ist abgelaufen oder wurde bereits erfolgreich benutzt.',
+                                                 c422: 'Es fehlen ein oder mehr Parameter');
   }
   return RegExp('.*"(.*)"}}').allMatches(_response.body).toList()[0].group(1);
 } // @formatter:on

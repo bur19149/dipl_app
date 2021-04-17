@@ -1,6 +1,7 @@
 import 'package:dipl_app/backend/requests/login.dart';
 import 'package:dipl_app/backend/requests/variables.dart';
 import 'package:dipl_app/frontend/gui_pages.dart';
+import 'package:dipl_app/frontend/pages/gui_terminuebersicht.dart';
 import 'package:flutter/material.dart';
 import '../gui_eingabefelder.dart';
 import '../gui_konstanten.dart';
@@ -29,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
         value: value,
         pruefung: Pruefung(
             pruefung: (val) => RegExp('[0-9A-Za-z]{8}').hasMatch(val),
-            errortext: 'ungüliges Passwort'));
+            errortext: 'ungültiges Passwort'));
 
     return ListViewScaffold(children: [
       LoginRahmen(children: [
@@ -47,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
                   print(token);
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => Ladeseite()),
+                    MaterialPageRoute(builder: (context) => TerminUebersichtPage()),
                         (Route<dynamic> route) => false,
                   );
                 } catch (e) {

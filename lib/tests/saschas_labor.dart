@@ -9,6 +9,7 @@ import 'package:dipl_app/frontend/gui_buttons.dart';
 import 'package:dipl_app/frontend/gui_rahmen.dart';
 import 'package:dipl_app/frontend/gui_text.dart';
 import 'package:dipl_app/frontend/pages/gui_terminuebersicht.dart';
+import 'package:dipl_app/tests/Standardmenu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -32,7 +33,8 @@ class _SaschasLaborState extends State<SaschasLabor> {
           MaterialPageRoute(builder: (context) => testeSortierMenu())), text: 'testeSortierButton'),
       // TempButton(onPressed: () => Navigator.push(context,
       //     MaterialPageRoute(builder: (context) => testeSuchfunktion())), text: 'testeSuchfunktion'),
-      TempButton(onPressed:() => Navigator.push(context, MaterialPageRoute(builder: (context)=> TesteMenuSaschaTest())), text: 'Menüleisten-Test')]);
+      TempButton(onPressed:() => Navigator.push(context, MaterialPageRoute(builder: (context)=> TesteMenuSaschaTest())), text: 'Menüleisten-Test'),
+      TempButton(onPressed:() => Navigator.push(context, MaterialPageRoute(builder: (context)=> Standardmenu())), text: 'Standardmenü-Test')]);
   }
 // @formatter:on
 /*  Widget testeKinderAnmeldungen() {
@@ -308,7 +310,4 @@ class _TesteMenuState extends State<TesteMenuSaschaTest> {
     });
     setState(() {});
   }
-
-
-
 }
