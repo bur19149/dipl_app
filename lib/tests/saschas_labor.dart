@@ -232,8 +232,7 @@ class _TesteMenuState extends State<TesteMenuSaschaTest> {
             itemBuilder: (context, index){
               UserTermin termin = _searchResult[index];
               List<Widget> children = [];
-              if (index == 0)
-                children.addAll([Topleiste(), SizedBox(height: 40)]);
+              if (index == 0) children.addAll([Topleiste(), SizedBox(height: 40)]);
               children.addAll([
                 TerminRahmenTerminuebersicht(
                     name: termin.name,
@@ -255,8 +254,6 @@ class _TesteMenuState extends State<TesteMenuSaschaTest> {
                     itemBuilder: (context, index) {
                       UserTermin termin = projectSnap.data[index];
                       List<Widget> children = [];
-                      if (index == 0)
-                        children.addAll([Topleiste(), SizedBox(height: 40)]);
                       children.addAll([
                         TerminRahmenTerminuebersicht(
                             name: termin.name,
@@ -272,16 +269,13 @@ class _TesteMenuState extends State<TesteMenuSaschaTest> {
               } else {
                 return Stack(
                     children: [
-                      ListView(
-                          padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-                          children: [Topleiste()]),
                       Align(
                           alignment: Alignment.center,
                           child: Text(projectSnap.data!=null?'Keine Termine vorhanden!':'Keine Internet Verbindung!',
                               style: Schrift()))]);
               }
             },
-            future: /*_getTermine()*/ terminlisteLocal,
+            future: terminlisteLocal,
             initialData: [])),
     );
   }
@@ -294,12 +288,6 @@ class _TesteMenuState extends State<TesteMenuSaschaTest> {
       setState(() {});
       return;
     }
-
-// getDailyTask(DateTime.now()).then((dailyTaskList) {
-    //   for (var task in dailyTaskList) {
-    //     // do something
-    //   }
-    // });
 
     terminlisteLocal.then((terminliste){
       for(var termin in terminliste){
