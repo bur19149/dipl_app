@@ -90,29 +90,29 @@ class _StandardmenuState extends State<Standardmenu> {
                       style: Schrift()));
                   }})));
   }
-
+//@foramtter:on
   @override
   void initState() {
     super.initState();
   }
 
 //@formatter:off
-void onSearchTextChanged(String text) async {
-  text.toLowerCase().trim();
-  _searchResult.clear();
-  if (text.isEmpty) {
-    setState(() {});
-    return;
-  }
-
-  terminlisteLocal.then((terminliste) {
-    for (var termin in terminliste) {
-      if (termin.name.toLowerCase().contains(text)||termin.ort.toLowerCase().contains(text)|| termin.beschreibung.contains(text)) {
-        _searchResult.add(termin);
-      }
+  void onSearchTextChanged(String text) async {
+    text.toLowerCase().trim();
+    _searchResult.clear();
+    if (text.isEmpty) {
+      setState(() {});
+      return;
     }
-  });
-  setState(() {});
+
+    terminlisteLocal.then((terminliste) {
+      for (var termin in terminliste) {
+        if (termin.name.toLowerCase().contains(text)||termin.ort.toLowerCase().contains(text)||termin.beschreibung.contains(text)) {
+          _searchResult.add(termin);
+        }
+      }
+    });
+    setState(() {});
   }
 
   //@foramtter:on
