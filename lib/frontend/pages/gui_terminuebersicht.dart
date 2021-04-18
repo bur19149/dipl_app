@@ -20,8 +20,11 @@ class TerminUebersichtPage extends StatefulWidget {
 class _StandardmenuState extends State<TerminUebersichtPage> {
 
   //Variables
-  Future<List<UserTermin>> terminlisteLocal = requestAlleTermine();
-  List<UserTermin> _searchResult = [];
+  Future<List<UserTermin>> terminListeMeineTermine = requestMeineTermine();
+  Future<List<UserTermin>> terminListeAlleTermine  = requestAlleTermine();
+  List<UserTermin> _searchResultMeineTermine = [];
+  List<UserTermin> _searchResultAlleTermine  = [];
+  bool homeMeineTermine;
 
   //Controller
   TextEditingController controller = new TextEditingController();
@@ -35,12 +38,12 @@ class _StandardmenuState extends State<TerminUebersichtPage> {
         textEditingController: controller,
         onChanged: onSearchTextChanged,
         scaffoldHome: Scaffold(
-            body: _searchResult.length != 0 || controller.text.isNotEmpty ?
+            body: _searchResultAlleTermine.length != 0 || controller.text.isNotEmpty ?
             ListView.builder(
                 padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-                itemCount: _searchResult.length,
+                itemCount: _searchResultAlleTermine.length,
                 itemBuilder: (context, index) {
-                  UserTermin termin = _searchResult[index];
+                  UserTermin termin = _searchResultAlleTermine[index];
                   List<Widget> children = [];
                   if(index==0) {
                     children.add(SizedBox(height: 70));
@@ -55,12 +58,12 @@ class _StandardmenuState extends State<TerminUebersichtPage> {
                         plaetze: termin.plaetze,
                         beschreibung: termin.beschreibung),
                     SizedBox(height: 35)]);
-                  if(_searchResult.length-1==index){
+                  if(_searchResultAlleTermine.length-1==index){
                     children.add(SizedBox(height: 70));
                   }
                   return Column(children: children);})
                 : FutureBuilder(
-                future: terminlisteLocal,
+                future: terminListeAlleTermine,
                 initialData: [],
                 builder: (context, projectSnap) {
                   if (projectSnap.data != null && projectSnap.data.length > 0) {
@@ -102,17 +105,17 @@ class _StandardmenuState extends State<TerminUebersichtPage> {
 
 //@formatter:off
   void onSearchTextChanged(String text) async {
-    text.toLowerCase().trim();
-    _searchResult.clear();
+    text=text.toLowerCase().trim();
+    _searchResultAlleTermine.clear();
     if (text.isEmpty) {
       setState(() {});
       return;
     }
 
-    terminlisteLocal.then((terminliste) {
+    terminListeAlleTermine.then((terminliste) {
       for (var termin in terminliste) {
         if (termin.name.toLowerCase().contains(text)||termin.ort.toLowerCase().contains(text)||termin.beschreibung.contains(text)) {
-          _searchResult.add(termin);
+          _searchResultAlleTermine.add(termin);
         }
       }
     });
