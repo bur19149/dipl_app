@@ -3,6 +3,19 @@ import '../gui_konstanten.dart';
 import '../gui_buttons.dart';
 import '../gui_text.dart';
 
+class AdminTerminUebersichtPage extends StatefulWidget {
+  @override
+  _AdminTerminUebersichtPageState createState() => _AdminTerminUebersichtPageState();
+}
+
+class _AdminTerminUebersichtPageState extends State<AdminTerminUebersichtPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+
 class SortierMenu extends StatefulWidget {
   @override
   _SortierMenuState createState() => _SortierMenuState();
