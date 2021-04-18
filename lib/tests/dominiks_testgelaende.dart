@@ -163,7 +163,7 @@ class _TesteMenuState extends State<TesteMenu> {
 	Widget build(BuildContext context) {
 		return Menuleiste(
 				admin: admin,
-				scaffold: Scaffold(
+				scaffoldHome: Scaffold(
 						body: Center(
 								child: RaisedButton(
 										onPressed: () {

@@ -10,7 +10,8 @@ class Menuleiste extends StatefulWidget {
   // ------------------------------- Variablen --------------------------------
 
 	// @formatter:off
-  final Scaffold							scaffold; 						 // Scaffold unter der Menüleiste
+  final Scaffold							scaffoldHome; 				 // Scaffold unter der Menüleiste für Home
+  final Scaffold              scaffoldMeineTermine;  // Scaffhold für Meine Termine under der Menüleiste
   final bool     							admin;    						 // Ist der Nutzer ein Admin oder ein User?
 	final TextEditingController textEditingController; // Controller für Suchfeld in Topleiste
 	final ValueChanged<String>  onChanged;  					 // Eventhandler für Suchfeld
@@ -18,7 +19,7 @@ class Menuleiste extends StatefulWidget {
 
 	// ------------------------------ Konstruktor -------------------------------
 
-	Menuleiste({this.scaffold = const Scaffold(), this.admin = false, this.textEditingController, this.onChanged});
+	Menuleiste({this.scaffoldHome = const Scaffold(),this.scaffoldMeineTermine=const Scaffold(), this.admin = false, this.textEditingController, this.onChanged});
 
 	// ------------------------------- createState ------------------------------
 
@@ -99,12 +100,8 @@ class _MenuleisteState extends State<Menuleiste> {
             controller: pageController,
             onPageChanged: (page) => swipeHandler(page),
             children: [
-              widget.scaffold,
-              Scaffold(
-                body: Center(child: Text('Seite 2'))),
-          /*Scaffold(
-            body: Center(child: Text('Seite 3')),
-          )*/ //TODO ka
+              widget.scaffoldHome,
+              widget.scaffoldMeineTermine,
         ]),
           Align(alignment: Alignment.topCenter,
                 child: Container(height: 60,

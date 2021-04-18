@@ -225,7 +225,7 @@ class _TesteMenuState extends State<TesteMenuSaschaTest> {
 
   @override
   Widget build(BuildContext context) {
-    return Menuleiste(admin: admin, scaffold: Scaffold(
+    return Menuleiste(admin: admin, scaffoldHome: Scaffold(
         body: _searchResult.length != 0 || controller.text.isNotEmpty ?
         ListView.builder(padding: EdgeInsets.only(left: 15, right: 15, top: 15),
             itemCount: _searchResult.length,

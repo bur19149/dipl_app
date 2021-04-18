@@ -34,7 +34,7 @@ class _StandardmenuState extends State<TerminUebersichtPage> {
         admin: true,
         textEditingController: controller,
         onChanged: onSearchTextChanged,
-        scaffold: Scaffold(
+        scaffoldHome: Scaffold(
             body: _searchResult.length != 0 || controller.text.isNotEmpty ?
             ListView.builder(
                 padding: EdgeInsets.only(left: 15, right: 15, top: 15),
