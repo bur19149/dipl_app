@@ -12,7 +12,7 @@ class Topleiste extends StatefulWidget {
   // ------------------------------- Variablen --------------------------------
 
   final TextEditingController controller; // Controller für Suchfeld in Topleiste
-  final ValueChanged<String> onChanged;
+  final ValueChanged<String>  onChanged;  // Eventhandler für Suchfeld
   // ------------------------------ Konstruktor -------------------------------
 
   Topleiste({this.controller, this.onChanged});
@@ -108,7 +108,7 @@ class _LeistenTextfield extends StatefulWidget {
   // ------------------------------- Variablen --------------------------------
 
   final TextEditingController controller; // Controller für Suchfeld in Topleiste
-  final ValueChanged<String> onChanged;
+  final ValueChanged<String>  onChanged;  // Eventhandler für Suchfeld
   // ------------------------------ Konstruktor -------------------------------
 
   _LeistenTextfield({this.controller, this.onChanged});
