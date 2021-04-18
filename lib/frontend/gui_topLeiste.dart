@@ -12,10 +12,10 @@ class Topleiste extends StatefulWidget {
   // ------------------------------- Variablen --------------------------------
 
   final TextEditingController controller; // Controller für Suchfeld in Topleiste
-
+  final ValueChanged<String> onChanged;
   // ------------------------------ Konstruktor -------------------------------
 
-  Topleiste({this.controller});
+  Topleiste({this.controller, this.onChanged});
 
   // ------------------------------- createState ------------------------------
 
@@ -84,7 +84,7 @@ class _TopleisteState extends State<Topleiste> {
                           width: fieldExpanded ?
                           MediaQuery.of(context).size.width : 0, duration: !fieldExpanded
                               ? Duration(milliseconds: 50) : duration,
-                          child: _LeistenTextfield(controller: widget.controller)))]))),
+                          child: _LeistenTextfield(controller: widget.controller, onChanged: widget.onChanged)))]))),
         schatten])),
       Row(children: [
         _LeistenButton(
@@ -108,10 +108,10 @@ class _LeistenTextfield extends StatefulWidget {
   // ------------------------------- Variablen --------------------------------
 
   final TextEditingController controller; // Controller für Suchfeld in Topleiste
-
+  final ValueChanged<String> onChanged;
   // ------------------------------ Konstruktor -------------------------------
 
-  _LeistenTextfield({this.controller});
+  _LeistenTextfield({this.controller, this.onChanged});
 
   // ------------------------------- createState ------------------------------
 
@@ -127,7 +127,7 @@ class _LeistenTextfieldState extends State<_LeistenTextfield> {
   @override
   Widget build(BuildContext context) {
     print('#################### _LeistenTextfieldState: ${widget.controller}');
-    return TextField(controller: widget.controller ?? TextEditingController(),
+    return TextField(controller: widget.controller ?? TextEditingController(), onChanged: widget.onChanged ?? (s) {},
         style: Schrift(
             fontWeight: FontWeight.w400, fontSize: 20, color: Farben.schwarz),
         strutStyle: StrutStyle(height: 1.6),
