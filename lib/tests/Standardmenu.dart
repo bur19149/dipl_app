@@ -20,10 +20,12 @@ class _StandardmenuState extends State<Standardmenu> {
   //Controller
   TextEditingController controller = new TextEditingController();
 
+  //@foratter:off
+
   @override
   Widget build(BuildContext context) {
-    print('########################## [${_searchResult.length}] || [${controller.text}] = [${_searchResult.length != 0 || controller.text.isNotEmpty}] #######################');
     return Menuleiste(
+      //TODO Admin ist zurzeit noch statisch
         admin: true,
         textEditingController: controller,
         onChanged: onSearchTextChanged,
@@ -35,6 +37,9 @@ class _StandardmenuState extends State<Standardmenu> {
               itemBuilder: (context, index) {
                 UserTermin termin = _searchResult[index];
                 List<Widget> children = [];
+                if(index==0) {
+                  children.add(SizedBox(height: 70));
+                }
                 children.addAll([
                   TerminRahmenTerminuebersicht(
                       name: termin.name,
@@ -45,6 +50,9 @@ class _StandardmenuState extends State<Standardmenu> {
                       plaetze: termin.plaetze,
                       beschreibung: termin.beschreibung),
                   SizedBox(height: 35)]);
+                if(_searchResult.length-1==index){
+                  children.add(SizedBox(height: 70));
+                }
                 return Column(children: children);})
                 : FutureBuilder(
                 future: terminlisteLocal,
@@ -57,6 +65,9 @@ class _StandardmenuState extends State<Standardmenu> {
                         itemBuilder: (context, index) {
                           UserTermin termin = projectSnap.data[index];
                           List<Widget> children = [];
+                          if(index==0){
+                            children.add(SizedBox(height: 70));
+                          }
                           children.addAll([
                             TerminRahmenTerminuebersicht(
                                 name: termin.name,
@@ -67,16 +78,17 @@ class _StandardmenuState extends State<Standardmenu> {
                                 plaetze: termin.plaetze,
                                 beschreibung: termin.beschreibung),
                             SizedBox(height: 35)]);
+                          if(projectSnap.data.length-1==index){
+                            children.add(SizedBox(height: 70));
+                          }
                           return Column(children: children);
-
                         });
                   } else {
                     return Align(
                       alignment: Alignment.center,
                       child: Text(projectSnap != null ? 'Keine Termine vorhanden!' : 'Keine Internet Verbindung!',
                       style: Schrift()));
-                  }
-                })));
+                  }})));
   }
 
   @override
@@ -84,27 +96,27 @@ class _StandardmenuState extends State<Standardmenu> {
     super.initState();
   }
 
+//@formatter:off
 void onSearchTextChanged(String text) async {
   text.toLowerCase().trim();
   _searchResult.clear();
   if (text.isEmpty) {
-    print('###################### setState() ################# 1');
     setState(() {});
     return;
   }
 
   terminlisteLocal.then((terminliste) {
     for (var termin in terminliste) {
-      if (termin.name.toLowerCase().contains(text)||termin.ort.toLowerCase().contains(text)) {
+      if (termin.name.toLowerCase().contains(text)||termin.ort.toLowerCase().contains(text)|| termin.beschreibung.contains(text)) {
         _searchResult.add(termin);
       }
     }
-    ///Debug
-    _searchResult.forEach((element) {print(element.name);});
   });
-  print('###################### setState() ################# 2');
   setState(() {});
-}}
+  }
+
+  //@foramtter:on
+}
 
 
 
