@@ -26,6 +26,7 @@ class _StandardmenuState extends State<Standardmenu> {
     return Menuleiste(
         admin: true,
         textEditingController: controller,
+        onChanged: onSearchTextChanged,
         scaffold: Scaffold(
             body: _searchResult.length != 0 || controller.text.isNotEmpty ?
             ListView.builder(
