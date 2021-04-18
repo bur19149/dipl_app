@@ -34,7 +34,7 @@ class _SaschasLaborState extends State<SaschasLabor> {
       // TempButton(onPressed: () => Navigator.push(context,
       //     MaterialPageRoute(builder: (context) => testeSuchfunktion())), text: 'testeSuchfunktion'),
       TempButton(onPressed:() => Navigator.push(context, MaterialPageRoute(builder: (context)=> TesteMenuSaschaTest())), text: 'Menüleisten-Test'),
-      TempButton(onPressed:() => Navigator.push(context, MaterialPageRoute(builder: (context)=> Standardmenu())), text: 'Standardmenü-Test')]);
+      TempButton(onPressed:() => Navigator.push(context, MaterialPageRoute(builder: (context)=> TerminUebersichtPage())), text: 'Standardmenü-Test')]);
   }
 // @formatter:on
 /*  Widget testeKinderAnmeldungen() {
