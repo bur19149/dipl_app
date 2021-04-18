@@ -33,7 +33,6 @@ class _SaschasLaborState extends State<SaschasLabor> {
           MaterialPageRoute(builder: (context) => testeSortierMenu())), text: 'testeSortierButton'),
       // TempButton(onPressed: () => Navigator.push(context,
       //     MaterialPageRoute(builder: (context) => testeSuchfunktion())), text: 'testeSuchfunktion'),
-      TempButton(onPressed:() => Navigator.push(context, MaterialPageRoute(builder: (context)=> TesteMenuSaschaTest())), text: 'Menüleisten-Test'),
       TempButton(onPressed:() => Navigator.push(context, MaterialPageRoute(builder: (context)=> TerminUebersichtPage())), text: 'Standardmenü-Test')]);
   }
 // @formatter:on
@@ -206,96 +205,5 @@ class _UserRahmenState extends State<UserRahmen> with SingleTickerProviderStateM
   void dispose() {
     _controller.dispose();
     super.dispose();
-  }
-}
-
-class TesteMenuSaschaTest extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _TesteMenuState();
-}
-
-class _TesteMenuState extends State<TesteMenuSaschaTest> {
-  TextEditingController controller = new TextEditingController();
-
-  ///VARIABLEN
-  bool admin = true;
-
-  Future<List<UserTermin>> terminlisteLocal = requestAlleTermine();
-  List<UserTermin> _searchResult = [];
-
-  @override
-  Widget build(BuildContext context) {
-    return Menuleiste(admin: admin, scaffoldHome: Scaffold(
-        body: _searchResult.length != 0 || controller.text.isNotEmpty ?
-        ListView.builder(padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-            itemCount: _searchResult.length,
-            itemBuilder: (context, index){
-              UserTermin termin = _searchResult[index];
-              List<Widget> children = [];
-              if (index == 0) children.addAll([Topleiste(), SizedBox(height: 40)]);
-              children.addAll([
-                TerminRahmenTerminuebersicht(
-                    name: termin.name,
-                    anmeldungEnde: termin.anmeldungEnde,
-                    ort: termin.ort,
-                    timeVon: termin.timeVon,
-                    timeBis: termin.timeBis,
-                    plaetze: termin.plaetze,
-                    beschreibung: termin.beschreibung),
-                SizedBox(height: 35)]);
-              return Column(children: children);
-            })
-            : FutureBuilder(
-            builder: (context, projectSnap) {
-              if (projectSnap.data != null && projectSnap.data.length > 0) {
-                return ListView.builder(
-                    padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-                    itemCount: projectSnap.data.length,
-                    itemBuilder: (context, index) {
-                      UserTermin termin = projectSnap.data[index];
-                      List<Widget> children = [];
-                      children.addAll([
-                        TerminRahmenTerminuebersicht(
-                            name: termin.name,
-                            anmeldungEnde: termin.anmeldungEnde,
-                            ort: termin.ort,
-                            timeVon: termin.timeVon,
-                            timeBis: termin.timeBis,
-                            plaetze: termin.plaetze,
-                            beschreibung: termin.beschreibung),
-                        SizedBox(height: 35)]);
-                      return Column(children: children);
-                    });
-              } else {
-                return Stack(
-                    children: [
-                      Align(
-                          alignment: Alignment.center,
-                          child: Text(projectSnap.data!=null?'Keine Termine vorhanden!':'Keine Internet Verbindung!',
-                              style: Schrift()))]);
-              }
-            },
-            future: terminlisteLocal,
-            initialData: [])),
-    );
-  }
-
-  void onSearchTextChanged(String text) async {
-    text.toLowerCase().trim();
-    _searchResult.clear();
-    if (text.isEmpty) {
-      //TODO es werden die Default Termine geladen.
-      setState(() {});
-      return;
-    }
-
-    terminlisteLocal.then((terminliste){
-      for(var termin in terminliste){
-        if(termin.name.toLowerCase().contains(text)||termin.ort.toLowerCase().contains(text)){
-          _searchResult.add(termin);
-        }
-      }
-    });
-    setState(() {});
   }
 }
