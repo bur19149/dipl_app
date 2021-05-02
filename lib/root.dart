@@ -15,10 +15,9 @@ class Root extends StatefulWidget {
 class _RootState extends State<Root> {
 	//Variables
 	Future<List<UserTermin>> terminListeMeineTermine = requestMeineTermine();
-	Future<List<UserTermin>> terminListeAlleTermine = requestAlleTermine();
+	Future<List<UserTermin>> terminListeAlleTermine  = requestAlleTermine();
 	List<UserTermin> _searchResultMeineTermine = [];
-	List<UserTermin> _searchResultAlleTermine = [];
-	bool homeMeineTermine;
+	List<UserTermin> _searchResultAlleTermine  = [];
 
 	//Controller
 	TextEditingController controller = new TextEditingController();
