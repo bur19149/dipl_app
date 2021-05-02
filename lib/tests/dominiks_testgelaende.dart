@@ -28,7 +28,7 @@ class DominiksTestgelaende extends StatefulWidget {
 class _DominiksTestgelaendeState extends State<DominiksTestgelaende> {
   @override
   Widget build(BuildContext context) {
-    return TempSeite(children: [
+    return ListViewScaffold(children: [
 			// @formatter:off
       TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteMenu())),            text: 'Menüleisten-Test'),
       TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteWidgets())),         text: 'Widgets-Tests'),
