@@ -1,18 +1,13 @@
-import 'package:dipl_app/backend/objects.dart';
-import 'package:dipl_app/backend/requests/user.dart';
-import 'package:dipl_app/frontend/gui_menuleiste.dart';
-import 'package:dipl_app/frontend/gui_topLeiste.dart';
 import 'package:dipl_app/frontend/pages/gui_admin_terminuebersicht.dart';
 import 'package:dipl_app/backend/objects.dart' as objects;
 import 'package:dipl_app/frontend/gui_konstanten.dart';
 import 'package:dipl_app/frontend/gui_buttons.dart';
 import 'package:dipl_app/frontend/gui_rahmen.dart';
 import 'package:dipl_app/frontend/gui_text.dart';
-import 'package:dipl_app/frontend/pages/gui_terminuebersicht.dart';
-import 'package:dipl_app/tests/Standardmenu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:dipl_app/Root.dart';
 import 'package:dipl_app/main.dart';
 
 
@@ -29,7 +24,7 @@ class _SaschasLaborState extends State<SaschasLabor> {
           MaterialPageRoute(builder: (context) => testeRegistrierteUser())), text: 'testeRegistrierteUser'),
       TempButton(onPressed: () => Navigator.push(context,
           MaterialPageRoute(builder: (context) => testeSortierMenu())), text: 'testeSortierButton'),
-      TempButton(onPressed:() => Navigator.push(context, MaterialPageRoute(builder: (context)=> TerminUebersichtPage())), text: 'Standardmenü-Test'),
+      TempButton(onPressed:() => Navigator.push(context, MaterialPageRoute(builder: (context)=> Root())), text: 'Standardmenü-Test'),
       TempButton(onPressed:() => Navigator.push(context, MaterialPageRoute(builder: (context)=> AdminTerminUebersichtPage())), text: 'AdminTerminÜbersichtPage'),]);
   }
 // @formatter:on

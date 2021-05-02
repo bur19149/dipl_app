@@ -1,7 +1,7 @@
+import 'package:dipl_app/Root.dart';
 import 'package:dipl_app/backend/requests/login.dart';
 import 'package:dipl_app/backend/requests/variables.dart';
 import 'package:dipl_app/frontend/gui_pages.dart';
-import 'package:dipl_app/frontend/pages/gui_terminuebersicht.dart';
 import 'package:flutter/material.dart';
 import '../gui_eingabefelder.dart';
 import '../gui_konstanten.dart';
@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
                   print(token);
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => TerminUebersichtPage()),
+                    MaterialPageRoute(builder: (context) => Root()),
                         (Route<dynamic> route) => false,
                   );
                 } catch (e) {

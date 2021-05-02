@@ -10,8 +10,8 @@ class Menuleiste extends StatefulWidget {
   // ------------------------------- Variablen --------------------------------
 
 	// @formatter:off
-  final Scaffold							scaffoldHome; 				 // Scaffold unter der Menüleiste für Home
-  final Scaffold              scaffoldMeineTermine;  // Scaffhold für Meine Termine under der Menüleiste
+  final Widget							  scaffoldHome; 				 // Scaffold unter der Menüleiste für Home
+  final Widget                scaffoldMeineTermine;  // Scaffhold für Meine Termine under der Menüleiste
   final bool     							admin;    						 // Ist der Nutzer ein Admin oder ein User?
 	final TextEditingController textEditingController; // Controller für Suchfeld in Topleiste
 	final ValueChanged<String>  onChanged;  					 // Eventhandler für Suchfeld
