@@ -8,8 +8,8 @@ class User {
   // @formatter:off
   int        _userID;       // einzigartige ID
   String     jugendgruppe;
-  String     _nachname;
-  String     _vorname;
+  String     nachname;
+  String     vorname;
   String     email;
   String     _plz;
   String     ort;
@@ -38,40 +38,34 @@ class User {
     this.registered   = registered;
   } // @formatter:on
 
+  User.leer() : this(0, '', '', '', null, null, null, null, 0, null, false);
+
   // --------------------------------- Setter ---------------------------------
 
   set userID(int value) {
     _userID = pruefungen.prufeID(value);
   }
 
-  set vorname(String value) {
-    _vorname = pruefungen.prufeName(pruefungen.stringPrufung(value));
-  }
-
-  set nachname(String value) {
-    _nachname = pruefungen.prufeName(pruefungen.stringPrufung(value));
-  }
-
   set plz(String value) {
-    var intplz = int.parse(pruefungen.stringPrufung(value));
-    if (intplz < 1000 || intplz > 9992) throw 'Die Postleitzahl ist ungültig.';
+    // TODO loeschen
+//    var intplz = int.parse(pruefungen.stringPrufung(value));
+//    if (intplz < 1000 || intplz > 9992) throw 'Die Postleitzahl ist ungültig.';
     _plz = value;
   }
 
   set typ(UserTyp value) {
-    if (value == null) {
-      throw Exception('Null übergabe.');
-    } else {
+//    TODO loeschen
+//    if (value == null) {
+//      throw Exception('Null übergabe.');
+//    } else {
       _typ = value;
-    }
+//    }
   }
 
   // --------------------------------- Getter ---------------------------------
 
   // @formatter:off
   int        get userID   => _userID;
-  String     get vorname  => _vorname;
-  String     get nachname => _nachname;
   String     get plz      => _plz;
   UserTyp    get typ      => _typ;
   // @formatter:on
@@ -81,7 +75,7 @@ class User {
   @override
   String toString() {
     String str =
-        'Name:         $_vorname $_nachname ($_userID)\nWohnort:      $ort ($_plz)\nE-Mail:       '
+        'Name:         $vorname $nachname ($_userID)\nWohnort:      $ort ($_plz)\nE-Mail:       '
                 '$email\n' +
             (jugendgruppe != null ? 'Jugendgruppe: $jugendgruppe\n' : '') +
             'Registriert:  $registered\n${_typ.toString()}';

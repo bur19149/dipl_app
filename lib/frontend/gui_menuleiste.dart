@@ -290,11 +290,12 @@ class _AdminMenuState extends State<_AdminMenu> {
 class _AdminMenuText extends StatefulWidget {
   // ------------------------------- Variablen --------------------------------
 
-  final String text;
+  final String text; // Titel des Buttons
+  final Widget page; // Seite auf die der Button verweist
 
   // ------------------------------ Konstruktor -------------------------------
 
-  const _AdminMenuText(this.text);
+  const _AdminMenuText(this.text, {this.page = const Scaffold()});
 
   // ------------------------------- createState ------------------------------
 
@@ -307,14 +308,14 @@ class _AdminMenuTextState extends State<_AdminMenuText> {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
+    return InkWell(onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => widget.page)), child: Align(
         alignment: Alignment.centerRight,
         child: Container(
             padding: EdgeInsets.only(right: 10, top: 11, bottom: 11),
             child: Text(
                 widget.text,
                 style: Schrift(fontSize: 18, fontWeight: FontWeight.w600
-                ))));
+                )))));
   }
 }
 

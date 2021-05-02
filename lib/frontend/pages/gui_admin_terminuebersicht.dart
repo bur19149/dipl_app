@@ -15,7 +15,6 @@ class _AdminTerminUebersichtPageState extends State<AdminTerminUebersichtPage> {
   }
 }
 
-
 class SortierMenu extends StatefulWidget {
   @override
   _SortierMenuState createState() => _SortierMenuState();
@@ -74,6 +73,4 @@ class _SortierMenuState extends State<SortierMenu> {
           farbe: Buttonfarbe.rot,
           gefuellt: _archiv)]);
   }
-
-
 }

@@ -40,7 +40,8 @@ class _TopleisteState extends State<Topleiste> {
   }
 
   void _settingsButtonPressed() {
-    requestUser().then((user) => Navigator.push(context, MaterialPageRoute(builder: (context) => EinstellungenPage(user: user))));
+//    requestUser().then((user) => Navigator.push(context, MaterialPageRoute(builder: (context) => EinstellungenPage(user: user))));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => EinstellungenPage()));
   }
 
   // --------------------------------- Build ----------------------------------
