@@ -17,6 +17,8 @@ import 'package:flutter/material.dart';
 import 'package:dipl_app/main.dart';
 
 import '../Root.dart';
+import '../backend/objects.dart';
+import '../frontend/pages/gui_admin_registrierte_user.dart';
 
 class DominiksTestgelaende extends StatefulWidget {
   @override
@@ -40,7 +42,9 @@ class _DominiksTestgelaendeState extends State<DominiksTestgelaende> {
       TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteGruppenleiter())),   text: 'Teste Gruppenleiter'),
       TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteSnackbar())),    		text: 'Teste Snackbar'),
       TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteTextfeld())),    		text: 'Teste Textfeld'),
-      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Ladeseite())),    				text: 'Teste Ladeseite')
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Ladeseite())),    				text: 'Teste Ladeseite'),
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrierteUserPage())),text: 'Teste User-Rahmen'),
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteAnimation())),text: 'Teste Animation')
       // @formatter:on
 		]);
 	}
@@ -269,7 +273,8 @@ class _TesteTextfeldState extends State<TesteTextfeld> {
 								print(val);
 								if (val.length > 4) {
 									text = val;
-									return null;}
+									return null;
+								}
 								return 'Ungültiger Text';
 							})),
 			ElevatedButton(onPressed: () {
@@ -381,4 +386,92 @@ class _GruppenleiterState extends State<Gruppenleiter>
 	}
 
 	String text = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.';
+}
+
+
+class TesteAnimation extends StatefulWidget {
+	@override
+	_TesteAnimationState createState() => _TesteAnimationState();
+}
+
+class _TesteAnimationState extends State<TesteAnimation>
+		with TickerProviderStateMixin {
+
+	bool isExpanded;
+
+	AnimationController controllerTop;
+	AnimationController controllerBottom;
+
+	Animation<double> heightFactorTop;
+	Animation<double> heightFactorBottom;
+
+	@override
+	void initState() {
+		controllerTop =
+				AnimationController(duration: Duration(milliseconds: 200), vsync: this);
+		controllerBottom =
+				AnimationController(duration: Duration(milliseconds: 200), vsync: this);
+
+		heightFactorTop = controllerTop.drive(CurveTween(curve: Curves.easeIn));
+		heightFactorBottom =
+				controllerBottom.drive(CurveTween(curve: Curves.easeIn));
+
+		isExpanded = PageStorage.of(context)?.readState(context) ?? false;
+
+		if (isExpanded) controllerBottom.value = 1.0;
+		if (!isExpanded) controllerTop.value = 1.0;
+
+		super.initState();
+	}
+
+
+	void handleTap() {
+		setState(() {
+			isExpanded = !isExpanded;
+			if (isExpanded) {
+				controllerTop.forward();
+				controllerBottom.reverse().then<void>((void value) {
+					if (!mounted) return;
+					setState(() {});
+				});
+			} else {
+				controllerBottom.forward();
+				controllerTop.reverse().then<void>((void value) {
+					if (!mounted) return;
+					setState(() {});
+				});
+			}
+			PageStorage.of(context)?.writeState(context, isExpanded);
+		});
+	}
+
+	@override
+	Widget build(BuildContext context) {
+		final bool closedTop = isExpanded && controllerTop.isDismissed;
+		final bool closedBottom = !isExpanded && controllerBottom.isDismissed;
+
+		return TempSeite(children: [
+			AnimatedBuilder(animation: controllerTop.view, builder: (context, child) =>
+					ClipRect(child: Align(heightFactor: heightFactorTop.value,
+							child: child)),
+			child: closedTop ? null : Container(height: 100, color: Colors.blue,
+					child: Column(
+							children: [Button(text: 'öffnen', onPressed: () => handleTap())]))),
+
+			AnimatedBuilder(animation: controllerBottom.view, builder: (context, child) =>
+					ClipRect(child: Align(heightFactor: heightFactorBottom.value,
+							child: child)),
+			child: closedBottom ? null : Container(height: 100,
+					color: Colors.red,
+					child: Column(
+							children: [Button(text: 'Schließen', onPressed: () => handleTap())])))
+		]);
+	}
+
+	@override
+	void dispose() {
+		controllerTop.dispose();
+		controllerBottom.dispose();
+		super.dispose();
+	}
 }

@@ -97,6 +97,14 @@ class _ExpandableInnerRahmenState extends State<ExpandableInnerRahmen>
                 child: Rahmen(
                     children: widget.children ?? [], shadow: false))));
   } // @formatter:on
+
+  // -------------------------------- Dispose ---------------------------------
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 }
 
 /// ausklappbarer Rahmen

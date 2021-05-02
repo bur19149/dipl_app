@@ -38,7 +38,7 @@ class User {
     this.registered   = registered;
   } // @formatter:on
 
-  User.leer() : this(0, '', '', '', null, null, null, null, 0, null, false);
+  User.leer() : this(0, '', '', '', '', '', null, '', 0, null, false);
 
   // --------------------------------- Setter ---------------------------------
 

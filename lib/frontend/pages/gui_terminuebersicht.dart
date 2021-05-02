@@ -181,7 +181,7 @@ class _TerminRahmenTerminuebersichtState extends State<TerminRahmenTerminuebersi
               child: Text('Zum Termin anmelden', style: Schrift())),
           SizedBox(height: 10),
           Button(
-              text: true ? 'Keine Antwort' : '',
+              text: true ? 'Keine Antwort' : '', // TODO
               farbe: Buttonfarbe.blau,
               gefuellt: false,
               onPressed: () {})]);
