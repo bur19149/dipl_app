@@ -43,8 +43,8 @@ class _DominiksTestgelaendeState extends State<DominiksTestgelaende> {
       TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteSnackbar())),    		text: 'Teste Snackbar'),
       TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteTextfeld())),    		text: 'Teste Textfeld'),
       TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Ladeseite())),    				text: 'Teste Ladeseite'),
-      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrierteUserPage())),text: 'Teste User-Rahmen'),
-      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteAnimation())),text: 'Teste Animation')
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrierteUserPage())), text: 'Teste User-Rahmen'),
+      TempButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TesteAnimation())),       text: 'Teste Animation')
       // @formatter:on
 		]);
 	}

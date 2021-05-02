@@ -87,7 +87,9 @@ class _MeineTerminePageState extends State<MeineTerminePage> {
                     return Align(
                         alignment: Alignment.center,
                         child: Text(
-                            projectSnap != null ? 'Keine Termine vorhanden!' : 'Keine Internet Verbindung!',
+                            projectSnap != null
+                                ? 'Keine Termine vorhanden!'
+                                : 'Keine Internet Verbindung!',
                             style: Schrift()));
                   }
                 }));
@@ -115,20 +117,51 @@ class _TerminRahmenMeineTermine extends StatefulWidget {
 }
 
 class _TerminRahmenMeineTermineState extends State<_TerminRahmenMeineTermine>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   DateTime anmeldungEnde;
   bool _sameDate;
-  bool isExpanded; // Ist der Rahmen sichtbar/ausgefahren?
-  AnimationController controller; // Controller des Widgets / der Animation, definiert die Animationszeit
-  Animation<double> heightFactor; // definiert die Animation (Kurve usw.)
+
+  bool isExpanded;
+
+  AnimationController controllerTop;
+  AnimationController controllerBottom;
+
+  Animation<double> heightFactorTop;
+  Animation<double> heightFactorBottom;
+
+  @override
+  void initState() {
+    controllerTop =
+        AnimationController(duration: Duration(milliseconds: 1), vsync: this);
+    controllerBottom =
+        AnimationController(duration: Duration(milliseconds: 200), vsync: this);
+
+    heightFactorTop = controllerTop.drive(CurveTween(curve: Curves.easeIn));
+    heightFactorBottom =
+        controllerBottom.drive(CurveTween(curve: Curves.easeIn));
+
+    isExpanded = PageStorage.of(context)?.readState(context) ?? false;
+
+    if (isExpanded) controllerBottom.value = 1.0;
+    if (!isExpanded) controllerTop.value = 1.0;
+
+    _sameDate = _checkSameDate(start: widget.timeVon, end: widget.timeBis);
+    anmeldungEnde = widget.anmeldungEnde ?? DateTime(0);
+    super.initState();
+  }
 
   void handleTap() {
     setState(() {
       isExpanded = !isExpanded;
       if (isExpanded) {
-        controller.forward();
+        controllerTop.forward();
+        controllerBottom.reverse().then<void>((void value) {
+          if (!mounted) return;
+          setState(() {});
+        });
       } else {
-        controller.reverse().then<void>((void value) {
+        controllerBottom.forward();
+        controllerTop.reverse().then<void>((void value) {
           if (!mounted) return;
           setState(() {});
         });
@@ -137,114 +170,113 @@ class _TerminRahmenMeineTermineState extends State<_TerminRahmenMeineTermine>
     });
   }
 
-  @override
-  void initState() {
-    controller = AnimationController(duration: Duration(milliseconds: 200), vsync: this);
-    heightFactor = controller.drive(CurveTween(curve: Curves.easeIn));
-    isExpanded = PageStorage.of(context)?.readState(context) ?? true;
-    if (isExpanded) controller.value = 1.0;
-
-    _sameDate = _checkSameDate(start: widget.timeVon, end: widget.timeBis);
-    anmeldungEnde = widget.anmeldungEnde ?? DateTime(0);
-    super.initState();
-  }
-
-  bool _checkSameDate({@required DateTime start,@required DateTime end}) { // @formatter:off
+	bool _checkSameDate({@required DateTime start,@required DateTime end}) { // @formatter:off
     bool day   = start.day   == end.day,
          month = start.month == end.month,
          year  = start.year  == end.year;
     return day && month && year;
   } // @formatter:on
 
-  @override
-  Widget build(BuildContext context) {
-    bool closed = !isExpanded && controller.isDismissed;
-    print('###### Closed: [$closed], isExpanded: [$isExpanded]');
-    return ExpandableRahmen(
-      header: widget.name,
-      bottomHeader:
-          'Anmeldung offen bis ${DateFormat('dd.MM.yyyy kk:mm').format(anmeldungEnde)}',
-      childrenTop: [
-        Row(children: [
-          Container(
-              height: _sameDate ? 20 : 45,
-              child: Align(
-                  alignment:
-                      _sameDate ? Alignment.centerLeft : Alignment.topLeft,
-                  child: SvgPicture.asset(SVGicons.uhr,
-                      width: 20, color: Farben.dunkelgrau))),
-          SizedBox(width: 10),
-          Wrap(children: [ // @formatter:off
+	@override
+	Widget build(BuildContext context) {
+		final bool closedTop = isExpanded && controllerTop.isDismissed;
+		final bool closedBottom = !isExpanded && controllerBottom.isDismissed;
+
+		return ExpandableRahmen(
+			header: widget.name,
+			bottomHeader:
+			'Anmeldung offen bis ${DateFormat('dd.MM.yyyy kk:mm').format(
+					anmeldungEnde)}',
+			childrenTop: [
+				Row(children: [
+					Container(
+							height: _sameDate ? 20 : 45,
+							child: Align(
+									alignment:
+									_sameDate ? Alignment.centerLeft : Alignment.topLeft,
+									child: SvgPicture.asset(SVGicons.uhr,
+											width: 20, color: Farben.dunkelgrau))),
+					SizedBox(width: 10),
+					Wrap(children: [ // @formatter:off
             Text('${DateFormat('dd.MM.yyyy - kk:mm').format(widget.timeVon)} Uhr bis${_sameDate ? ' ' : '\n'}'
                 '${DateFormat('${!_sameDate ? 'dd.MM.yyyy - ' : ''}kk:mm').format(widget.timeBis)} Uhr',
                 style: Schrift()) // @formatter:on
-          ])
-        ]),
-        SizedBox(height: 5),
-        widget.ort == null || widget.ort.isEmpty
-            ? Container()
-            : Row(children: [
-                SizedBox(
-                    width: 20,
-                    child: SvgPicture.asset(SVGicons.standort,
-                        height: 25, color: Farben.dunkelgrau)),
-                SizedBox(width: 10),
-                Wrap(children: [Text(widget.ort, style: Schrift())])
-              ]),
-        SizedBox(height: 5),
-        Row(children: [
-          SvgPicture.asset(SVGicons.mehrereBenutzer,
-              width: 20, color: Farben.dunkelgrau),
-          SizedBox(width: 10),
-          RichText(
-              text: TextSpan(
-                  style: TextStyle(
-                      fontSize: Groesse.normal,
-                      color: Farben.blaugrau,
-                      fontFamily: appFont,
-                      fontWeight: FontWeight.w300),
-                  children: [
-                TextSpan(text: '${widget.belegtePlaetze}/${widget.plaetze}'),
-                TextSpan(text: ' Plätze belegt.')
-              ]))
-        ])
-      ],
-      childrenBottom: [
-        Button(
-          text: 'Bearbeiten',
-          farbe: Buttonfarbe.rot,
-          gefuellt: false,
-          onPressed: () {},
-        ),
-        AnimatedBuilder(
-            animation: controller.view,
-            builder: (BuildContext context, Widget child) => ClipRect(
-                child: Align(heightFactor: heightFactor.value, child: child)),
-            child: closed
-                ? null
-                : Container(
-                    width: double.infinity,
-                    child: Button(
-                      text: 'Antwort bearbeiten',
-                      svg: SVGicons.bearbeiten,
-                      gefuellt: true,
-                      farbe: Buttonfarbe.blaugrau,
-                      onPressed: () => handleTap(),
-                    ))),
-        AnimatedBuilder(
-            animation: controller.view,
-            builder: (BuildContext context, Widget child) => ClipRect(
-                child: Align(heightFactor: heightFactor.value, child: child)),
-            child: !closed
-                ? null
-                : Container(width: double.infinity, child: Text('Teste'))),
-      ],
-    );
-  }
+					])
+				]),
+				SizedBox(height: 5),
+				widget.ort == null || widget.ort.isEmpty
+						? Container()
+						: Row(children: [
+					SizedBox(
+							width: 20,
+							child: SvgPicture.asset(SVGicons.standort,
+									height: 25, color: Farben.dunkelgrau)),
+					SizedBox(width: 10),
+					Wrap(children: [Text(widget.ort, style: Schrift())])
+				]),
+				SizedBox(height: 5),
+				Row(children: [
+					SvgPicture.asset(SVGicons.mehrereBenutzer,
+							width: 20, color: Farben.dunkelgrau),
+					SizedBox(width: 10),
+					RichText(
+							text: TextSpan(
+									style: TextStyle(
+											fontSize: Groesse.normal,
+											color: Farben.blaugrau,
+											fontFamily: appFont,
+											fontWeight: FontWeight.w300),
+									children: [
+										TextSpan(
+												text: '${widget.belegtePlaetze}/${widget.plaetze}'),
+										TextSpan(text: ' Plätze belegt.')
+									]))
+				])
+			],
+			childrenBottom: [
+				Button(
+					text: 'Bearbeiten',
+					farbe: Buttonfarbe.rot,
+					gefuellt: false,
+					onPressed: () {},
+				),
 
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
+				AnimatedBuilder(
+						animation: controllerTop.view, builder: (context, child) =>
+						ClipRect(child: Align(heightFactor: heightFactorTop.value,
+								child: child)), child: closedTop ? null : Container(
+						width: double.infinity,
+						child: Button(
+							text: 'Antwort bearbeiten',
+							svg: SVGicons.bearbeiten,
+							gefuellt: true,
+							farbe: Buttonfarbe.blaugrau,
+							onPressed: () => handleTap(),
+						))),
+				AnimatedBuilder(
+						animation: controllerBottom.view, builder: (context, child) =>
+						ClipRect(child: Align(heightFactor: heightFactorBottom.value,
+								child: child)),
+						child: closedBottom ? null :
+						Rahmen(children: [
+							Button(text: 'Zur Veranstaltung anmelden', onPressed: () {}),
+							Button(text: 'Zugesagt', onPressed: () {}),
+							Button(
+								text: 'Schließen',
+								svg: SVGicons.bearbeiten,
+								gefuellt: true,
+								farbe: Buttonfarbe.blaugrau,
+								onPressed: () => handleTap(),
+							)
+						]))
+			],
+		);
+	}
+
+	@override
+	void dispose() {
+		controllerTop.dispose();
+		controllerBottom.dispose();
+		super.dispose();
+	}
 }
