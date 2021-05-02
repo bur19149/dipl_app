@@ -5,13 +5,13 @@ import 'dart:io';
 // -------------------------------- Variablen -------------------------------
 
 // @formatter:off
-final File orgAppConfig = File('OrgAppConfig.txt');                                           //Name des SaveFiles
-//final String url        = 'https://jugendevent.mainlevel.at/api';                             // Verbindungs-URL
-final String url        = 'https://jugend-event.at/api';                             // Verbindungs-URL
-final String appVersion = 'alpha 0.1';                                                        // aktuelle Version der App
-//    String token      = 'rVMWQRDvHY0NpO-c_8S!nMRhmi=pXZ4gLQ3szHY7wYVVEV-z=RwhvezRxu8lkcB!'; // Token zur Identifizierung beim Server
+final File orgAppConfig = File('OrgAppConfig.txt');                                            // Name des SaveFiles
+//final String url        = 'https://jugendevent.mainlevel.at/api';                            // Verbindungs-URL
+final String url        = 'https://jugend-event.at/api';                                       // Verbindungs-URL
+final String appVersion = 'alpha 0.1';                                                         // aktuelle Version der App
+//    String token      = 'rVMWQRDvHY0NpO-c_8S!nMRhmi=pXZ4gLQ3szHY7wYVVEV-z=RwhvezRxu8lkcB!';  // Token zur Identifizierung beim Server
 //    String token      = 'LOHbk!6=EtRWZklq=A79hVSKSQElgEm%k_3E\$ayvDhjuCFVw7=FoQp-z6EVm98et'; // Token zur Identifizierung beim Server (Admin)
-      String token      = 'Xr0F?!kCjm%vhzwNm8GHI9Xj5IvTdpU2%NLIMfgz.de3!c?is-esU86Oozt=u=OU'; // Token zur Identifizierung beim Server (Admin Account jugend-event.at)
+      String token      = 'Xr0F?!kCjm%vhzwNm8GHI9Xj5IvTdpU2%NLIMfgz.de3!c?is-esU86Oozt=u=OU';  // Token zur Identifizierung beim Server (Admin Account jugend-event.at)
 /// alle existierenden Permissions
 var permissions = const <objects.Permission>[objects.Permission(null, null, 'Erlaubt das Anmelden zu Terminen',                                                   'termin.antwort.teilnehmer'   ),
                                              objects.Permission(null, null, 'Erlaubt es Kinder Accounts für einen Termin anzumelden',                             'termin.antwort.eltern'       ),

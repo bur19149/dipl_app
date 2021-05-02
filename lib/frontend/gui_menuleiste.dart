@@ -20,8 +20,7 @@ class Menuleiste extends StatefulWidget {
 
 	// ------------------------------ Konstruktor -------------------------------
 
-	Menuleiste(
-			{this.scaffoldHome = const Scaffold(), this.scaffoldMeineTermine = const Scaffold(), this.admin = false, this.textEditingController, this.onChanged, this.scaffoldAdmin = const Scaffold()});
+	Menuleiste({this.scaffoldHome = const Scaffold(), this.scaffoldMeineTermine = const Scaffold(), this.admin = false, this.textEditingController, this.onChanged, this.scaffoldAdmin = const Scaffold()});
 
 	// ------------------------------- createState ------------------------------
 
@@ -96,15 +95,15 @@ class _MenuleisteState extends State<Menuleiste> {
 // @formatter:off
   @override
   Widget build(BuildContext context) {
-
-		var pageList = widget.scaffoldAdmin != null ? [widget.scaffoldAdmin] : [widget.scaffoldHome, widget.scaffoldMeineTermine];
-
     return SafeArea(
         child: Stack(children: [
           PageView(
             controller: pageController,
             onPageChanged: (page) => swipeHandler(page),
-            children: pageList),
+            children: [
+              widget.scaffoldHome,
+              widget.scaffoldMeineTermine,
+        ]),
           Align(alignment: Alignment.topCenter,
                 child: Container(height: 60,
                     child: Material(color: Colors.transparent,
@@ -281,7 +280,7 @@ class _AdminMenuState extends State<_AdminMenu> {
         _AdminMenuText('Neuen Termin anlegen')]),
       SizedBox(height: 10),
       _MenuBox(children: [
-//        _AdminMenuText('User Einstellungen'), TODO entfernen
+        _AdminMenuText('User Einstellungen'),
         _AdminMenuText('Registrierte User'),
         _AdminMenuText('Neuen User anlegen')
       ])]));

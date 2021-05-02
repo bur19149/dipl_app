@@ -285,6 +285,9 @@ class _RahmenState extends State<Rahmen> {
 
 /// Rahmen zur Darstellung von Terminen
 /// wird bei der Terminübersicht verwendet (Terminkarten)
+
+//TODO ^Dokumentation falsch wir haben dafür TerminRahmenTerminübersicht => Meine Termine ????????
+
 class TerminRahmen extends StatefulWidget {
   // ------------------------------- Variablen --------------------------------
 

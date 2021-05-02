@@ -1,11 +1,9 @@
-
+import '../../backend/requests/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
-
-import '../../backend/requests/user.dart';
 import '../../backend/objects.dart';
+import 'package:intl/intl.dart';
 import '../gui_konstanten.dart';
 import '../gui_buttons.dart';
 import '../gui_rahmen.dart';
@@ -21,68 +19,72 @@ class TerminuebersichtPage extends StatefulWidget {
 
 class _TerminuebersichtPageState extends State<TerminuebersichtPage> {
 
-  Future<List<UserTermin>> terminListeAlleTermine  = requestAlleTermine();
-  List<UserTermin> _searchResultAlleTermine  = [];
   TextEditingController controller = new TextEditingController();
+  Future<List<UserTermin>> terminListeAlleTermine  = requestAlleTermine();
+  List<UserTermin> _searchResultTermine  = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: _searchResultAlleTermine.length != 0 || controller.text.isNotEmpty ?
+        body: _searchResultTermine.length != 0 || controller.text.isNotEmpty ?
         ListView.builder(
             padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-            itemCount: _searchResultAlleTermine.length,
+            itemCount: _searchResultTermine.length,
             itemBuilder: (context, index) {
-              UserTermin termin = _searchResultAlleTermine[index];
+              UserTermin termin = _searchResultTermine[index];
               List<Widget> children = [];
-              if(index==0)
-                children.add(SizedBox(height: 70));
-              children.addAll([
-                TerminRahmenTerminuebersicht(
-                    name: termin.name,
-                    anmeldungEnde: termin.anmeldungEnde,
-                    ort: termin.ort,
-                    timeVon: termin.timeVon,
-                    timeBis: termin.timeBis,
-                    plaetze: termin.plaetze,
-                    beschreibung: termin.beschreibung),
-                SizedBox(height: 35)]);
-              if(_searchResultAlleTermine.length-1==index)
-                children.add(SizedBox(height: 70));
-              return Column(children: children);})
+                  if (index == 0) {
+                    children.add(SizedBox(height: 70));
+                  }
+                  children.addAll([
+                    TerminRahmenTerminuebersicht(
+                        name: termin.name,
+                        anmeldungEnde: termin.anmeldungEnde,
+                        ort: termin.ort,
+                        timeVon: termin.timeVon,
+                        timeBis: termin.timeBis,
+                        plaetze: termin.plaetze,
+                        beschreibung: termin.beschreibung),
+                    SizedBox(height: 35)
+                  ]);
+                  if (_searchResultTermine.length - 1 == index)
+                    children.add(SizedBox(height: 70));
+                  return Column(children: children);
+                })
             : FutureBuilder(
-            future: terminListeAlleTermine,
-            initialData: [],
-            builder: (context, projectSnap) {
-              if (projectSnap.data != null && projectSnap.data.length > 0) {
-                return ListView.builder(
-                    padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-                    itemCount: projectSnap.data.length,
-                    itemBuilder: (context, index) {
-                      UserTermin termin = projectSnap.data[index];
-                      List<Widget> children = [];
-                      if(index==0)
-                        children.add(SizedBox(height: 70));
-                      children.addAll([
-                        TerminRahmenTerminuebersicht(
-                            name: termin.name,
-                            anmeldungEnde: termin.anmeldungEnde,
-                            ort: termin.ort,
-                            timeVon: termin.timeVon,
-                            timeBis: termin.timeBis,
-                            plaetze: termin.plaetze,
-                            beschreibung: termin.beschreibung),
-                        SizedBox(height: 35)]);
-                      if(projectSnap.data.length-1==index)
-                        children.add(SizedBox(height: 70));
-                      return Column(children: children);
-                    });
-              } else {
-                return Align(
-                    alignment: Alignment.center,
-                    child: Text(projectSnap != null ? 'Keine Termine vorhanden!' : 'Keine Internet Verbindung!',
-                        style: Schrift()));
-              }}));
+                future: terminListeAlleTermine,
+                initialData: [],
+                builder: (context, projectSnap) {
+                  if (projectSnap.data != null && projectSnap.data.length > 0) {
+                    return ListView.builder(
+                        padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+                        itemCount: projectSnap.data.length,
+                        itemBuilder: (context, index) {
+                          UserTermin termin = projectSnap.data[index];
+                          List<Widget> children = [];
+                          if (index == 0) children.add(SizedBox(height: 70));
+                          children.addAll([
+                            TerminRahmenTerminuebersicht(
+                                name: termin.name,
+                                anmeldungEnde: termin.anmeldungEnde,
+                                ort: termin.ort,
+                                timeVon: termin.timeVon,
+                                timeBis: termin.timeBis,
+                                plaetze: termin.plaetze,
+                                beschreibung: termin.beschreibung),
+                            SizedBox(height: 35)]);
+                          if (projectSnap.data.length - 1 == index)
+                            children.add(SizedBox(height: 70));
+                          return Column(children: children);
+                        });
+                  } else {
+                    return Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                            projectSnap != null ? 'Keine Termine vorhanden!' : 'Keine Internet Verbindung!',
+                            style: Schrift()));
+                  }
+                }));
   }
 }
 
@@ -93,12 +95,12 @@ class TerminRahmenTerminuebersicht extends StatefulWidget {
 
   const TerminRahmenTerminuebersicht(
       {this.name = 'Name',
-        this.anmeldungEnde,
-        this.ort = 'Ort',
-        this.plaetze = 0,
-        this.beschreibung = 'Beschreibung',
-        this.timeVon,
-        this.timeBis});
+       this.ort = 'Ort',
+       this.beschreibung = 'Beschreibung',
+       this.plaetze = 0,
+       this.anmeldungEnde,
+       this.timeVon,
+       this.timeBis});
 
   @override
   State<StatefulWidget> createState() => _TerminRahmenTerminuebersichtState();
@@ -117,8 +119,8 @@ class _TerminRahmenTerminuebersichtState extends State<TerminRahmenTerminuebersi
 
   bool _checkSameDate({@required DateTime start,@required DateTime end}) { // @formatter:off
     bool day   = start.day   == end.day,
-        month = start.month == end.month,
-        year  = start.year  == end.year;
+         month = start.month == end.month,
+         year  = start.year  == end.year;
     return day && month && year;
   } // @formatter:on
 
@@ -181,7 +183,7 @@ class _TerminRahmenTerminuebersichtState extends State<TerminRahmenTerminuebersi
               child: Text('Zum Termin anmelden', style: Schrift())),
           SizedBox(height: 10),
           Button(
-              text: true ? 'Keine Antwort' : '', // TODO
+              text: true ? 'Keine Antwort' : '', //TODO
               farbe: Buttonfarbe.blau,
               gefuellt: false,
               onPressed: () {})]);
