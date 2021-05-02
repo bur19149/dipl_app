@@ -10,8 +10,9 @@ import '../gui_rahmen.dart';
 import '../gui_text.dart';
 
 class TerminuebersichtPage extends StatefulWidget {
+  final TextEditingController controller;
 
-  TerminuebersichtPage();
+  const TerminuebersichtPage({this.controller});
 
   @override
   _TerminuebersichtPageState createState() => _TerminuebersichtPageState();
@@ -19,9 +20,15 @@ class TerminuebersichtPage extends StatefulWidget {
 
 class _TerminuebersichtPageState extends State<TerminuebersichtPage> {
 
-  TextEditingController controller = new TextEditingController();
+  TextEditingController controller;
   Future<List<UserTermin>> terminListeAlleTermine  = requestAlleTermine();
   List<UserTermin> _searchResultTermine  = [];
+
+  @override
+  void initState() {
+    controller = widget.controller ?? TextEditingController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

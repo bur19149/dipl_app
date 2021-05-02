@@ -29,7 +29,7 @@ class _RootState extends State<Root> {
 				admin: true, // TODO Admin ist zurzeit noch statisch
 				textEditingController: controller,
 				onChanged: onSearchTextChanged,
-				scaffoldHome: TerminuebersichtPage(),
+				scaffoldHome: TerminuebersichtPage(controller: controller),
 				scaffoldMeineTermine: MeineTerminePage());
 	} // @formatter:on
 	@override
@@ -49,22 +49,21 @@ class _RootState extends State<Root> {
 			setState(() {});
 			return;
 		}
-		if(isHome){
+		//if(isHome){
 			terminListeAlleTermine.then((terminliste) {
 				for (var termin in terminliste)
 					if (termin.name.toLowerCase().contains(text)||termin.ort.toLowerCase().contains(text)||termin.beschreibung.contains(text))
 						_searchResultAlleTermine.add(termin);
-			}
-			);
-		}else{
-			terminListeMeineTermine.then((terminliste){
-				for(var termin in terminliste){
-					if (termin.name.toLowerCase().contains(text)||termin.ort.toLowerCase().contains(text)){
-						_searchResultMeineTermine.add(termin);
-					}
-				}
 			});
-		}
+		// }else{
+		// 	terminListeMeineTermine.then((terminliste){
+		// 		for(var termin in terminliste){
+		// 			if (termin.name.toLowerCase().contains(text)||termin.ort.toLowerCase().contains(text)){
+		// 				_searchResultMeineTermine.add(termin);
+		// 			}
+		// 		}
+		// 	});
+		// }
 		setState(() {});
 	}
 //@foramtter:on
