@@ -4,8 +4,8 @@ import 'package:dipl_app/frontend/gui_menuleiste.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../gui_buttons.dart';
 import '../gui_konstanten.dart';
+import '../gui_buttons.dart';
 import '../gui_rahmen.dart';
 import '../gui_text.dart';
 
@@ -159,11 +159,13 @@ class _UserRahmenState extends State<UserRahmen> with SingleTickerProviderStateM
                               Container(width: 10),
                               Text('${widget.user.typ.name}', style: Schrift())]),
                             SizedBox(height: 5),
+
+                            widget.user.jugendgruppe!=null && widget.user.jugendgruppe.isNotEmpty ?
                             Row(children: [
                               Container(width: 20, child: Center(child: SvgPicture.asset(SVGicons.mehrereBenutzer, height: 20,width: 20,color: Farben.blaugrau))),
                               Container(width: 10),
-                              Text('${widget.user.jugendgruppe}',style: Schrift())]),
-                            SizedBox(height: 5),
+                              Text('${widget.user.jugendgruppe}',style: Schrift())]):Container(),
+                            SizedBox(height: widget.user.jugendgruppe!=null && widget.user.jugendgruppe.isNotEmpty ? 5:0),
                             Row(children: [
                               Container(width: 20, child: Center(child: SvgPicture.asset(SVGicons.standort, height: 19, width: 25, color: Farben.blaugrau))),
                               Container(width: 10),
