@@ -17,35 +17,46 @@ class RegistrierteUserPage extends StatefulWidget {
 class _RegistrierteUserPageState extends State<RegistrierteUserPage> {
   Future<List<objects.User>> userListe = requests.User.requestUserListe();
 
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { //TODO warum Scaffhold Home und nicht Scaffhold admin ? (Note by Sascha)
     return Menuleiste(admin: true, scaffoldHome: Scaffold(
         body: FutureBuilder(
             future: userListe,
             initialData: [],
-            builder: (context, projectSnap) {
-              return ListView.builder(
-                  padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-                  itemCount: projectSnap.data.length,
-                  itemBuilder: (context, index) {
-                    var user = projectSnap.data[index];
-                    List<Widget> children = [];
-                    if (index == 0)
-                      children.addAll([
-                        SizedBox(height: 70),
-                        Button(
-                            text: 'Neuen Nutzer anlegen',
-                            farbe: Buttonfarbe.rot,
-                            gefuellt: false,
-                            onPressed: () {}),
-                        SizedBox(height: 35)
-                      ]);
-                    children.addAll([UserRahmen(user), SizedBox(height: 35)]);
-                    if (projectSnap.data.length - 1 == index)
-                      children.add(SizedBox(height: 70));
-                    return Column(children: children);
-                  });
-            })));
+            builder: (context, projectSnap){
+    //if Prüfung muss hier sein sonst null exception bei Verbindungsproblen bzw leere Seite wenn keine User
+                  if (projectSnap.data != null && projectSnap.data.length > 0) {
+                    return ListView.builder(
+                        padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+                        itemCount: projectSnap.data.length,
+                        itemBuilder: (context, index) {
+                          var user = projectSnap.data[index];
+                          List<Widget> children = [];
+                          if (index == 0)
+                            children.addAll([
+                              SizedBox(height: 70),
+                              Button(
+                                  text: 'Neuen Nutzer anlegen',
+                                  farbe: Buttonfarbe.rot,
+                                  gefuellt: false,
+                                  onPressed: () {}),
+                              SizedBox(height: 35)
+                            ]);
+                          children.addAll([UserRahmen(user), SizedBox(height: 35)]);
+                          if (projectSnap.data.length - 1 == index)
+                            children.add(SizedBox(height: 70));
+                          return Column(children: children);
+                        });
+                  }else{
+                    return Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                            projectSnap != null
+                              ? 'Keine User vorhanden!'
+                              : 'Keine Internet Verbindung!',
+                            style: Schrift()));
+                  }})));
   }
 }
 
