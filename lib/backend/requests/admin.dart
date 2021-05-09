@@ -162,8 +162,8 @@ abstract class Termin {
   /// der Zukunft, ausgegeben. Parameter \[ist\] archive [...]"
   ///
   /// Dokumentation der API-Doku v2.5 v. Tobias Möller entnommen
-  static Future<List<objects.UserTermin>> requestTerminListe( // @formatter:off
-      bool archive) async {
+  // @formatter:off
+  static Future<List<objects.UserTermin>> requestTerminListe(bool archive) async {
     var _response = await http.get('${variables.url}/admin/termin?token=${variables.token}&archive=$archive');
     if (_response.statusCode != 200) throw exceptionHandler(_response.statusCode);
     var terminliste = <objects.UserTermin>[];

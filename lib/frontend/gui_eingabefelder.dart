@@ -17,9 +17,9 @@ class Textfeld extends StatefulWidget {
   final TextStyle                headerStyle;     // Formatierung der Überschrift des Textfeldes
   final int                      maxLength;       // maximale Anzahl Zeichen innerhalb des Textfeldes
   final bool                     dateTime;        // Ist das Textfeld ein DateTimeTextfeld?
+	final bool                     multiline;       // Hat das Textfeld mehrere Zeilen?
   final Wrapper                  value;           // Inhalt des Textfeldes
   final List<TextInputFormatter> inputFormatters; // definiert den zulässigen Textinhalt und ermöglicht es Textmasken zuzuweisen
-  final bool                     multiline;       // Hat das Textfeld mehrere Zeilen?
 	final Pruefung 								 pruefung;				// Pruefung der Validität der Eingabe
 	final TextInputType						 keyboardType;		// definiert Tastaturlayout
 	// @formatter:off
@@ -197,8 +197,15 @@ class _CustomForm extends StatefulWidget {
 	final TextInputType						 keyboardType;	  // definiert Tastaturlayout
 	// @formatter:on
 
-	_CustomForm(
-			{this.hintText, this.multiline, this.controller, this.inputFormatters, this.maxLength, this.value, this.pruefung, this.keyboardType});
+	_CustomForm({
+		this.hintText,
+		this.multiline,
+		this.controller,
+		this.inputFormatters,
+		this.maxLength,
+		this.value,
+		this.pruefung,
+		this.keyboardType});
 
 	@override
 	_CustomFormState createState() => _CustomFormState();
@@ -465,8 +472,10 @@ class _DateTimeTextfeldState extends State<_DateTimeTextfeld> {
 /// Wrapper um Variablen an Parent-Widgets weiterzugeben zu können
 class Wrapper {
 	var value;
+	bool home;
 
-	Wrapper([this.value]);
+	Wrapper([this.value, this.home]);
+
 }
 
 class Pruefung {

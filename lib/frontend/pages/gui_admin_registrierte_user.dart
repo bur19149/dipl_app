@@ -170,7 +170,6 @@ class _UserRahmenState extends State<UserRahmen> with SingleTickerProviderStateM
                               Container(width: 10),
                               Text('${widget.user.typ.name}', style: Schrift())]),
                             SizedBox(height: 5),
-
                             widget.user.jugendgruppe!=null && widget.user.jugendgruppe.isNotEmpty ?
                             Row(children: [
                               Container(width: 20, child: Center(child: SvgPicture.asset(SVGicons.mehrereBenutzer, height: 20,width: 20,color: Farben.blaugrau))),

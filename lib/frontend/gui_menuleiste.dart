@@ -1,6 +1,7 @@
+import 'package:dipl_app/frontend/gui_eingabefelder.dart';
 import 'package:dipl_app/frontend/gui_konstanten.dart';
-import 'package:dipl_app/frontend/gui_text.dart';
 import 'package:dipl_app/frontend/gui_topLeiste.dart';
+import 'package:dipl_app/frontend/gui_text.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 
@@ -16,12 +17,20 @@ class Menuleiste extends StatefulWidget {
 	final TextEditingController textEditingController; // Controller für Suchfeld in Topleiste
 	final ValueChanged<String>  onChanged;  					 // Eventhandler für Suchfeld
 	final Widget								scaffoldAdmin;
+	final Wrapper wrapper;
 	// @formatter:on
 
 	// ------------------------------ Konstruktor -------------------------------
-
-	Menuleiste({this.scaffoldHome = const Scaffold(), this.scaffoldMeineTermine = const Scaffold(), this.admin = false, this.textEditingController, this.onChanged, this.scaffoldAdmin = const Scaffold()});
-
+  // @formatter:off
+	Menuleiste({
+    this.scaffoldMeineTermine = const Scaffold(),
+    this.scaffoldAdmin =        const Scaffold(),
+    this.scaffoldHome =         const Scaffold(),
+    this.textEditingController,
+    this.admin = false,
+    this.onChanged,
+    this.wrapper});
+  // @formatter:on
 	// ------------------------------- createState ------------------------------
 
 	@override
@@ -197,12 +206,12 @@ class _LeistenButtonState extends State<_LeistenButton> {
   Widget build(BuildContext context) {
     return SizedBox(
         height: 55,
-        child: RaisedButton(
+        child: RaisedButton(// ignore: deprecated_member_use
             onPressed: widget.onPressed,
             child: _LeistenButtonChild(
-              text: widget.text,
-              admin: widget.admin,
-              svg: widget.svg,
+              text:   widget.text,
+              admin:  widget.admin,
+              svg:    widget.svg,
               active: widget.active),
             color: Farben.weiss,
             shape: RoundedRectangleBorder(

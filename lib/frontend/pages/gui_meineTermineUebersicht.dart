@@ -3,50 +3,79 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../backend/objects.dart';
-import 'package:intl/intl.dart';
+import '../gui_eingabefelder.dart';
 import '../gui_konstanten.dart';
+import 'package:intl/intl.dart';
 import '../gui_buttons.dart';
 import '../gui_rahmen.dart';
 import '../gui_text.dart';
 
 class MeineTerminePage extends StatefulWidget {
+
+  final TextEditingController controller;
+  final List<UserTermin> searchResult;
+  final Wrapper wrapper;
+
+  //@foramtter:off
+  const MeineTerminePage(
+      {@required this.controller,
+       @required this.searchResult,
+       @required this.wrapper});
+  //@foramtter:on
   @override
   _MeineTerminePageState createState() => _MeineTerminePageState();
 }
 
 class _MeineTerminePageState extends State<MeineTerminePage> {
   //Variables
-  TextEditingController controller = new TextEditingController();
   Future<List<UserTermin>> alleMeineTermine = requestMeineTermine();
-  List<UserTermin> _searchResultMeineTermine = [];
+  List<UserTermin> searchResult = [];
+  TextEditingController controller;
+
+  futureConverter(){
+    this.widget.wrapper.home=false;
+    alleMeineTermine.then((meineTerminliste){
+      List<UserTermin> temp = [];
+      for(var termin in meineTerminliste){
+        temp.add(termin);
+      }
+      this.widget.wrapper.value=temp;
+    });
+  }
+
+  @override
+  void initState() {
+    controller   = widget.controller ?? TextEditingController();
+    searchResult = widget.searchResult ?? [];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: _searchResultMeineTermine.length != 0 ||
-                controller.text.isNotEmpty
+        body: searchResult.length != 0 || controller.text.isNotEmpty
             ? ListView.builder(
                 padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-                itemCount: _searchResultMeineTermine.length,
+                itemCount: searchResult.length,
                 itemBuilder: (context, index) {
-                  UserTermin termin = _searchResultMeineTermine[index];
+                  UserTermin termin = searchResult[index];
                   List<Widget> children = [];
                   if (index == 0) {
                     children.add(SizedBox(height: 70));
                   }
                   children.addAll([
                     _TerminRahmenMeineTermine(
-                      name: termin.name,
-                      anmeldungEnde: termin.anmeldungEnde,
-                      ort: termin.ort,
-                      plaetze: termin.plaetze,
-                      timeVon: termin.timeVon,
-                      timeBis: termin.timeBis,
+                      name:           termin.name,
+                      anmeldungEnde:  termin.anmeldungEnde,
+                      ort:            termin.ort,
+                      plaetze:        termin.plaetze,
+                      timeVon:        termin.timeVon,
+                      timeBis:        termin.timeBis,
                       belegtePlaetze: termin.teilnehmer.length,
                     ),
                     SizedBox(height: 35)
                   ]);
-                  if (_searchResultMeineTermine.length - 1 == index) {
+                  if (searchResult.length - 1 == index) {
                     children.add(SizedBox(height: 70));
                   }
                   return Column(children: children);
@@ -73,23 +102,19 @@ class _MeineTerminePageState extends State<MeineTerminePage> {
                             plaetze: termin.plaetze,
                             timeVon: termin.timeVon,
                             timeBis: termin.timeBis,
-                            belegtePlaetze: termin.teilnehmer.length,
-                          ),
-                          SizedBox(height: 35)
-                        ]);
+                            belegtePlaetze: termin.teilnehmer.length),
+                          SizedBox(height: 35)]);
                         if (projectSnap.data.length - 1 == index) {
                           children.add(SizedBox(height: 70));
+                          futureConverter();
                         }
                         return Column(children: children);
-                      },
-                    );
+                      });
                   } else {
                     return Align(
                         alignment: Alignment.center,
                         child: Text(
-                            projectSnap != null
-                                ? 'Keine Termine vorhanden!'
-                                : 'Keine Internet Verbindung!',
+                            projectSnap != null ? 'Keine Termine vorhanden!' : 'Keine Internet Verbindung!',
                             style: Schrift()));
                   }
                 }));
@@ -97,27 +122,24 @@ class _MeineTerminePageState extends State<MeineTerminePage> {
 }
 
 class _TerminRahmenMeineTermine extends StatefulWidget {
-  final String name, ort;
-  final int plaetze;
-  final int belegtePlaetze;
   final DateTime anmeldungEnde, timeVon, timeBis;
+  final int plaetze, belegtePlaetze;
+  final String name, ort;
 
   const _TerminRahmenMeineTermine(
       {this.name = 'Name',
-      this.ort = 'Ort',
-      this.plaetze = 0,
-      this.belegtePlaetze = 0,
-      this.anmeldungEnde,
-      this.timeVon,
-      this.timeBis});
+       this.ort = 'Ort',
+       this.plaetze = 0,
+       this.belegtePlaetze = 0,
+       this.anmeldungEnde,
+       this.timeVon,
+       this.timeBis});
 
   @override
-  _TerminRahmenMeineTermineState createState() =>
-      _TerminRahmenMeineTermineState();
+  _TerminRahmenMeineTermineState createState() => _TerminRahmenMeineTermineState();
 }
 
-class _TerminRahmenMeineTermineState extends State<_TerminRahmenMeineTermine>
-    with TickerProviderStateMixin {
+class _TerminRahmenMeineTermineState extends State<_TerminRahmenMeineTermine> with TickerProviderStateMixin {
   DateTime anmeldungEnde;
   bool _sameDate;
 

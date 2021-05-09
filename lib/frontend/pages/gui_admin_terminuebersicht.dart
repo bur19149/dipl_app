@@ -1,4 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'package:dipl_app/frontend/gui_menuleiste.dart';
+import 'package:dipl_app/backend/requests/admin.dart';
+import 'package:flutter/material.dart';
 import '../gui_konstanten.dart';
 import '../gui_buttons.dart';
 import '../gui_text.dart';
@@ -9,9 +11,21 @@ class AdminTerminUebersichtPage extends StatefulWidget {
 }
 
 class _AdminTerminUebersichtPageState extends State<AdminTerminUebersichtPage> {
+
+  TextEditingController controller = TextEditingController();
+  // Future<List<UserTermin>> abc = Termin.requestTerminListe(false);
+
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Menuleiste(
+      admin: true,
+      scaffoldHome: Scaffold(
+          body: ListView(padding: EdgeInsets.only(left: 15, right: 15, top: 80),
+            children: [
+              SortierMenu(),
+          ],)
+      ));
   }
 }
 
@@ -21,8 +35,8 @@ class SortierMenu extends StatefulWidget {
 }
 
 class _SortierMenuState extends State<SortierMenu> {
-  bool _archiv = false;
   bool _aufsteigend = false;
+  bool _archiv = false;
   bool _jahr = false;
 
   @override

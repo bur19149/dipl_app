@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../backend/objects.dart';
 import 'package:intl/intl.dart';
+import '../gui_eingabefelder.dart';
 import '../gui_konstanten.dart';
 import '../gui_buttons.dart';
 import '../gui_rahmen.dart';
@@ -11,51 +12,70 @@ import '../gui_text.dart';
 
 class TerminuebersichtPage extends StatefulWidget {
   final TextEditingController controller;
+  final List<UserTermin> searchResult;
+  final Wrapper wrapper;
 
-  const TerminuebersichtPage({this.controller});
-
+  //@formatter:off
+  const TerminuebersichtPage({
+    @required this.controller,
+    @required this.searchResult,
+    @required this.wrapper});
+//@formatter:on
   @override
   _TerminuebersichtPageState createState() => _TerminuebersichtPageState();
 }
 
 class _TerminuebersichtPageState extends State<TerminuebersichtPage> {
 
+  Future<List<UserTermin>> terminListeAlleTermine = requestAlleTermine();
+  List<UserTermin> searchResult = [];
   TextEditingController controller;
-  Future<List<UserTermin>> terminListeAlleTermine  = requestAlleTermine();
-  List<UserTermin> _searchResultTermine  = [];
+
+  doBullshit(){
+    this.widget.wrapper.home=true;
+    terminListeAlleTermine.then((terminListe){
+      List<UserTermin> abc = [];
+      for(var termin in terminListe){
+        abc.add(termin);
+      }
+      this.widget.wrapper.value=abc;
+    });
+  }
 
   @override
   void initState() {
-    controller = widget.controller ?? TextEditingController();
+    controller   = widget.controller ?? TextEditingController();
+    searchResult = widget.searchResult ?? [];
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: _searchResultTermine.length != 0 || controller.text.isNotEmpty ?
-        ListView.builder(
+        body: searchResult.length != 0 || controller.text.isNotEmpty
+       ? ListView.builder(
             padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-            itemCount: _searchResultTermine.length,
+            itemCount: searchResult.length,
             itemBuilder: (context, index) {
-              UserTermin termin = _searchResultTermine[index];
+              UserTermin termin = searchResult[index];
               List<Widget> children = [];
                   if (index == 0) {
                     children.add(SizedBox(height: 70));
                   }
                   children.addAll([
                     TerminRahmenTerminuebersicht(
-                        name: termin.name,
+                        name:          termin.name,
                         anmeldungEnde: termin.anmeldungEnde,
-                        ort: termin.ort,
-                        timeVon: termin.timeVon,
-                        timeBis: termin.timeBis,
-                        plaetze: termin.plaetze,
-                        beschreibung: termin.beschreibung),
+                        ort:           termin.ort,
+                        timeVon:       termin.timeVon,
+                        timeBis:       termin.timeBis,
+                        plaetze:       termin.plaetze,
+                        beschreibung:  termin.beschreibung),
                     SizedBox(height: 35)
                   ]);
-                  if (_searchResultTermine.length - 1 == index)
+                  if (searchResult.length - 1 == index){
                     children.add(SizedBox(height: 70));
+                  }
                   return Column(children: children);
                 })
             : FutureBuilder(
@@ -69,19 +89,23 @@ class _TerminuebersichtPageState extends State<TerminuebersichtPage> {
                         itemBuilder: (context, index) {
                           UserTermin termin = projectSnap.data[index];
                           List<Widget> children = [];
-                          if (index == 0) children.add(SizedBox(height: 70));
+                          if (index == 0){
+                            children.add(SizedBox(height: 70));
+                          }
                           children.addAll([
                             TerminRahmenTerminuebersicht(
-                                name: termin.name,
+                                name:          termin.name,
                                 anmeldungEnde: termin.anmeldungEnde,
-                                ort: termin.ort,
-                                timeVon: termin.timeVon,
-                                timeBis: termin.timeBis,
-                                plaetze: termin.plaetze,
-                                beschreibung: termin.beschreibung),
+                                ort:           termin.ort,
+                                timeVon:       termin.timeVon,
+                                timeBis:       termin.timeBis,
+                                plaetze:       termin.plaetze,
+                                beschreibung:  termin.beschreibung),
                             SizedBox(height: 35)]);
-                          if (projectSnap.data.length - 1 == index)
+                          if(projectSnap.data.length-1==index) {
                             children.add(SizedBox(height: 70));
+                            doBullshit();
+                          }
                           return Column(children: children);
                         });
                   } else {
@@ -91,7 +115,8 @@ class _TerminuebersichtPageState extends State<TerminuebersichtPage> {
                             projectSnap != null ? 'Keine Termine vorhanden!' : 'Keine Internet Verbindung!',
                             style: Schrift()));
                   }
-                }));
+                })
+    );
   }
 }
 
