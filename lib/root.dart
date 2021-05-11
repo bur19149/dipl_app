@@ -55,8 +55,8 @@ class _RootState extends State<Root> {
 						searchResultMeineTermine.add(a);
 					}
 				}
-			setState(() {});
 			}
+		setState(() {});
 		}
 //@foramtter:on
 }
